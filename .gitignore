@@ -38,3 +38,5 @@
 /SupplyChainManagement/obj/project.assets.json
 /SupplyChainManagement/obj/project.nuget.cache
 /SupplyChainManagement/obj/SupplyChainManagement.csproj.nuget.dgspec.json
+*.v2
+*.bin

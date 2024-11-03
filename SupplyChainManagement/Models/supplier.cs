@@ -9,3 +9,4 @@ namespace SupplyChainManagement.Models
         public long SupplierName { get; set; }
     }
 }
+ 

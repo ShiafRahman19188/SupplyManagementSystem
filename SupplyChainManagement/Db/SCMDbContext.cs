@@ -10,10 +10,10 @@ namespace SupplyChainManagement.Db
             
         }
 
-        public DbSet<purchaseRequisition> purchaseRequisitions { get; set; }
-        public DbSet<supplier> suppliers { get; set; }
-        public DbSet<merchandiser> merchandisers { get; set; }
-        public DbSet<deliveryUnit> deliveryUnits { get; set; }
-        public DbSet<itemDetails> itemDetails { get; set; }
+        public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Merchandiser> Merchandisers { get; set; }
+        public DbSet<DeliveryUnit> DeliveryUnits { get; set; }
+        public DbSet<ItemDetails> ItemDetails { get; set; }
     }
 }

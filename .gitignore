@@ -40,3 +40,4 @@
 /SupplyChainManagement/obj/SupplyChainManagement.csproj.nuget.dgspec.json
 *.v2
 *.bin
+/SupplyChainManagement/obj/Debug/net8.0

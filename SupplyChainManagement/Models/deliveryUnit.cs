@@ -2,10 +2,10 @@
 
 namespace SupplyChainManagement.Models
 {
-    public class deliveryUnit
+    public class DeliveryUnit
     {
         [Key]
-        public Int64 deliveryUnitId { get; set; }
-        public String? deliveryUnitName { get; set; }
+        public long DeliveryUnitId { get; set; }
+        public string DeliveryUnitName { get; set; }
     }
 }

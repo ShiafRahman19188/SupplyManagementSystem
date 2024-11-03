@@ -2,10 +2,10 @@
 
 namespace SupplyChainManagement.Models
 {
-    public class merchandiser
+    public class Merchandiser
     {
         [Key]
-        public Int64 merchandiserId { get; set; }
-        public String? merchandiserName { get; set; }
+        public long MerchandiserId { get; set; }
+        public string MerchandiserName { get; set; }
     }
 }

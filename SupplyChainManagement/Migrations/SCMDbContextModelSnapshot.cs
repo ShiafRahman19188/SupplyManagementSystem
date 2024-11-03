@@ -22,153 +22,156 @@ namespace SupplyChainManagement.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SupplyChainManagement.Models.deliveryUnit", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.DeliveryUnit", b =>
                 {
-                    b.Property<long>("deliveryUnitId")
+                    b.Property<long>("DeliveryUnitId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("deliveryUnitId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("DeliveryUnitId"));
 
-                    b.Property<string>("deliveryUnitName")
+                    b.Property<string>("DeliveryUnitName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("deliveryUnitId");
+                    b.HasKey("DeliveryUnitId");
 
-                    b.ToTable("deliveryUnits");
+                    b.ToTable("DeliveryUnits");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.itemDetails", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.ItemDetails", b =>
                 {
-                    b.Property<long>("itemDetailsId")
+                    b.Property<long>("ItemDetailsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("itemDetailsId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ItemDetailsId"));
 
-                    b.Property<string>("itemName")
+                    b.Property<string>("ItemName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("purchaseRequisitionpr_id")
+                    b.Property<long>("PurchaseRequisitionPRID")
                         .HasColumnType("bigint");
 
-                    b.HasKey("itemDetailsId");
+                    b.HasKey("ItemDetailsId");
 
-                    b.HasIndex("purchaseRequisitionpr_id");
+                    b.HasIndex("PurchaseRequisitionPRID");
 
-                    b.ToTable("itemDetails");
+                    b.ToTable("ItemDetails");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.merchandiser", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.Merchandiser", b =>
                 {
-                    b.Property<long>("merchandiserId")
+                    b.Property<long>("MerchandiserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("merchandiserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("MerchandiserId"));
 
-                    b.Property<string>("merchandiserName")
+                    b.Property<string>("MerchandiserName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("merchandiserId");
+                    b.HasKey("MerchandiserId");
 
-                    b.ToTable("merchandisers");
+                    b.ToTable("Merchandisers");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.purchaseRequisition", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
                 {
-                    b.Property<long>("pr_id")
+                    b.Property<long>("PRID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("pr_id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PRID"));
 
-                    b.Property<long>("deliveryUnitId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("delivery_date")
+                    b.Property<DateTime?>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("merchandiserId")
+                    b.Property<long>("DeliveryUnitId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("pr_date")
+                    b.Property<long>("MerchandiserID")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("PRDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("pr_no")
+                    b.Property<string>("PRNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("supplierId")
+                    b.Property<long>("SupplierId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("pr_id");
+                    b.HasKey("PRID");
 
-                    b.HasIndex("deliveryUnitId");
+                    b.HasIndex("DeliveryUnitId");
 
-                    b.HasIndex("merchandiserId");
+                    b.HasIndex("MerchandiserID");
 
-                    b.HasIndex("supplierId");
+                    b.HasIndex("SupplierId");
 
-                    b.ToTable("purchaseRequisitions");
+                    b.ToTable("PurchaseRequisitions");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.supplier", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.Supplier", b =>
                 {
-                    b.Property<long>("supplierId")
+                    b.Property<long>("SupplierId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("supplierId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SupplierId"));
 
-                    b.Property<string>("supplierName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("SupplierName")
+                        .HasColumnType("bigint");
 
-                    b.HasKey("supplierId");
+                    b.HasKey("SupplierId");
 
-                    b.ToTable("suppliers");
+                    b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.itemDetails", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.ItemDetails", b =>
                 {
-                    b.HasOne("SupplyChainManagement.Models.purchaseRequisition", "purchaseRequisition")
-                        .WithMany("itemDetails")
-                        .HasForeignKey("purchaseRequisitionpr_id")
+                    b.HasOne("SupplyChainManagement.Models.PurchaseRequisition", "PurchaseRequisition")
+                        .WithMany("ItemDetails")
+                        .HasForeignKey("PurchaseRequisitionPRID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("purchaseRequisition");
+                    b.Navigation("PurchaseRequisition");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.purchaseRequisition", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
                 {
-                    b.HasOne("SupplyChainManagement.Models.deliveryUnit", "deliveryUnit")
+                    b.HasOne("SupplyChainManagement.Models.DeliveryUnit", "DeliveryUnit")
                         .WithMany()
-                        .HasForeignKey("deliveryUnitId")
+                        .HasForeignKey("DeliveryUnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupplyChainManagement.Models.merchandiser", "merchandiser")
+                    b.HasOne("SupplyChainManagement.Models.Merchandiser", "Merchandiser")
                         .WithMany()
-                        .HasForeignKey("merchandiserId")
+                        .HasForeignKey("MerchandiserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SupplyChainManagement.Models.supplier", "supplier")
+                    b.HasOne("SupplyChainManagement.Models.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("supplierId")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("deliveryUnit");
+                    b.Navigation("DeliveryUnit");
 
-                    b.Navigation("merchandiser");
+                    b.Navigation("Merchandiser");
 
-                    b.Navigation("supplier");
+                    b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.purchaseRequisition", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
                 {
-                    b.Navigation("itemDetails");
+                    b.Navigation("ItemDetails");
                 });
 #pragma warning restore 612, 618
         }

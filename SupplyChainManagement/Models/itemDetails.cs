@@ -2,12 +2,12 @@
 
 namespace SupplyChainManagement.Models
 {
-    public class itemDetails
+    public class ItemDetails
     {
         [Key]
-        public Int64 itemDetailsId { get; set; }
-        public String? itemName { get; set; }
+        public long ItemDetailsId { get; set; }
+        public string ItemName { get; set; }
         
-        public purchaseRequisition purchaseRequisition { get; set; }
+        public PurchaseRequisition PurchaseRequisition { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace SupplyChainManagement.Models
 {
-    public class supplier
+    public class Supplier
     {
         [Key]
-        public Int64 supplierId { get; set; }
-        public String? supplierName { get; set; }
+        public long SupplierId { get; set; }
+        public long SupplierName { get; set; }
     }
 }

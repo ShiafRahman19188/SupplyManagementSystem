@@ -32,9 +32,9 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="MerchandiserID" class="control-label">Merchandiser ID</label>
-                    <input asp-for="MerchandiserID" class="form-control" />
-                    <span asp-validation-for="MerchandiserID" class="text-danger"></span>
+                    <label asp-for="Requisitionar" class="control-label">Requisitionar </label>
+                    <input asp-for="Requisitionar" class="form-control" />
+                    <span asp-validation-for="Requisitionar" class="text-danger"></span>
                 </div>
             </div>
 
@@ -42,21 +42,57 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="SupplierId" class="control-label">Supplier ID</label>
-                    <input asp-for="SupplierId" class="form-control" />
-                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                    <label asp-for="Supplier" class="control-label">Suggested Supplier</label>
+                    <input asp-for="Supplier" class="form-control" />
+                    <span asp-validation-for="Supplier" class="text-danger"></span>
                 </div>
-
+            </div>
+                <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="DeliveryUnitId" class="control-label">Delivery Unit ID</label>
-                    <input asp-for="DeliveryUnitId" class="form-control" />
-                    <span asp-validation-for="DeliveryUnitId" class="text-danger"></span>
+                    <label asp-for="DeliveryUnit" class="control-label">Delivery Unit </label>
+                    <input asp-for="DeliveryUnit" class="form-control" />
+                    <span asp-validation-for="DeliveryUnit" class="text-danger"></span>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">Item Master Code</th>
+                        <th class="text-center">Lead Time</th>
+                        <th class="text-center">Item Name</th>
+                        <th class="text-center">PR Quantity</th>
+                        <th class="text-center">Unit Price</th>
+                        <th class="text-center">Shade Code</th>
+                        <th class="text-center">UOM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ItemDetails != null)
+                    {
+                        @foreach (var detail in Model.ItemDetails)
+                        {
+                            <tr>
+                                <td class="text-center">@detail.ItemMasterID</td>
+                                <td class="text-center">@detail.LeadTime</td>
+                                <td class="text-center">@detail.ItemName</td>
+                                <td class="text-center">@detail.PRQuantity</td>
+                                <td class="text-center">@detail.UnitPrice</td>
+                                <td class="text-center">@detail.ShadeCode</td>
+                                <td class="text-center">@detail.UOM</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        </div>
+ 
 
 
     

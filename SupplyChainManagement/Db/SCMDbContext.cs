@@ -14,6 +14,6 @@ namespace SupplyChainManagement.Db
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Merchandiser> Merchandisers { get; set; }
         public DbSet<DeliveryUnit> DeliveryUnits { get; set; }
-        public DbSet<ItemDetails> ItemDetails { get; set; }
+        public DbSet<PRDetails> ItemDetails { get; set; }
     }
 }

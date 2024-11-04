@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ItemInsight>
+
+
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th class="text-center">PO Quantity</th>
+            <th class="text-center">Rate</th>
+            <th class="text-center">Quotation Ref No</th>
+            <th class="text-center">Country Name</th>
+            <th class="text-center">Supplier Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var insight in Model)
+            {
+                <tr>
+                    <td class="text-center">@insight.POQty</td>
+                    <td class="text-center">@insight.Rate</td>
+                    <td class="text-center">@insight.QuotationRefNo</td>
+                    <td class="text-center">@insight.CountryName</td>
+                    <td class="text-center">@insight.SupplierName</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No data available</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

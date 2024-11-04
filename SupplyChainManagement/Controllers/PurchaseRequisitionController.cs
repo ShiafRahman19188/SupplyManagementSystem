@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SupplyChainManagement.Db;
 using SupplyChainManagement.Models;
 using System.Diagnostics.Metrics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -13,12 +15,14 @@ namespace SupplyChainManagement.Controllers
         private readonly string textile;
         private readonly string scm;
         private readonly DBService _queryService;
-        public PurchaseRequisitionController(IConfiguration configuration, DBService DBService)
+        private readonly SCMDbContext _context;
+        public PurchaseRequisitionController(IConfiguration configuration, DBService DBService, SCMDbContext context)
         {
             _configuration = configuration;
             textile = _configuration.GetConnectionString("TextileConnection");
             scm = _configuration.GetConnectionString("DefaultConnection");
             _queryService = DBService;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -35,6 +39,8 @@ namespace SupplyChainManagement.Controllers
             model.PRID = 0;
             model.PRNumber = "YPR" + bookingId;
             model.PRDate= DateTime.Now;
+            model.Requisitionar = "Md.  Shiafur Rahman";
+            model.DeliveryUnit = "Warehouse";
             model.ItemDetails = GetItems(bookingId);
 
             return View(model);
@@ -71,7 +77,52 @@ namespace SupplyChainManagement.Controllers
 
         }
 
-        public JsonResult GetPRInsight(int ItemMasterId)
+
+        [HttpPost]
+        public IActionResult SavePurchaseRequisition([FromBody] PurchaseRequisition model)
+        {
+            if (!ModelState.IsValid)
+            {
+                PurchaseRequisition purchaseRequisition = new PurchaseRequisition();
+                purchaseRequisition.PRNumber = model.PRNumber;
+                purchaseRequisition.PRDate = model.PRDate;
+                purchaseRequisition.DeliveryDate = model.DeliveryDate;
+                purchaseRequisition.DeliveryUnit = model.DeliveryUnit;
+                purchaseRequisition.Supplier= model.Supplier;
+                purchaseRequisition.Requisitionar= model.Requisitionar;
+
+
+
+                _context.PurchaseRequisitions.Add(purchaseRequisition);
+                _context.SaveChanges();
+                var user = _context.PurchaseRequisitions.FirstOrDefault(i => i.PRNumber == purchaseRequisition.
+                PRNumber);
+
+                PRDetails purchaseDetails = new PRDetails();
+                foreach (var item in model.ItemDetails)
+                {
+                   purchaseDetails.PurchaseRequisitionPRID= purchaseRequisition.PRID;
+                    purchaseDetails.ItemMasterID = item.ItemMasterID;
+                    purchaseDetails.UnitPrice = item.UnitPrice;
+                    purchaseDetails.LeadTime = item.LeadTime;
+                    purchaseDetails.UOM= item.UOM;
+                    purchaseDetails.PRQuantity = item.PRQuantity;
+                    purchaseDetails.ItemName = item.ItemName;
+                    purchaseDetails.ShadeCode = item.ShadeCode;
+                    _context.ItemDetails.Add(purchaseDetails);
+
+                }
+                _context.SaveChanges();
+
+             
+                return RedirectToAction("Index"); 
+            }
+
+            
+            return View("Edit", model); 
+        }
+
+        public IActionResult GetPRInsight(int ItemMasterId)
         {
 
 
@@ -94,9 +145,11 @@ namespace SupplyChainManagement.Controllers
                 item.SupplierName = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty;
                 items.Add(item);
 
-
+                
             }
-            return Json(items);
+            // return Json(items);
+            return PartialView("_ItemInsightPartial", items);
+
 
 
         }

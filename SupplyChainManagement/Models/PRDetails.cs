@@ -5,7 +5,7 @@ namespace SupplyChainManagement.Models
     public class PRDetails
     {
         [Key]
-        public long PRDetailsId { get; set; }  
+        public long PRDetailsId { get; set; }
         public int ItemMasterID { get; set; }
         public int LeadTime { get; set; }
         public string ItemName { get; set; }
@@ -13,6 +13,11 @@ namespace SupplyChainManagement.Models
         public decimal UnitPrice { get; set; }
         public string ShadeCode { get; set; }
         public string UOM { get; set; }
+        public long? PurchaseRequisitionPRID { get; set; }
+
+
+        public virtual PurchaseRequisition PurchaseRequisition { get; set; }
+
 
     }
 

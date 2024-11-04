@@ -3,10 +3,10 @@ using SupplyChainManagement.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SCMDbContext>(db => db.UseSqlServer(builder.Configuration.GetConnectionString("con")));
+builder.Services.AddDbContext<SCMDbContext>(db => db.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddScoped<DBService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

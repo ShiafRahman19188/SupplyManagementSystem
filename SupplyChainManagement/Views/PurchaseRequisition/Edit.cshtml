@@ -1,0 +1,74 @@
+﻿@model PurchaseRequisition
+
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="SavePurchaseRequisition" method="post">
+    <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="PRNumber" class="control-label">PR Number</label>
+                    <input asp-for="PRNumber" class="form-control" disabled />
+                    <span asp-validation-for="PRNumber" class="text-danger"></span>
+                </div>
+
+              
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="PRDate" class="control-label">PR Date</label>
+                    <input asp-for="PRDate" class="form-control" type="date" disabled />
+                    <span asp-validation-for="PRDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="DeliveryDate" class="control-label">Delivery Date</label>
+                    <input asp-for="DeliveryDate" class="form-control" type="date" />
+                    <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="MerchandiserID" class="control-label">Merchandiser ID</label>
+                    <input asp-for="MerchandiserID" class="form-control" />
+                    <span asp-validation-for="MerchandiserID" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="SupplierId" class="control-label">Supplier ID</label>
+                    <input asp-for="SupplierId" class="form-control" />
+                    <span asp-validation-for="SupplierId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DeliveryUnitId" class="control-label">Delivery Unit ID</label>
+                    <input asp-for="DeliveryUnitId" class="form-control" />
+                    <span asp-validation-for="DeliveryUnitId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+
+    <input type="hidden" asp-for="PRID" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

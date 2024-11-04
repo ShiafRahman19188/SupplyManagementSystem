@@ -12,8 +12,8 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    [Migration("20241103042358_1st")]
-    partial class _1st
+    [Migration("20241103045431_initial-db")]
+    partial class initialdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

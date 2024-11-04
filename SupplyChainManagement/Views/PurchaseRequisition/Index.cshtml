@@ -1,0 +1,113 @@
+﻿@model PRPending
+
+@{
+    ViewData["Title"] = "Purchase Requisition";
+}
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Order Base ( EWO)</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Projection Base (Buyer)</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+            Textile Capacity Base
+            (ROL)
+        </button>
+    </div>
+</nav>
+</br>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+
+        <table class="table  table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Yarn Booking</th>
+                    <th class="text-center">Export Order</th> 
+                    <th class="text-center">Fabric Booking No</th>
+                    <th class="text-center">Buyer Name</th>
+                    <th class="text-center">BuyerTeamID</th>
+                    <th class="text-center">StyleNo</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.EWOBookings is not null)
+                {
+                    @foreach (var booking in Model.EWOBookings)
+                    {
+                        <tr>
+                            <td>@booking.YarnBookingNo</td>
+                            <td>@booking.ExportOrderID</td>
+                            <td>@booking.FabricBookingNo</td>
+                            <td>@booking.BuyerName</td>
+                            <td>@booking.BuyerTeamID</td>
+                            <td>@booking.StyleNo</td>
+                            <td class="text-center">
+
+                                <a href="@Url.Action("Edit", "PurchaseRequisition", new { bookingId = booking.YBookingID })">
+                                    <i class="fa fa-gear fa-spin" style="font-size:24px;color:green"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                
+                
+                }
+    
+            </tbody>
+        </table>
+
+
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Yarn Booking</th>
+                    <th class="text-center">Export Order</th>
+                    <th class="text-center">Fabric Booking No</th>
+                    <th class="text-center">Buyer Name</th>
+                    <th class="text-center">BuyerTeamID</th>
+                    <th class="text-center">StyleNo</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Projections is not null)
+                {
+                    @foreach (var booking in Model.Projections)
+                    {
+                        <tr>
+                            <td>@booking.YarnBookingNo</td>
+                            <td>@booking.ExportOrderID</td>
+                            <td>@booking.FabricBookingNo</td>
+                            <td>@booking.BuyerName</td>
+                            <td>@booking.BuyerTeamID</td>
+                            <td>@booking.StyleNo</td>
+                            <td class="text-center"><i class="fa fa-gear fa-spin" style="font-size:24px;color:green"></i></td>
+                        </tr>
+                    }
+
+
+                }
+
+            </tbody>
+        </table>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div>

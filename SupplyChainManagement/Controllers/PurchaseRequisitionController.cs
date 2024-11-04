@@ -78,7 +78,7 @@ namespace SupplyChainManagement.Controllers
             List<ItemInsight> items = new List<ItemInsight>();
 
 
-            string textileQuery = $" select top 10 ch.poqty,rate,ch.QuotationRefNo,con.CountryName,c.Name from YarnPOChild ch inner join YarnPOMaster po on po.YPOMasterID = ch.YPOMasterID inner join EPYSL..Contacts c on c.ContactID = po.SupplierID inner join EPYSL..country con on con.CountryID = CountryOfOriginID where ItemMasterID = "+ ItemMasterId + " order by po.DateAdded desc";
+            string textileQuery = $"select top 10 ch.poqty poqty,rate,ch.QuotationRefNo,con.CountryName,c.Name from YarnPOChild ch inner join YarnPOMaster po on po.YPOMasterID = ch.YPOMasterID inner join EPYSL..Contacts c on c.ContactID = po.SupplierID inner join EPYSL..country con on con.CountryID = CountryOfOriginID where ItemMasterID = " + ItemMasterId + " order by po.DateAdded desc";
 
             var textileResults = _queryService.ExecuteQuery(textile, textileQuery);
 
@@ -87,8 +87,8 @@ namespace SupplyChainManagement.Controllers
 
                 ItemInsight item = new ItemInsight();
 
-                item.POQty = reader["POQty"] != DBNull.Value ? Convert.ToDecimal(reader["POQty"]) : 0;
-                item.Rate = reader["Rate"] != DBNull.Value ? Convert.ToDecimal(reader["Rate"]) : 0;
+                item.POQty = reader["poqty"] != DBNull.Value ? Convert.ToDecimal(reader["poqty"]) : 0;
+                item.Rate = reader["rate"] != DBNull.Value ? Convert.ToDecimal(reader["rate"]) : 0;
                 item.QuotationRefNo = reader["QuotationRefNo"] != DBNull.Value ? reader["QuotationRefNo"].ToString() : string.Empty;
                 item.CountryName = reader["CountryName"] != DBNull.Value ? reader["CountryName"].ToString() : string.Empty;
                 item.SupplierName = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty;

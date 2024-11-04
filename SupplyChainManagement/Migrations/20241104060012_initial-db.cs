@@ -38,6 +38,24 @@ namespace SupplyChainManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PurchaseRequisitions",
+                columns: table => new
+                {
+                    PRID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PRNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PRDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Requisitionar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Supplier = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliveryUnit = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseRequisitions", x => x.PRID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Suppliers",
                 columns: table => new
                 {
@@ -51,99 +69,53 @@ namespace SupplyChainManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseRequisitions",
-                columns: table => new
-                {
-                    PRID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PRNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PRDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    MerchandiserID = table.Column<long>(type: "bigint", nullable: false),
-                    SupplierId = table.Column<long>(type: "bigint", nullable: false),
-                    DeliveryUnitId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchaseRequisitions", x => x.PRID);
-                    table.ForeignKey(
-                        name: "FK_PurchaseRequisitions_DeliveryUnits_DeliveryUnitId",
-                        column: x => x.DeliveryUnitId,
-                        principalTable: "DeliveryUnits",
-                        principalColumn: "DeliveryUnitId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PurchaseRequisitions_Merchandisers_MerchandiserID",
-                        column: x => x.MerchandiserID,
-                        principalTable: "Merchandisers",
-                        principalColumn: "MerchandiserId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PurchaseRequisitions_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
-                        principalColumn: "SupplierId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ItemDetails",
                 columns: table => new
                 {
-                    ItemDetailsId = table.Column<long>(type: "bigint", nullable: false)
+                    PRDetailsId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemMasterID = table.Column<int>(type: "int", nullable: false),
+                    LeadTime = table.Column<int>(type: "int", nullable: false),
                     ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PurchaseRequisitionPRID = table.Column<long>(type: "bigint", nullable: false)
+                    PRQuantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ShadeCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UOM = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PurchaseRequisitionPRID = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemDetails", x => x.ItemDetailsId);
+                    table.PrimaryKey("PK_ItemDetails", x => x.PRDetailsId);
                     table.ForeignKey(
                         name: "FK_ItemDetails_PurchaseRequisitions_PurchaseRequisitionPRID",
                         column: x => x.PurchaseRequisitionPRID,
                         principalTable: "PurchaseRequisitions",
-                        principalColumn: "PRID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PRID");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemDetails_PurchaseRequisitionPRID",
                 table: "ItemDetails",
                 column: "PurchaseRequisitionPRID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseRequisitions_DeliveryUnitId",
-                table: "PurchaseRequisitions",
-                column: "DeliveryUnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseRequisitions_MerchandiserID",
-                table: "PurchaseRequisitions",
-                column: "MerchandiserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseRequisitions_SupplierId",
-                table: "PurchaseRequisitions",
-                column: "SupplierId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ItemDetails");
-
-            migrationBuilder.DropTable(
-                name: "PurchaseRequisitions");
-
-            migrationBuilder.DropTable(
                 name: "DeliveryUnits");
+
+            migrationBuilder.DropTable(
+                name: "ItemDetails");
 
             migrationBuilder.DropTable(
                 name: "Merchandisers");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
+
+            migrationBuilder.DropTable(
+                name: "PurchaseRequisitions");
         }
     }
 }

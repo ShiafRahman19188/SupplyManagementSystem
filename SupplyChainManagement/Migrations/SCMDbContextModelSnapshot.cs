@@ -39,28 +39,6 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("DeliveryUnits");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemDetails", b =>
-                {
-                    b.Property<long>("ItemDetailsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ItemDetailsId"));
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("PurchaseRequisitionPRID")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ItemDetailsId");
-
-                    b.HasIndex("PurchaseRequisitionPRID");
-
-                    b.ToTable("ItemDetails");
-                });
-
             modelBuilder.Entity("SupplyChainManagement.Models.Merchandiser", b =>
                 {
                     b.Property<long>("MerchandiserId")
@@ -78,6 +56,48 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("Merchandisers");
                 });
 
+            modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
+                {
+                    b.Property<long>("PRDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PRDetailsId"));
+
+                    b.Property<int>("ItemMasterID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LeadTime")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PRQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("PurchaseRequisitionPRID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ShadeCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UOM")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PRDetailsId");
+
+                    b.HasIndex("PurchaseRequisitionPRID");
+
+                    b.ToTable("ItemDetails");
+                });
+
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
                 {
                     b.Property<long>("PRID")
@@ -89,28 +109,26 @@ namespace SupplyChainManagement.Migrations
                     b.Property<DateTime?>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DeliveryUnitId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MerchandiserID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("DeliveryUnit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("PRDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PRNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("SupplierId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Requisitionar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PRID");
-
-                    b.HasIndex("DeliveryUnitId");
-
-                    b.HasIndex("MerchandiserID");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("PurchaseRequisitions");
                 });
@@ -131,42 +149,11 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemDetails", b =>
+            modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
                 {
-                    b.HasOne("SupplyChainManagement.Models.PurchaseRequisition", "PurchaseRequisition")
+                    b.HasOne("SupplyChainManagement.Models.PurchaseRequisition", null)
                         .WithMany("ItemDetails")
-                        .HasForeignKey("PurchaseRequisitionPRID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PurchaseRequisition");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
-                {
-                    b.HasOne("SupplyChainManagement.Models.DeliveryUnit", "DeliveryUnit")
-                        .WithMany()
-                        .HasForeignKey("DeliveryUnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupplyChainManagement.Models.Merchandiser", "Merchandiser")
-                        .WithMany()
-                        .HasForeignKey("MerchandiserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupplyChainManagement.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryUnit");
-
-                    b.Navigation("Merchandiser");
-
-                    b.Navigation("Supplier");
+                        .HasForeignKey("PurchaseRequisitionPRID");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>

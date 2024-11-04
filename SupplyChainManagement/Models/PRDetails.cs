@@ -15,4 +15,13 @@ namespace SupplyChainManagement.Models
         public string UOM { get; set; }
 
     }
+
+    public class ItemInsight
+    {
+        public decimal POQty { get; set; }
+        public decimal Rate { get; set; }
+        public string QuotationRefNo { get; set; }
+        public string CountryName { get; set; }
+        public string SupplierName { get; set; }
+    }
 }

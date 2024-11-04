@@ -42,3 +42,4 @@
 *.bin
 /SupplyChainManagement/obj/Debug/net8.0
 /SupplyChainManagement/obj/SupplyChainManagement.csproj.nuget.g.props
+/SupplyChainManagement/bin/Debug/net8.0

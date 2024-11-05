@@ -2,13 +2,15 @@
 
 
 
-<table class="table table-striped">
+<table class="table table-striped ">
     <thead class="thead-dark">
         <tr>
             <th class="text-center">PO Quantity</th>
             <th class="text-center">Rate</th>
             <th class="text-center">Quotation Ref No</th>
             <th class="text-center">Country Name</th>
+            <th class="text-center">PO Date</th>
+            <th class="text-center">Receive Date</th>
             <th class="text-center">Supplier Name</th>
         </tr>
     </thead>
@@ -22,6 +24,10 @@
                     <td class="text-center">@insight.Rate</td>
                     <td class="text-center">@insight.QuotationRefNo</td>
                     <td class="text-center">@insight.CountryName</td>
+                    <td class="text-center">
+                        @DateTime.Parse(insight.POdate).ToString("MM/dd/yyyy")
+                    </td>
+                    <td class="text-center">@DateTime.Parse(insight.ReceivedDate).ToString("MM/dd/yyyy")</td>
                     <td class="text-center">@insight.SupplierName</td>
                 </tr>
             }

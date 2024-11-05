@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SupplyChainManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class initialdb : Migration
+    public partial class initial_2nd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -81,7 +81,8 @@ namespace SupplyChainManagement.Migrations
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ShadeCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UOM = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PurchaseRequisitionPRID = table.Column<long>(type: "bigint", nullable: true)
+                    PurchaseRequisitionPRID = table.Column<long>(type: "bigint", nullable: true),
+                    PurchaseRequisitionPRID1 = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,12 +92,22 @@ namespace SupplyChainManagement.Migrations
                         column: x => x.PurchaseRequisitionPRID,
                         principalTable: "PurchaseRequisitions",
                         principalColumn: "PRID");
+                    table.ForeignKey(
+                        name: "FK_ItemDetails_PurchaseRequisitions_PurchaseRequisitionPRID1",
+                        column: x => x.PurchaseRequisitionPRID1,
+                        principalTable: "PurchaseRequisitions",
+                        principalColumn: "PRID");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemDetails_PurchaseRequisitionPRID",
                 table: "ItemDetails",
                 column: "PurchaseRequisitionPRID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemDetails_PurchaseRequisitionPRID1",
+                table: "ItemDetails",
+                column: "PurchaseRequisitionPRID1");
         }
 
         /// <inheritdoc />

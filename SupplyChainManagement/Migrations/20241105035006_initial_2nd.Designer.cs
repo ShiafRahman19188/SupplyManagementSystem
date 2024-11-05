@@ -12,8 +12,8 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    [Migration("20241104060012_initial-db")]
-    partial class initialdb
+    [Migration("20241105035006_initial_2nd")]
+    partial class initial_2nd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,9 @@ namespace SupplyChainManagement.Migrations
                     b.Property<long?>("PurchaseRequisitionPRID")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PurchaseRequisitionPRID1")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ShadeCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -97,6 +100,8 @@ namespace SupplyChainManagement.Migrations
                     b.HasKey("PRDetailsId");
 
                     b.HasIndex("PurchaseRequisitionPRID");
+
+                    b.HasIndex("PurchaseRequisitionPRID1");
 
                     b.ToTable("ItemDetails");
                 });
@@ -154,9 +159,15 @@ namespace SupplyChainManagement.Migrations
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
                 {
+                    b.HasOne("SupplyChainManagement.Models.PurchaseRequisition", "PurchaseRequisition")
+                        .WithMany()
+                        .HasForeignKey("PurchaseRequisitionPRID");
+
                     b.HasOne("SupplyChainManagement.Models.PurchaseRequisition", null)
                         .WithMany("ItemDetails")
-                        .HasForeignKey("PurchaseRequisitionPRID");
+                        .HasForeignKey("PurchaseRequisitionPRID1");
+
+                    b.Navigation("PurchaseRequisition");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>

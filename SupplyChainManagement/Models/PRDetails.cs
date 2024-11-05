@@ -13,6 +13,7 @@ namespace SupplyChainManagement.Models
         public decimal UnitPrice { get; set; }
         public string ShadeCode { get; set; }
         public string UOM { get; set; }
+        public string YBookingNo { get; set; }
         public long? PurchaseRequisitionPRID { get; set; }
 
 

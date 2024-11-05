@@ -21,9 +21,8 @@
         <table class="table  table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center">Yarn Booking</th>
-                    <th class="text-center">Export Order</th> 
                     <th class="text-center">Fabric Booking No</th>
+                    <th class="text-center">Export Order</th> 
                     <th class="text-center">Buyer Name</th>
                     <th class="text-center">BuyerTeamID</th>
                     <th class="text-center">StyleNo</th>
@@ -36,9 +35,8 @@
                     @foreach (var booking in Model.EWOBookings)
                     {
                         <tr>
-                            <td>@booking.YarnBookingNo</td>
-                            <td>@booking.ExportOrderID</td>
                             <td>@booking.FabricBookingNo</td>
+                            <td>@booking.ExportOrderID</td>
                             <td>@booking.BuyerName</td>
                             <td>@booking.BuyerTeamID</td>
                             <td>@booking.StyleNo</td>

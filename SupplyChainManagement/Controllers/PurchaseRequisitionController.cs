@@ -53,7 +53,7 @@ namespace SupplyChainManagement.Controllers
             List<PRDetails> items = new List<PRDetails>();
 
 
-            string textileQuery = $" select IM.ItemMasterID,im.DisplayItemName,sum(ch.BookingQty)qty,ShadeCode,u.UnitDesc from YarnBookingChild_New ch\r\n  inner join YarnBookingChildItem_New chi on chi.YBChildID=ch.YBChildID\r\n  left join EPYSL..ItemMaster IM ON  IM.ItemMasterID = ch.ItemMasterID\r\n  inner join EPYSL..Unit u on chi.UnitID=u.UnitID\r\n  where ch.YBookingID="+ bookingId + "  group by IM.ItemMasterID,im.DisplayItemName,ShadeCode,UnitDesc";
+            string textileQuery = $" select yn.YBookingNo,IM.ItemMasterID,im.DisplayItemName,sum(ch.BookingQty)qty,ShadeCode,u.UnitDesc from YarnBookingChild_New ch\r\n  inner join YarnBookingChildItem_New chi on chi.YBChildID=ch.YBChildID\r\n  left join EPYSL..ItemMaster IM ON  IM.ItemMasterID = ch.ItemMasterID\r\n  inner join EPYSL..Unit u on chi.UnitID=u.UnitID\r\ninner join YarnBookingMaster_New yn on yn.YBookingID=ch.YBookingID\r\n  where ch.YBookingID=" + bookingId + "  group by IM.ItemMasterID,im.DisplayItemName,ShadeCode,UnitDesc,yn.YBookingNo";
 
             var textileResults = _queryService.ExecuteQuery(textile, textileQuery);
 
@@ -68,6 +68,7 @@ namespace SupplyChainManagement.Controllers
                 item.ShadeCode = reader["ShadeCode"] != DBNull.Value ? reader["ShadeCode"].ToString() : string.Empty;
                 item.UOM= reader["UnitDesc"] != DBNull.Value ? reader["UnitDesc"].ToString() : string.Empty;
                 item.UnitPrice = 0;
+                item.YBookingNo = reader["YBookingNo"] != DBNull.Value ? reader["YBookingNo"].ToString() : string.Empty;
                 items.Add(item);
 
 

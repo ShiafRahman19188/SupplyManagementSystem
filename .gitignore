@@ -47,3 +47,4 @@
 /.vs/VSWorkspaceState.json
 /SupplyChainManagement/obj/Debug/net8.0/SupplyChainManagement.RazorAssemblyInfo.cache
 /SupplyChainManagement/obj/Debug/net8.0/SupplyChainManagement.RazorAssemblyInfo.cs
+/SupplyChainManagement/bin/Debug/net8.0/appsettings.json

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplyChainManagement.Db;
 
@@ -11,9 +12,11 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    partial class SCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106033805_YarnTable")]
+    partial class YarnTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,68 +39,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("DeliveryUnitId");
 
-                    b.ToTable("DeliveryUnits", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemGroup", b =>
-                {
-                    b.Property<int>("ItemGroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemGroupId"));
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemGroupId");
-
-                    b.ToTable("ItemGroups", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
-                {
-                    b.Property<int>("ItemMasterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemMasterId"));
-
-                    b.Property<string>("DisplayItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ItemGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ItemSubGroupId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemMasterId");
-
-                    b.HasIndex("ItemGroupId");
-
-                    b.HasIndex("ItemSubGroupId");
-
-                    b.ToTable("ItemMasters", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemSubGroup", b =>
-                {
-                    b.Property<int>("ItemSubGroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemSubGroupId"));
-
-                    b.Property<string>("SubGroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemSubGroupId");
-
-                    b.ToTable("ItemSubGroups", (string)null);
+                    b.ToTable("DeliveryUnits");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Merchandiser", b =>
@@ -114,7 +56,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("MerchandiserId");
 
-                    b.ToTable("Merchandisers", (string)null);
+                    b.ToTable("Merchandisers");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
@@ -165,7 +107,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasIndex("PurchaseRequisitionPRID1");
 
-                    b.ToTable("ItemDetails", (string)null);
+                    b.ToTable("ItemDetails");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
@@ -200,7 +142,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("PRID");
 
-                    b.ToTable("PurchaseRequisitions", (string)null);
+                    b.ToTable("PurchaseRequisitions");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Supplier", b =>
@@ -221,7 +163,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("SupplierId");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
@@ -233,36 +175,20 @@ namespace SupplyChainManagement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YarnId"));
 
                     b.Property<string>("HSCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YarnCategory")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YarnShade")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("YarnId");
 
-                    b.ToTable("Yarns", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
-                {
-                    b.HasOne("SupplyChainManagement.Models.ItemGroup", "ItemGroup")
-                        .WithMany()
-                        .HasForeignKey("ItemGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupplyChainManagement.Models.ItemSubGroup", "ItemSubGroup")
-                        .WithMany()
-                        .HasForeignKey("ItemSubGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemGroup");
-
-                    b.Navigation("ItemSubGroup");
+                    b.ToTable("Yarns");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>

@@ -7,18 +7,9 @@ namespace SupplyChainManagement.Models
     {
         [Key]
         public int YPOChildID { get; set; }
-
-        [Required]
         public int YPOMasterID { get; set; }
-
-        [Required]
-        [Column("ItemMasterID", TypeName = "int")]
         public int ItemMasterID { get; set; }
-
-        [Required]
         public int UnitName { get; set; }
-
-        [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal PoQty { get; set; }
 
@@ -45,9 +36,8 @@ namespace SupplyChainManagement.Models
         [StringLength(100)]
         public string? BookingNo { get; set; }
 
-        [Required]
-        public bool ReceivedCompleted { get; set; }
 
+        public bool ReceivedCompleted { get; set; }
         public DateTime? ReceivedDate { get; set; }
     }
 

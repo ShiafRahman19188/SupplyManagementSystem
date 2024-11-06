@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplyChainManagement.Db;
 
@@ -11,9 +12,11 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    partial class SCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106053617_SubGroupModified")]
+    partial class SubGroupModified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("DeliveryUnitId");
 
-                    b.ToTable("DeliveryUnits", (string)null);
+                    b.ToTable("DeliveryUnits");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.ItemGroup", b =>
@@ -52,7 +55,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("ItemGroupId");
 
-                    b.ToTable("ItemGroups", (string)null);
+                    b.ToTable("ItemGroups");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
@@ -81,7 +84,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasIndex("ItemSubGroupId");
 
-                    b.ToTable("ItemMasters", (string)null);
+                    b.ToTable("ItemMasters");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.ItemSubGroup", b =>
@@ -97,7 +100,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("ItemSubGroupId");
 
-                    b.ToTable("ItemSubGroups", (string)null);
+                    b.ToTable("ItemSubGroups");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Merchandiser", b =>
@@ -114,7 +117,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("MerchandiserId");
 
-                    b.ToTable("Merchandisers", (string)null);
+                    b.ToTable("Merchandisers");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
@@ -165,7 +168,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasIndex("PurchaseRequisitionPRID1");
 
-                    b.ToTable("ItemDetails", (string)null);
+                    b.ToTable("ItemDetails");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
@@ -200,7 +203,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("PRID");
 
-                    b.ToTable("PurchaseRequisitions", (string)null);
+                    b.ToTable("PurchaseRequisitions");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Supplier", b =>
@@ -221,7 +224,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("SupplierId");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
@@ -243,7 +246,7 @@ namespace SupplyChainManagement.Migrations
 
                     b.HasKey("YarnId");
 
-                    b.ToTable("Yarns", (string)null);
+                    b.ToTable("Yarns");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>

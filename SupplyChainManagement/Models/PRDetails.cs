@@ -29,5 +29,7 @@ namespace SupplyChainManagement.Models
         public string QuotationRefNo { get; set; }
         public string CountryName { get; set; }
         public string SupplierName { get; set; }
+        public string POdate { get; set; }
+        public string ReceivedDate { get; set; }
     }
 }

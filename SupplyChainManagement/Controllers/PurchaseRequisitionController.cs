@@ -130,7 +130,7 @@ namespace SupplyChainManagement.Controllers
             List<ItemInsight> items = new List<ItemInsight>();
 
 
-            string textileQuery = $"select top 10 ch.poqty poqty,rate,ch.QuotationRefNo,con.CountryName,c.Name from YarnPOChild ch inner join YarnPOMaster po on po.YPOMasterID = ch.YPOMasterID inner join EPYSL..Contacts c on c.ContactID = po.SupplierID inner join EPYSL..country con on con.CountryID = CountryOfOriginID where ItemMasterID = " + ItemMasterId + " order by po.DateAdded desc";
+            string textileQuery = $"select top 10 ch.poqty poqty,rate,ch.QuotationRefNo,con.CountryName,ReceiveDate,po.DateAdded,\r\nc.Name from YarnPOChild ch \r\ninner join YarnPOMaster po on po.YPOMasterID = ch.YPOMasterID \r\ninner join YarnReceiveMaster rm on rm.POID=po.YPOMasterID\r\ninner join EPYSL..Contacts c on c.ContactID = po.SupplierID \r\ninner join EPYSL..country con on con.CountryID = CountryOfOriginID  where ItemMasterID = " + ItemMasterId + " order by po.DateAdded desc";
 
             var textileResults = _queryService.ExecuteQuery(textile, textileQuery);
 
@@ -144,6 +144,8 @@ namespace SupplyChainManagement.Controllers
                 item.QuotationRefNo = reader["QuotationRefNo"] != DBNull.Value ? reader["QuotationRefNo"].ToString() : string.Empty;
                 item.CountryName = reader["CountryName"] != DBNull.Value ? reader["CountryName"].ToString() : string.Empty;
                 item.SupplierName = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty;
+                item.POdate = reader["DateAdded"] != DBNull.Value ? reader["DateAdded"].ToString() : string.Empty;
+                item.ReceivedDate = reader["ReceiveDate"] != DBNull.Value ? reader["ReceiveDate"].ToString() : string.Empty;
                 items.Add(item);
 
                 

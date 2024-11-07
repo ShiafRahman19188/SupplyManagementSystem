@@ -3,11 +3,11 @@ using SupplyChainManagement.Models;
 
 namespace SupplyChainManagement.Db
 {
-    public class SCMDbContext:DbContext
+    public class SCMDbContext : DbContext
     {
-        public SCMDbContext(DbContextOptions<SCMDbContext> options):base(options)
+        public SCMDbContext(DbContextOptions<SCMDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
@@ -19,6 +19,9 @@ namespace SupplyChainManagement.Db
         public DbSet<ItemMaster> ItemMasters { get; set; }
         public DbSet<ItemGroup> ItemGroups { get; set; }
         public DbSet<ItemSubGroup> ItemSubGroups { get; set; }
+        public DbSet<BookingMaster> BookingMasters { get; set; }
+        public DbSet<BookingChild> BookingChild { get; set; }
+        public DbSet<FabricYarn> FabricYarns { get; set; }
 
 
 
@@ -26,8 +29,14 @@ namespace SupplyChainManagement.Db
         {
             modelBuilder.Entity<PRDetails>()
                 .HasOne(p => p.PurchaseRequisition)
-                .WithMany() 
+                .WithMany()
                 .HasForeignKey(p => p.PurchaseRequisitionPRID);
+
+            
+
+           
+
+
         }
     }
 }

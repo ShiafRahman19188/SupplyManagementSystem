@@ -9,5 +9,6 @@
          public int ItemSubGroupId { get; set; } 
         public virtual ItemGroup ItemGroup { get; set; }
         public virtual ItemSubGroup ItemSubGroup { get; set; }
+        
     }
 }

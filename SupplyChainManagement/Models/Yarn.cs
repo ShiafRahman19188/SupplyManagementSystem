@@ -9,5 +9,9 @@ namespace SupplyChainManagement.Models
         public string? YarnCategory { get; set; }
         public string? YarnShade { get; set; }
         public string? HSCode { get; set; }
+        
+        
+
+        
     }
 }

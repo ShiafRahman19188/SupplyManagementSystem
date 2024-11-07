@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplyChainManagement.Db;
 
@@ -11,9 +12,11 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    partial class SCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106093714_StyleNoBookingMaster")]
+    partial class StyleNoBookingMaster
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,25 +93,6 @@ namespace SupplyChainManagement.Migrations
                     b.HasKey("DeliveryUnitId");
 
                     b.ToTable("DeliveryUnits");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.FabricYarn", b =>
-                {
-                    b.Property<int>("FabricYarnId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FabricYarnId"));
-
-                    b.Property<int>("FabricId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YarnId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FabricYarnId");
-
-                    b.ToTable("FabricYarns");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.ItemGroup", b =>
@@ -291,7 +275,12 @@ namespace SupplyChainManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("YarnId")
+                        .HasColumnType("int");
+
                     b.HasKey("SupplierId");
+
+                    b.HasIndex("YarnId");
 
                     b.ToTable("Suppliers");
                 });
@@ -307,6 +296,9 @@ namespace SupplyChainManagement.Migrations
                     b.Property<string>("HSCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ItemMasterId")
+                        .HasColumnType("int");
+
                     b.Property<string>("YarnCategory")
                         .HasColumnType("nvarchar(max)");
 
@@ -314,6 +306,8 @@ namespace SupplyChainManagement.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("YarnId");
+
+                    b.HasIndex("ItemMasterId");
 
                     b.ToTable("Yarns");
                 });
@@ -380,14 +374,42 @@ namespace SupplyChainManagement.Migrations
                     b.Navigation("PurchaseRequisition");
                 });
 
+            modelBuilder.Entity("SupplyChainManagement.Models.Supplier", b =>
+                {
+                    b.HasOne("SupplyChainManagement.Models.Yarn", "Yarn")
+                        .WithMany("Suppliers")
+                        .HasForeignKey("YarnId");
+
+                    b.Navigation("Yarn");
+                });
+
+            modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
+                {
+                    b.HasOne("SupplyChainManagement.Models.ItemMaster", "ItemMaster")
+                        .WithMany("Yarns")
+                        .HasForeignKey("ItemMasterId");
+
+                    b.Navigation("ItemMaster");
+                });
+
             modelBuilder.Entity("SupplyChainManagement.Models.BookingMaster", b =>
                 {
                     b.Navigation("BookingChild");
                 });
 
+            modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
+                {
+                    b.Navigation("Yarns");
+                });
+
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>
                 {
                     b.Navigation("ItemDetails");
+                });
+
+            modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
+                {
+                    b.Navigation("Suppliers");
                 });
 #pragma warning restore 612, 618
         }

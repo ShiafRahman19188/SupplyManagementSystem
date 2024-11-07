@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplyChainManagement.Db;
 
@@ -11,9 +12,11 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    partial class SCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106052528_poModelUpdate")]
+    partial class poModelUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,59 +24,6 @@ namespace SupplyChainManagement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("SupplyChainManagement.Models.BookingChild", b =>
-                {
-                    b.Property<int>("BookingChildId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingChildId"));
-
-                    b.Property<int>("BookingMasterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemMasterId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BookingChildId");
-
-                    b.HasIndex("BookingMasterId");
-
-                    b.HasIndex("ItemMasterId");
-
-                    b.ToTable("BookingChild");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.BookingMaster", b =>
-                {
-                    b.Property<int>("BookingMasterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingMasterId"));
-
-                    b.Property<string>("BookingMasterNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExportWorkOrder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StyleNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("SupplierId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("BookingMasterId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("BookingMasters");
-                });
 
             modelBuilder.Entity("SupplyChainManagement.Models.DeliveryUnit", b =>
                 {
@@ -90,86 +40,6 @@ namespace SupplyChainManagement.Migrations
                     b.HasKey("DeliveryUnitId");
 
                     b.ToTable("DeliveryUnits");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.FabricYarn", b =>
-                {
-                    b.Property<int>("FabricYarnId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FabricYarnId"));
-
-                    b.Property<int>("FabricId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YarnId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FabricYarnId");
-
-                    b.ToTable("FabricYarns");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemGroup", b =>
-                {
-                    b.Property<int>("ItemGroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemGroupId"));
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemGroupId");
-
-                    b.ToTable("ItemGroups");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
-                {
-                    b.Property<int>("ItemMasterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemMasterId"));
-
-                    b.Property<string>("DisplayItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ItemGroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ItemSubGroupId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemMasterId");
-
-                    b.HasIndex("ItemGroupId");
-
-                    b.HasIndex("ItemSubGroupId");
-
-                    b.ToTable("ItemMasters");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemSubGroup", b =>
-                {
-                    b.Property<int>("ItemSubGroupId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemSubGroupId"));
-
-                    b.Property<string>("SubGroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemSubGroupId");
-
-                    b.ToTable("ItemSubGroups");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.Merchandiser", b =>
@@ -296,7 +166,6 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("Suppliers");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("SupplyChainManagement.Models.YarnPOChild", b =>
                 {
                     b.Property<int>("YPOChildID")
@@ -471,77 +340,6 @@ namespace SupplyChainManagement.Migrations
                     b.HasKey("YPOMasterID");
 
                     b.ToTable("ItemPOMaster");
-=======
-            modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
-                {
-                    b.Property<int>("YarnId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YarnId"));
-
-                    b.Property<string>("HSCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("YarnCategory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("YarnShade")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("YarnId");
-
-                    b.ToTable("Yarns");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.BookingChild", b =>
-                {
-                    b.HasOne("SupplyChainManagement.Models.BookingMaster", "BookingMaster")
-                        .WithMany("BookingChild")
-                        .HasForeignKey("BookingMasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupplyChainManagement.Models.ItemMaster", "ItemMaster")
-                        .WithMany()
-                        .HasForeignKey("ItemMasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookingMaster");
-
-                    b.Navigation("ItemMaster");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.BookingMaster", b =>
-                {
-                    b.HasOne("SupplyChainManagement.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.ItemMaster", b =>
-                {
-                    b.HasOne("SupplyChainManagement.Models.ItemGroup", "ItemGroup")
-                        .WithMany()
-                        .HasForeignKey("ItemGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SupplyChainManagement.Models.ItemSubGroup", "ItemSubGroup")
-                        .WithMany()
-                        .HasForeignKey("ItemSubGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemGroup");
-
-                    b.Navigation("ItemSubGroup");
->>>>>>> a974eb185cbe63fb120b8be69b0f820ec8a95a9c
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>
@@ -555,11 +353,6 @@ namespace SupplyChainManagement.Migrations
                         .HasForeignKey("PurchaseRequisitionPRID1");
 
                     b.Navigation("PurchaseRequisition");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.BookingMaster", b =>
-                {
-                    b.Navigation("BookingChild");
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisition", b =>

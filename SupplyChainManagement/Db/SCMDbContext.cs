@@ -15,6 +15,10 @@ namespace SupplyChainManagement.Db
         public DbSet<Merchandiser> Merchandisers { get; set; }
         public DbSet<DeliveryUnit> DeliveryUnits { get; set; }
         public DbSet<PRDetails> ItemDetails { get; set; }
+        
+        public DbSet<YarnPOMaster> ItemPOMaster { get; set; }
+        public DbSet<YarnPOChild> ItemPODetail { get; set; }
+
         public DbSet<Yarn> Yarns { get; set; }
         public DbSet<ItemMaster> ItemMasters { get; set; }
         public DbSet<ItemGroup> ItemGroups { get; set; }
@@ -22,7 +26,6 @@ namespace SupplyChainManagement.Db
         public DbSet<BookingMaster> BookingMasters { get; set; }
         public DbSet<BookingChild> BookingChild { get; set; }
         public DbSet<FabricYarn> FabricYarns { get; set; }
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

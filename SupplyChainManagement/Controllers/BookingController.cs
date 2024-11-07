@@ -58,5 +58,35 @@ namespace SupplyChainManagement.Controllers
         }
 
 
+        //[HttpPost]
+        //public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequestDto request)
+        //{
+        //    if (request == null || request.Yarns == null || request.Yarns.Count == 0)
+        //    {
+        //        return BadRequest("Invalid data.");
+        //    }
+
+        //    var bookingMasterId = request.BookingMasterId;
+
+        //    // Loop through the yarns and save each one to the database
+        //    foreach (var yarnName in request.Yarns)
+        //    {
+        //        var newYarn = new Yarn
+        //        {
+        //            BookingMasterId = bookingMasterId,
+        //            YarnName = yarnName
+        //        };
+
+        //        _context.Yarns.Add(newYarn);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok("Yarns saved successfully.");
+        //}
+
+
+
+
     }
 }

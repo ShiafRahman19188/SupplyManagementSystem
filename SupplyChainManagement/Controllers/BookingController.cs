@@ -57,33 +57,87 @@ namespace SupplyChainManagement.Controllers
                 }).ToList();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequest request)
+        {
+            if (request == null || request.Yarns == null || request.Yarns.Count == 0)
+            {
+                return BadRequest("Invalid request.");
+            }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequestDto request)
-        //{
-        //    if (request == null || request.Yarns == null || request.Yarns.Count == 0)
-        //    {
-        //        return BadRequest("Invalid data.");
-        //    }
+            var booking = _context.BookingChild.FirstOrDefault(i => i.BookingMasterId == request.BookingMasterId);
 
-        //    var bookingMasterId = request.BookingMasterId;
+            
+            var FabricBookingName = _context.BookingMasters
+                                             .Where(i => i.BookingMasterId == request.BookingMasterId)
+                                             .Select(i => i.BookingMasterNo)
+                                             .FirstOrDefault();
 
-        //    // Loop through the yarns and save each one to the database
-        //    foreach (var yarnName in request.Yarns)
-        //    {
-        //        var newYarn = new Yarn
-        //        {
-        //            BookingMasterId = bookingMasterId,
-        //            YarnName = yarnName
-        //        };
+            
+            var existingYarnBookingMaster = _context.YarnBookingMasters
+                                                    .FirstOrDefault(ybm => ybm.YarnBookingMasterNo == FabricBookingName + "-YB");
 
-        //        _context.Yarns.Add(newYarn);
-        //    }
+           
+            if (existingYarnBookingMaster == null)
+            {
+                existingYarnBookingMaster = new YarnBookingMaster
+                {
+                    YarnBookingMasterNo = FabricBookingName + "-YB",
+                    IsAcknowledge = 1
+                };
+                _context.YarnBookingMasters.Add(existingYarnBookingMaster);
+                await _context.SaveChangesAsync();
+            }
 
-        //    await _context.SaveChangesAsync();
+            foreach (var yarn in request.Yarns)
+            {
+                var itemMaster = _context.ItemMasters.FirstOrDefault(i => i.ItemName == yarn.Name);
 
-        //    return Ok("Yarns saved successfully.");
-        //}
+                if (itemMaster == null)
+                {
+                    
+                    itemMaster = new ItemMaster
+                    {
+                        ItemName = yarn.Name,
+                        DisplayItemName = yarn.Name,
+                        ItemGroupId = 2,
+                        ItemSubGroupId = 2
+                    };
+                    _context.ItemMasters.Add(itemMaster);
+                    await _context.SaveChangesAsync();
+
+                    
+                    var fabricYarn = new FabricYarn
+                    {
+                        FabricId = booking.ItemMasterId,
+                        YarnId = itemMaster.ItemMasterId
+                    };
+                    _context.FabricYarns.Add(fabricYarn);
+                }
+
+                if (yarn.Selected)
+                {
+                   
+                    var yarnBookingChild = new YarnBookingChild
+                    {
+                        YarnBookingMasterId = existingYarnBookingMaster.YarnBookingMasterId,
+                        ItemMasterId = itemMaster.ItemMasterId,
+                        Quantity = Convert.ToInt64(yarn.PoQuantity)
+                    };
+
+                    _context.YarnBookingChilds.Add(yarnBookingChild);
+                }
+            }
+
+            
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+
+       
 
 
 

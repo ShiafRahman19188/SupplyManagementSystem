@@ -15,6 +15,8 @@ namespace SupplyChainManagement.Db
         public DbSet<Merchandiser> Merchandisers { get; set; }
         public DbSet<DeliveryUnit> DeliveryUnits { get; set; }
         public DbSet<PRDetails> ItemDetails { get; set; }
+        public DbSet<YarnPOMaster> ItemPOMaster { get; set; }
+        public DbSet<YarnPOChild> ItemPODetail { get; set; }
 
 
 

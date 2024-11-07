@@ -1,0 +1,54 @@
+﻿@using SupplyChainManagement.DTO
+@model IEnumerable<BookingInfoDto>
+
+<h2>Booking Data</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Booking No</th>
+            <th>Export Work Order</th>
+            <th>Style No</th>
+            <th>Fabric</th>
+            <th>Supplier</th>
+            <th>Yarn Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BookingMasterNo</td>
+                <td>@item.ExportWorkOrder</td>
+                <td>@item.StyleNo</td>
+                <td>@item.Fabric</td>
+                <td>@item.SupplierName</td>
+                <td>
+                    <button class="btn btn-info" onclick="toggleYarn(this)">
+                        Show Yarns
+                    </button>
+                    <div class="yarn-details" style="display:none; margin-top:10px;">
+                        <ul>
+                            @foreach (var yarn in item.Yarns)
+                            {
+                                <li>@yarn.Yarn</li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function toggleYarn(button) {
+        const yarnDetails = button.nextElementSibling;
+        if (yarnDetails.style.display === "none") {
+            yarnDetails.style.display = "block";
+            button.textContent = "Hide Yarns";
+        } else {
+            yarnDetails.style.display = "none";
+            button.textContent = "Show Yarns";
+        }
+    }
+</script>

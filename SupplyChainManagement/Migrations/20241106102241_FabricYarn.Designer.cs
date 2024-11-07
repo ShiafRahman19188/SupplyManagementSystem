@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplyChainManagement.Db;
 
@@ -11,9 +12,11 @@ using SupplyChainManagement.Db;
 namespace SupplyChainManagement.Migrations
 {
     [DbContext(typeof(SCMDbContext))]
-    partial class SCMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106102241_FabricYarn")]
+    partial class FabricYarn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,182 +299,6 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("Suppliers");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("SupplyChainManagement.Models.YarnPOChild", b =>
-                {
-                    b.Property<int>("YPOChildID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YPOChildID"));
-
-                    b.Property<string>("BookingNo")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("HSCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ItemMasterID")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PIValue")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("PoQty")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<bool>("ReceivedCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ReceivedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("UnitName")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YPOMasterID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("YarnLotNo")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("YarnShade")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("YPOChildID");
-
-                    b.ToTable("ItemPODetail");
-                });
-
-            modelBuilder.Entity("SupplyChainManagement.Models.YarnPOMaster", b =>
-                {
-                    b.Property<int>("YPOMasterID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YPOMasterID"));
-
-                    b.Property<int>("AddedBy")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Approved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ApprovedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ApprovedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Charges")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryOfOrigin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeliveryEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DeliveryStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PODate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PONo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PortofDischarge")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PortofLoading")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("QuotationRefDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("QuotationRefNo")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("ShipmentMode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ShippingTolerance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("SupplierAcknowledge")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SupplierAcknowledgeBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("SupplierAcknowledgeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SupplierName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SupplierReject")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SupplierRejectBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SupplierRejectReason")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("TransShipmentAllow")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.HasKey("YPOMasterID");
-
-                    b.ToTable("ItemPOMaster");
-=======
             modelBuilder.Entity("SupplyChainManagement.Models.Yarn", b =>
                 {
                     b.Property<int>("YarnId")
@@ -541,7 +368,6 @@ namespace SupplyChainManagement.Migrations
                     b.Navigation("ItemGroup");
 
                     b.Navigation("ItemSubGroup");
->>>>>>> a974eb185cbe63fb120b8be69b0f820ec8a95a9c
                 });
 
             modelBuilder.Entity("SupplyChainManagement.Models.PRDetails", b =>

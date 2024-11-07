@@ -3,11 +3,11 @@ using SupplyChainManagement.Models;
 
 namespace SupplyChainManagement.Db
 {
-    public class SCMDbContext:DbContext
+    public class SCMDbContext : DbContext
     {
-        public SCMDbContext(DbContextOptions<SCMDbContext> options):base(options)
+        public SCMDbContext(DbContextOptions<SCMDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
@@ -15,8 +15,18 @@ namespace SupplyChainManagement.Db
         public DbSet<Merchandiser> Merchandisers { get; set; }
         public DbSet<DeliveryUnit> DeliveryUnits { get; set; }
         public DbSet<PRDetails> ItemDetails { get; set; }
+<<<<<<< HEAD
         public DbSet<YarnPOMaster> ItemPOMaster { get; set; }
         public DbSet<YarnPOChild> ItemPODetail { get; set; }
+=======
+        public DbSet<Yarn> Yarns { get; set; }
+        public DbSet<ItemMaster> ItemMasters { get; set; }
+        public DbSet<ItemGroup> ItemGroups { get; set; }
+        public DbSet<ItemSubGroup> ItemSubGroups { get; set; }
+        public DbSet<BookingMaster> BookingMasters { get; set; }
+        public DbSet<BookingChild> BookingChild { get; set; }
+        public DbSet<FabricYarn> FabricYarns { get; set; }
+>>>>>>> a974eb185cbe63fb120b8be69b0f820ec8a95a9c
 
 
 
@@ -24,8 +34,14 @@ namespace SupplyChainManagement.Db
         {
             modelBuilder.Entity<PRDetails>()
                 .HasOne(p => p.PurchaseRequisition)
-                .WithMany() 
+                .WithMany()
                 .HasForeignKey(p => p.PurchaseRequisitionPRID);
+
+            
+
+           
+
+
         }
     }
 }

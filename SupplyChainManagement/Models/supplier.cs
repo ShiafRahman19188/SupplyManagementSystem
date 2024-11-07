@@ -8,6 +8,8 @@ namespace SupplyChainManagement.Models
         public long SupplierId { get; set; }
         public string SupplierName { get; set; }
         public string ContactDisplayCode { get; set; }
+        
+        
     }
 }
  

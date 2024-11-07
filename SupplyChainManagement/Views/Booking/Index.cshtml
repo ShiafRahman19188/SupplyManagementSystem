@@ -141,12 +141,44 @@
         newYarns[bookingMasterId] = newYarns[bookingMasterId].filter(y => y.name !== yarnName);
     }
 
+    
+
     async function saveYarns(bookingMasterId) {
-        if (!newYarns[bookingMasterId] || newYarns[bookingMasterId].length === 0) {
-            alert("No new yarns to save.");
-            return;
+        
+        const allYarns = [];
+
+        
+        const existingYarnRows = document.querySelectorAll(`#yarn-list-${bookingMasterId} tr`);
+        existingYarnRows.forEach(row => {
+            const yarnId = row.querySelector("td:nth-child(2)").textContent.trim();
+            const yarnName = row.querySelector("td:nth-child(3)").textContent.trim();
+            const poQuantity = row.querySelector("td:nth-child(4) input").value.trim();
+            const uom = row.querySelector("td:nth-child(5) input").value.trim();
+            const isSelected = row.querySelector("td:first-child input").checked;
+
+            allYarns.push({
+                id: yarnId === "New" ? null : yarnId,  
+                name: yarnName,
+                poQuantity: poQuantity,
+                uom: uom,
+                selected: isSelected
+            });
+        });
+
+        
+        if (newYarns[bookingMasterId]) {
+            newYarns[bookingMasterId].forEach(newYarn => {
+                allYarns.push({
+                    id: null,  
+                    name: newYarn.name,
+                    poQuantity: newYarn.poQuantity,
+                    uom: newYarn.uom,
+                    selected: newYarn.selected
+                });
+            });
         }
 
+        
         try {
             const response = await fetch('/Booking/SaveYarns', {
                 method: 'POST',
@@ -155,12 +187,13 @@
                 },
                 body: JSON.stringify({
                     bookingMasterId: bookingMasterId,
-                    yarns: newYarns[bookingMasterId]
+                    yarns: allYarns
                 })
             });
 
             if (response.ok) {
                 alert("Yarns saved successfully!");
+                
                 newYarns[bookingMasterId] = [];
             } else {
                 alert("Error saving yarns.");

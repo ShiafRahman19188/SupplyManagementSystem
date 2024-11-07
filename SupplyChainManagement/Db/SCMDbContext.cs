@@ -26,6 +26,8 @@ namespace SupplyChainManagement.Db
         public DbSet<BookingMaster> BookingMasters { get; set; }
         public DbSet<BookingChild> BookingChild { get; set; }
         public DbSet<FabricYarn> FabricYarns { get; set; }
+        public DbSet<YarnBookingMaster> YarnBookingMasters { get; set; }
+        public DbSet<YarnBookingChild> YarnBookingChilds { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

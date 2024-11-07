@@ -67,17 +67,17 @@ namespace SupplyChainManagement.Controllers
 
             var booking = _context.BookingChild.FirstOrDefault(i => i.BookingMasterId == request.BookingMasterId);
 
-            // Retrieve Fabric Booking Name
+            
             var FabricBookingName = _context.BookingMasters
                                              .Where(i => i.BookingMasterId == request.BookingMasterId)
                                              .Select(i => i.BookingMasterNo)
                                              .FirstOrDefault();
 
-            // Check if YarnBookingMaster already exists for this booking
+            
             var existingYarnBookingMaster = _context.YarnBookingMasters
                                                     .FirstOrDefault(ybm => ybm.YarnBookingMasterNo == FabricBookingName + "-YB");
 
-            // Create YarnBookingMaster only if it doesn't exist
+           
             if (existingYarnBookingMaster == null)
             {
                 existingYarnBookingMaster = new YarnBookingMaster
@@ -95,7 +95,7 @@ namespace SupplyChainManagement.Controllers
 
                 if (itemMaster == null)
                 {
-                    // Add new ItemMaster if it doesn't exist
+                    
                     itemMaster = new ItemMaster
                     {
                         ItemName = yarn.Name,
@@ -106,7 +106,7 @@ namespace SupplyChainManagement.Controllers
                     _context.ItemMasters.Add(itemMaster);
                     await _context.SaveChangesAsync();
 
-                    // Associate with FabricYarn
+                    
                     var fabricYarn = new FabricYarn
                     {
                         FabricId = booking.ItemMasterId,
@@ -117,7 +117,7 @@ namespace SupplyChainManagement.Controllers
 
                 if (yarn.Selected)
                 {
-                    // Create and link YarnBookingChild to existing YarnBookingMaster
+                   
                     var yarnBookingChild = new YarnBookingChild
                     {
                         YarnBookingMasterId = existingYarnBookingMaster.YarnBookingMasterId,
@@ -129,7 +129,7 @@ namespace SupplyChainManagement.Controllers
                 }
             }
 
-            // Save all changes
+            
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -137,67 +137,7 @@ namespace SupplyChainManagement.Controllers
 
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequest request)
-        //{
-        //    if (request == null || request.Yarns == null || request.Yarns.Count == 0)
-        //    {
-        //        return BadRequest("Invalid request.");
-        //    }
-        //    var booking = _context.BookingChild.FirstOrDefault(i => i.BookingMasterId == request.BookingMasterId);
-
-        //    foreach (var yarn in request.Yarns)
-        //    {
-
-        //        var itemMaster = _context.ItemMasters.FirstOrDefault(i => i.ItemName == yarn.Name);
-
-        //        if (itemMaster == null)
-        //        {
-
-        //            itemMaster = new ItemMaster { ItemName = yarn.Name, DisplayItemName = yarn.Name, ItemGroupId = 2, ItemSubGroupId = 2 };
-        //            _context.ItemMasters.Add(itemMaster);
-        //            await _context.SaveChangesAsync();
-
-        //            var fabricYarn = new FabricYarn
-        //            {
-        //                FabricId = booking.ItemMasterId,
-        //                YarnId = itemMaster.ItemMasterId
-        //            };
-        //            _context.FabricYarns.Add(fabricYarn);
-        //        }
-
-        //        if (yarn.Selected)
-        //        {
-        //            var FabricBookingName = _context.BookingMasters.Where(i => i.BookingMasterId == request.BookingMasterId).Select(i=>i.BookingMasterNo).FirstOrDefault();
-        //            var yarnbookingMaster = new YarnBookingMaster
-        //            {
-        //                YarnBookingMasterNo = FabricBookingName + "-YB",
-        //                IsAcknowledge = 1
-
-
-        //            };
-        //            _context.YarnBookingMasters.Add(yarnbookingMaster);
-        //            await _context.SaveChangesAsync();
-
-        //            var YarnBookingInfo = _context.YarnBookingMasters.FirstOrDefault(i => i.YarnBookingMasterNo == yarnbookingMaster.YarnBookingMasterNo);
-        //            var yarnBookingChild = new YarnBookingChild
-        //            {
-        //                 YarnBookingMasterId = YarnBookingInfo.YarnBookingMasterId,
-
-        //                ItemMasterId = itemMaster.ItemMasterId,
-        //                Quantity = Convert.ToInt64(yarn.PoQuantity)
-        //            };
-
-        //            _context.YarnBookingChilds.Add(yarnBookingChild);
-
-
-        //        }
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return Ok();
-        //}
-
+       
 
 
 

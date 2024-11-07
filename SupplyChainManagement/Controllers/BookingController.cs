@@ -58,32 +58,46 @@ namespace SupplyChainManagement.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequestDto request)
-        //{
-        //    if (request == null || request.Yarns == null || request.Yarns.Count == 0)
-        //    {
-        //        return BadRequest("Invalid data.");
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> SaveYarns([FromBody] SaveYarnRequest request)
+        {
+            if (request == null || request.Yarns == null || request.Yarns.Count == 0)
+            {
+                return BadRequest("Invalid request.");
+            }
+            var booking = _context.BookingChild.FirstOrDefault(i => i.BookingMasterId == request.BookingMasterId);
 
-        //    var bookingMasterId = request.BookingMasterId;
+            foreach (var yarn in request.Yarns)
+            {
+                
+                var itemMaster = _context.ItemMasters.FirstOrDefault(i => i.ItemName == yarn.Name);
+                
+                if (itemMaster == null)
+                {
+                    
+                    itemMaster = new ItemMaster { ItemName = yarn.Name, DisplayItemName = yarn.Name, ItemGroupId = 2, ItemSubGroupId = 2 };
+                    _context.ItemMasters.Add(itemMaster);
+                    await _context.SaveChangesAsync();
 
-        //    // Loop through the yarns and save each one to the database
-        //    foreach (var yarnName in request.Yarns)
-        //    {
-        //        var newYarn = new Yarn
-        //        {
-        //            BookingMasterId = bookingMasterId,
-        //            YarnName = yarnName
-        //        };
+                    var fabricYarn = new FabricYarn
+                    {
+                        FabricId = booking.ItemMasterId,
+                        YarnId = itemMaster.ItemMasterId
+                    };
+                    _context.FabricYarns.Add(fabricYarn);
+                }
 
-        //        _context.Yarns.Add(newYarn);
-        //    }
+                if (yarn.Selected)
+                {
+                    
+                    
+                }
+            }
 
-        //    await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
-        //    return Ok("Yarns saved successfully.");
-        //}
 
 
 

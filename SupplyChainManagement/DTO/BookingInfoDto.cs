@@ -24,4 +24,18 @@ namespace SupplyChainManagement.DTO
         public string Yarn { get; set; }
     }
 
+    public class SaveYarnRequest
+    {
+        public int BookingMasterId { get; set; }
+        public List<YarnDto> Yarns { get; set; }
+    }
+
+    public class YarnDto
+    {
+        public string Name { get; set; }
+        public bool Selected { get; set; }
+        public string PoQuantity { get; set; }
+        public string Uom { get; set; }
+    }
+
 }

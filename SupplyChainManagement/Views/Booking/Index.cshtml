@@ -47,7 +47,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <input type="checkbox" checked disabled />
+                                        <input type="checkbox" checked />
                                     </td>
                                     <td>@yarn.YarnId</td>
                                     <td>@yarn.Yarn</td>
@@ -148,7 +148,7 @@
         }
 
         try {
-            const response = await fetch('/YourController/SaveYarns', {
+            const response = await fetch('/Booking/SaveYarns', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

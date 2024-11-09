@@ -125,7 +125,7 @@ namespace SupplyChainManagement.Controllers
                         Quantity = Convert.ToInt64(yarn.PoQuantity)
                     };
 
-                    _context.YarnBookingChilds.Add(yarnBookingChild);
+                     _context.YarnBookingChilds.Add(yarnBookingChild);
                 }
             }
 

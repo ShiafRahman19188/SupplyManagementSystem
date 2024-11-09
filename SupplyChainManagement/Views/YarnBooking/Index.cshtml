@@ -1,0 +1,63 @@
+﻿@model List<SupplyChainManagement.DTO.YarnBookingMasterDto>
+
+<h2>Yarn Booking List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th> 
+            <th>Yarn Booking No</th>
+            <th>Fabric Name</th>
+            <th>Is Acknowledged</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>
+                    <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
+                        ➤ 
+                    </button>
+                </td>
+                <td>@booking.YarnBookingMasterNo</td>
+                <td>@booking.FabricName</td>
+                <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
+            </tr>
+            
+            
+            <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
+                <td colspan="4"> 
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Yarn Name</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var child in booking.yarnBookingChildren)
+                            {
+                                <tr>
+                                    <td>@booking.YarnName</td>
+                                    <td>@child.Quantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function toggleDetails(detailsId) {
+        var detailsRow = document.getElementById(detailsId);
+        if (detailsRow.style.display === "none") {
+            detailsRow.style.display = "table-row";
+        } else {
+            detailsRow.style.display = "none";
+        }
+    }
+</script>

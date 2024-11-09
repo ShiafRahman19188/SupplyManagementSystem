@@ -38,11 +38,12 @@ namespace SupplyChainManagement.Controllers
         [HttpPost]
         public IActionResult SendPoEmail(int poId, string PONo, string supplierName,YarnPOMaster model)
         {
-            string linkURL = "http://localhost:5144/";
-            var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}";
+			//string linkURL = "http://localhost:5023/";
+			string linkURL = "http://localhost:5023/StandaloneApp/Index";
+			var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}";
             string encryptedQueryData = EncryptDecrypt.Encrypt(queryParameters);
             string link = $"{linkURL}?data={Uri.EscapeDataString(encryptedQueryData)}";
-           // string link = $"{linkURL}{queryParameters}";
+           
             string emailBody = $"<p>Hello,</p><p>Please review the Purchase Order.</p><p><a href='{link}'>Click here to view PO {PONo}</a></p>";
 
             _emailService.SendEmail("noor.alam@epylliongroup.com", $"PO Notification for {supplierName}", emailBody);

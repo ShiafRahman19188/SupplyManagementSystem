@@ -163,8 +163,12 @@
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 </button>
                             </td>
+                            <td style="display: none;">${item.itemMasterId}</td>
                             <td>${item.yarnName}</td>
                             <td>${item.totalQuantity}</td>
+                            <td>
+                                    <button class="btn btn-success approve-btn" onclick="approveRequisition(${item.itemMasterId})">Approve</button>
+                            </td>
                         </tr>`;
                     tableBody.append(rowHtml);
 
@@ -179,6 +183,7 @@
                                                 <th>Yarn Booking No</th>
                                                 <th>Fabric</th>
                                                 <th>Quantity</th>
+                                                    
                                             </tr>
                                         </thead>
                                         <tbody>`;
@@ -188,6 +193,7 @@
                                     <td>${detail.yarnBookingMasterNo}</td>
                                     <td>${detail.fabric}</td>
                                     <td>${detail.quantity}</td>
+
                                 </tr>`;
                         });
                         detailsRowHtml += '</tbody></table></td></tr>';
@@ -200,6 +206,51 @@
             }
         });
     });
+
+
+
+    
+    function approveRequisition(itemMasterId) {
+        
+        var row = $(`#yarnSummaryBody tr`).filter(function () {
+            return $(this).find('td').eq(1).text() == itemMasterId;
+        });
+
+        
+        var itemYarnId = row.find('td').eq(1).text();  
+        var yarnName = row.find('td').eq(2).text();     
+        var totalQuantity = row.find('td').eq(3).text(); 
+
+        
+        console.log("ItemYarnId:", itemYarnId);
+        console.log("YarnName:", yarnName);
+        console.log("TotalQuantity:", totalQuantity);
+
+        
+        var dataToApprove = {
+            
+           
+            ItemYarnId: itemYarnId,  
+            TotalQuantity: totalQuantity  
+        };
+
+        $.ajax({
+            url: '/YarnBooking/Approve',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToApprove),
+            success: function (response) {
+                alert('Purchase Requisition Approved!');
+                console.log(response);
+                
+            },
+            error: function (error) {
+                alert('Failed to approve purchase requisition.');
+                console.log(error);
+            }
+        });
+    }
+
 
 
 </script>

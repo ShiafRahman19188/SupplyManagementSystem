@@ -135,6 +135,38 @@ namespace SupplyChainManagement.Controllers
             return yarnBookingDetails;
         }
 
+        [HttpPost]
+        public IActionResult Approve([FromBody] PurchaseRequisitionMaster purchaseRequisition)
+        {
+            if (purchaseRequisition == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            try
+            {
+                
+                var requisition = new PurchaseRequisitionMaster
+                {
+                    PRNo = "PR-"+ purchaseRequisition.ItemYarnId,
+                    PRDate = DateTime.Now,
+                    ItemYarnId = purchaseRequisition.ItemYarnId,
+                    TotalQuantity = purchaseRequisition.TotalQuantity
+                };
+
+               
+                _context.PurchaseRequisitionMasters.Add(requisition);
+                _context.SaveChanges();
+
+                return Ok(new { message = "Purchase Requisition Approved!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while saving the data.", details = ex.Message });
+            }
+        }
+
+
 
     }
 }

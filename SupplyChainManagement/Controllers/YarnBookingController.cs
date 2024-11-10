@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SupplyChainManagement.Db;
 using SupplyChainManagement.DTO;
 
@@ -17,11 +18,12 @@ namespace SupplyChainManagement.Controllers
         }
         public IActionResult Index()
         {
-            var yarnbookingData = GetUnacknowledgedYarnBookings();
+            var yarnbookingData = GetUnacknowledgedYarnBookingsAsync();
             return View(yarnbookingData);
         }
 
-        private List<YarnBookingMasterDto> GetUnacknowledgedYarnBookings()
+
+        private List<YarnBookingMasterDto> GetUnacknowledgedYarnBookingsAsync()
         {
             var query = from yb in _context.YarnBookingMasters
                         join yc in _context.YarnBookingChilds on yb.YarnBookingMasterId equals yc.YarnBookingMasterId
@@ -29,26 +31,37 @@ namespace SupplyChainManagement.Controllers
                         join fy in _context.FabricYarns on yc.ItemMasterId equals fy.YarnId
                         join fab in _context.ItemMasters on fy.FabricId equals fab.ItemMasterId
                         where yb.IsAcknowledge == 0
-                        select new YarnBookingMasterDto
+                        select new
                         {
-                            YarnBookingMasterId = yb.YarnBookingMasterId,
-                            YarnBookingMasterNo = yb.YarnBookingMasterNo,
+                            yb.YarnBookingMasterId,
+                            yb.YarnBookingMasterNo,
                             FabricName = fab.ItemName,
                             YarnName = im.ItemName,
-                            IsAcknowledge = yb.IsAcknowledge,
-                            FabricId = fy.FabricId,
-                            YarnId = im.ItemMasterId,
-                            yarnBookingChildren = new List<YarnBookingChildDto>
-                        {
-                            new YarnBookingChildDto
-                            { 
-
-                                Quantity = yc.Quantity 
-                            }
-                        }
+                            yb.IsAcknowledge,
+                            Quantity = yc.Quantity
                         };
 
-            return  query.ToList();
+            var groupedData = query
+                .GroupBy(x => new { x.YarnBookingMasterId, x.YarnBookingMasterNo, x.FabricName, x.IsAcknowledge })
+                .Select(g => new YarnBookingMasterDto
+                {
+                    YarnBookingMasterId = g.Key.YarnBookingMasterId,
+                    YarnBookingMasterNo = g.Key.YarnBookingMasterNo,
+                    FabricName = g.Key.FabricName,
+                    IsAcknowledge = g.Key.IsAcknowledge,
+                    yarnBookingChildren = g.Select(x => new YarnBookingChildDto
+                    {
+                        YarnName = x.YarnName,
+                        Quantity = x.Quantity
+                    }).ToList()
+                })
+                .ToList();
+
+            return groupedData;
         }
+
+
+
+        
     }
 }

@@ -17,17 +17,17 @@
             <tr>
                 <td>
                     <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
-                        ➤ 
+                        ➤
                     </button>
                 </td>
                 <td>@booking.YarnBookingMasterNo</td>
                 <td>@booking.FabricName</td>
                 <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
             </tr>
-            
-            
+
+           
             <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
-                <td colspan="4"> 
+                <td colspan="4">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -39,7 +39,7 @@
                             @foreach (var child in booking.yarnBookingChildren)
                             {
                                 <tr>
-                                    <td>@booking.YarnName</td>
+                                    <td>@child.YarnName</td>
                                     <td>@child.Quantity</td>
                                 </tr>
                             }

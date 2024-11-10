@@ -275,6 +275,32 @@ namespace SupplyChainManagement.Migrations
                     b.ToTable("PurchaseRequisitions");
                 });
 
+            modelBuilder.Entity("SupplyChainManagement.Models.PurchaseRequisitionMaster", b =>
+                {
+                    b.Property<int>("PurchaseRequisitionMasterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseRequisitionMasterId"));
+
+                    b.Property<int>("ItemYarnId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PRDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PRNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseRequisitionMasterId");
+
+                    b.ToTable("PurchaseRequisitionMasters");
+                });
+
             modelBuilder.Entity("SupplyChainManagement.Models.Supplier", b =>
                 {
                     b.Property<long>("SupplierId")

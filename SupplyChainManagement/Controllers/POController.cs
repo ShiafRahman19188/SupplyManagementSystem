@@ -38,9 +38,11 @@ namespace SupplyChainManagement.Controllers
         [HttpPost]
         public IActionResult SendPoEmail(int poId, string PONo, string supplierName,YarnPOMaster model)
         {
-			//string linkURL = "http://localhost:5023/";
 			string linkURL = "http://localhost:5023/StandaloneApp/Index";
-			var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}";
+            var itemDetailsJson = Newtonsoft.Json.JsonConvert.SerializeObject(model.ItemDetails);
+            string encryptedItemDetails = EncryptDecrypt.Encrypt(itemDetailsJson);
+            var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}&ItemDetails={Uri.EscapeDataString(encryptedItemDetails)}";
+           // var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}&ItemDetails={model.ItemDetails}";
             string encryptedQueryData = EncryptDecrypt.Encrypt(queryParameters);
             string link = $"{linkURL}?data={Uri.EscapeDataString(encryptedQueryData)}";
            

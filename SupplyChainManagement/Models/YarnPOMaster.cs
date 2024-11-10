@@ -49,6 +49,8 @@ namespace SupplyChainManagement.Models
             public DateTime DateAdded { get; set; } = new DateTime(1900, 1, 1);
 
             public DateTime? DateUpdated { get; set; }
-        
-    }
+
+		   public List<YarnPOChild> ItemDetails { get; set; }
+
+	}
 }

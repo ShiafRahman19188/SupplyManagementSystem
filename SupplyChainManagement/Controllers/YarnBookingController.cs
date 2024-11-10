@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SupplyChainManagement.Db;
 using SupplyChainManagement.DTO;
+using SupplyChainManagement.Models;
 
 namespace SupplyChainManagement.Controllers
 {
@@ -87,20 +88,51 @@ namespace SupplyChainManagement.Controllers
 
         public IActionResult GetYarnSummary()
         {
-            
+
             var yarnSummary = _context.YarnBookingChilds
-                .Join(_context.YarnBookingMasters, c => c.YarnBookingMasterId, yb => yb.YarnBookingMasterId, (c, yb) => new { c, yb })
-                .Join(_context.ItemMasters, combined => combined.c.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.c, im, combined.yb })
-                .Where(x => x.yb.IsAcknowledge == 1) 
-                .GroupBy(x => x.im.ItemName)
-                .Select(g => new YarnSummaryDto
-                {
-                    YarnName = g.Key,
-                    TotalQuantity = g.Sum(x => x.c.Quantity)
-                })
-                .ToList();
+            .Join(_context.YarnBookingMasters, c => c.YarnBookingMasterId, yb => yb.YarnBookingMasterId, (c, yb) => new { c, yb })
+            .Join(_context.ItemMasters, combined => combined.c.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.c, im, combined.yb })
+            .Where(x => x.yb.IsAcknowledge == 1) 
+            .GroupBy(x => new { x.im.ItemMasterId, x.im.ItemName }) 
+            .Select(g => new YarnBookingChildDto
+            {
+                ItemMasterId = g.Key.ItemMasterId, 
+                YarnName = g.Key.ItemName, 
+                TotalQuantity = g.Sum(x => x.c.Quantity) ,
+                
+            })
+            .ToList();
+
+            foreach (var summary in yarnSummary)
+            {
+               
+                summary.yarnBookingDetails = GetYarnBookingDetails(summary.ItemMasterId);
+            }
 
             return Json(yarnSummary);
+        }
+
+
+        public List<YarnBookingDetailsDto> GetYarnBookingDetails(int itemMasterId)
+        {
+            var yarnBookingDetails = _context.YarnBookingMasters
+                .Join(_context.YarnBookingChilds, yb => yb.YarnBookingMasterId, yc => yc.YarnBookingMasterId, (yb, yc) => new { yb, yc })
+                .Join(_context.ItemMasters, combined => combined.yc.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.yb, combined.yc, im })
+                .Join(_context.FabricYarns, combined => combined.yc.ItemMasterId, fy => fy.YarnId, (combined, fy) => new { combined.yb, combined.yc, combined.im, fy })
+                .Join(_context.ItemMasters, combined => combined.fy.FabricId, fab => fab.ItemMasterId, (combined, fab) => new { combined.yb, combined.yc, combined.im, combined.fy, fab })
+                .Where(x => x.yc.ItemMasterId == itemMasterId) 
+                .Select(x => new YarnBookingDetailsDto
+                {
+                    YarnBookingMasterId = x.yb.YarnBookingMasterId,
+                    YarnBookingMasterNo = x.yb.YarnBookingMasterNo,
+                    FabricId = x.fy.FabricId,
+                    Fabric = x.fab.ItemName,
+                    Quantity = x.yc.Quantity
+                })
+                .Distinct()  
+                .ToList();
+
+            return yarnBookingDetails;
         }
 
 

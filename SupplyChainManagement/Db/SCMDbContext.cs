@@ -28,6 +28,7 @@ namespace SupplyChainManagement.Db
         public DbSet<FabricYarn> FabricYarns { get; set; }
         public DbSet<YarnBookingMaster> YarnBookingMasters { get; set; }
         public DbSet<YarnBookingChild> YarnBookingChilds { get; set; }
+        public DbSet<PurchaseRequisitionMaster> PurchaseRequisitionMasters { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

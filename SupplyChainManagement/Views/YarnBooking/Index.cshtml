@@ -157,8 +157,8 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Yarn Booking Master ID</th>
-                                                <th>Master No</th>
+                                                    <th style="display: none;">Yarn Booking Master ID</th>
+                                                <th>Yarn Booking No</th>
                                                 <th>Fabric</th>
                                                 <th>Quantity</th>
                                             </tr>
@@ -166,7 +166,7 @@
                                         <tbody>`;
                         item.yarnBookingDetails.forEach(function (detail) {
                             detailsRowHtml += `<tr>
-                                    <td>${detail.yarnBookingMasterId}</td>
+                                    <td style="display: none;">${detail.yarnBookingMasterId}</td>
                                     <td>${detail.yarnBookingMasterNo}</td>
                                     <td>${detail.fabric}</td>
                                     <td>${detail.quantity}</td>

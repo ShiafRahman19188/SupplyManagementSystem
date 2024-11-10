@@ -129,7 +129,7 @@ namespace SupplyChainManagement.Controllers
                     Fabric = x.fab.ItemName,
                     Quantity = x.yc.Quantity
                 })
-                .Distinct()  
+                
                 .ToList();
 
             return yarnBookingDetails;

@@ -167,7 +167,7 @@
                             <td>${item.yarnName}</td>
                             <td>${item.totalQuantity}</td>
                             <td>
-                                    <button class="btn btn-success approve-btn" onclick="approveRequisition(${item.itemMasterId})">Approve</button>
+                                        <button id="approveBtn-${item.itemMasterId}" class="btn btn-success approve-btn" onclick="approveRequisition(${item.itemMasterId})">Approve</button>
                             </td>
                         </tr>`;
                     tableBody.append(rowHtml);
@@ -226,13 +226,16 @@
         console.log("YarnName:", yarnName);
         console.log("TotalQuantity:", totalQuantity);
 
-        
+        totalQuantity = parseFloat(totalQuantity);
+
         var dataToApprove = {
             
            
-            ItemYarnId: itemYarnId,  
+            ItemYarnId: parseInt(itemYarnId),
             TotalQuantity: totalQuantity  
         };
+
+        $(`#approveBtn-${itemMasterId}`).prop('disabled', true).text('Processing...');
 
         $.ajax({
             url: '/YarnBooking/Approve',
@@ -242,11 +245,13 @@
             success: function (response) {
                 alert('Purchase Requisition Approved!');
                 console.log(response);
+                $(`#approveBtn-${itemMasterId}`).text('Approved').prop('disabled', true);
                 
             },
             error: function (error) {
                 alert('Failed to approve purchase requisition.');
                 console.log(error);
+                $(`#approveBtn-${itemMasterId}`).prop('disabled', false).text('Approve');
             }
         });
     }

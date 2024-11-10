@@ -87,9 +87,11 @@ namespace SupplyChainManagement.Controllers
 
         public IActionResult GetYarnSummary()
         {
+            
             var yarnSummary = _context.YarnBookingChilds
                 .Join(_context.YarnBookingMasters, c => c.YarnBookingMasterId, yb => yb.YarnBookingMasterId, (c, yb) => new { c, yb })
-                .Join(_context.ItemMasters, combined => combined.c.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.c, im })
+                .Join(_context.ItemMasters, combined => combined.c.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.c, im, combined.yb })
+                .Where(x => x.yb.IsAcknowledge == 1) 
                 .GroupBy(x => x.im.ItemName)
                 .Select(g => new YarnSummaryDto
                 {

@@ -1,56 +1,307 @@
 ﻿@model List<SupplyChainManagement.DTO.YarnBookingMasterDto>
 
-<h2>Yarn Booking List</h2>
+<h2>Yarn Booking</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th> 
-            <th>Yarn Booking No</th>
-            <th>Fabric Name</th>
-            <th>Is Acknowledged</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var booking in Model)
-        {
-            <tr>
-                <td>
-                    <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
-                        ➤
-                    </button>
-                </td>
-                <td>@booking.YarnBookingMasterNo</td>
-                <td>@booking.FabricName</td>
-                <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
-            </tr>
+<div>
+   
+    <div style="float:left; margin-right: 20px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                    <a asp-controller="Booking" asp-action="Index" class="nav-link link-dark">Booking</a>
+                </li>
+                <li>
+                    <a asp-controller="YarnBooking" asp-action="Index" class="nav-link link-dark">Yarn Booking</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
+    
+    <div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="yarn-booking-tab" data-bs-toggle="tab" data-bs-target="#yarnBooking" type="button" role="tab" aria-controls="yarnBooking" aria-selected="true">Yarn Booking List</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="yarn-summary-tab" data-bs-toggle="tab" data-bs-target="#yarnSummary" type="button" role="tab" aria-controls="yarnSummary" aria-selected="false">Yarn Summary</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
            
-            <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
-                <td colspan="4">
-                    <table class="table table-bordered">
-                        <thead>
+            <div class="tab-pane fade show active" id="yarnBooking" role="tabpanel" aria-labelledby="yarn-booking-tab">
+             
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Yarn Booking No</th>
+                            <th>Fabric Name</th>
+                            <th>Is Acknowledged</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var booking in Model)
+                        {
                             <tr>
-                                <th>Yarn Name</th>
-                                <th>Quantity</th>
+                                <td>
+                                    <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td>@booking.YarnBookingMasterNo</td>
+                                <td>@booking.FabricName</td>
+                                <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
+                                <td>
+                                    <button class="btn btn-success acknowledge-btn" data-id="@booking.YarnBookingMasterId" @(booking.IsAcknowledge == 1 ? "disabled" : "")>
+                                        <i class="fa fa-check-circle"></i>
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var child in booking.yarnBookingChildren)
+                            <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
+                                <td colspan="5">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Yarn Name</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var child in booking.yarnBookingChildren)
+                                            {
+                                                <tr>
+                                                    <td>@child.YarnName</td>
+                                                    <td>@child.Quantity</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="yarnSummary" role="tabpanel" aria-labelledby="yarn-summary-tab">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Yarn Name</th>
+                            <th>Total Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var yarn in Model)
+                        {
+                            foreach (var item in yarn.yarnBookingChildren)
                             {
                                 <tr>
-                                    <td>@child.YarnName</td>
-                                    <td>@child.Quantity</td>
+                                    <td>@item.YarnName</td>
+                                    <td>@item.TotalQuantity</td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                           
+                        }
+                    </tbody>
+                </table>
+            </div>
 
+
+        </div>
+    </div>
+</div>
+
+<!-- jQuery, AJAX, and Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function toggleDetails(detailsId) {
+        var detailsRow = document.getElementById(detailsId);
+        detailsRow.style.display = (detailsRow.style.display === "none") ? "table-row" : "none";
+    }
+
+    $(".acknowledge-btn").click(function () {
+        var yarnBookingMasterId = $(this).data("id");
+        if (!confirm("Are you sure you want to acknowledge this booking?")) return;
+        $.ajax({
+            url: '/YarnBooking/Acknowledge',
+            type: 'POST',
+            data: { yarnBookingMasterId: yarnBookingMasterId },
+            success: function (response) {
+                alert("Yarn Booking acknowledged successfully.");
+                location.reload();
+            },
+            error: function (xhr) {
+                alert("Failed to acknowledge the Yarn Booking. Please try again.");
+            }
+        });
+    });
+
+
+    $('#yarn-summary-tab').on('click', function () {
+        $.ajax({
+            url: '/YarnBooking/GetYarnSummary', // Create this method in your controller
+            type: 'GET',
+            success: function (response) {
+                var tableBody = $('#yarnSummary tbody');
+                tableBody.empty(); // Clear existing rows
+                response.forEach(function (item) {
+                    tableBody.append('<tr><td>' + item.yarnName + '</td><td>' + item.totalQuantity + '</td></tr>');
+                });
+            },
+            error: function () {
+                alert('Failed to load yarn summary.');
+            }
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model List<SupplyChainManagement.DTO.YarnBookingMasterDto>
+
+<h2>Yarn Booking List</h2>
+
+
+<div>
+    <div style="float:left">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+
+                <span class="fs-4"> </span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+
+
+                <li>
+                    <a asp-controller="Booking" asp-action="Index" class="nav-link link-dark">
+
+                        Booking
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="YarnBooking" asp-action="Index" class="nav-link link-dark">
+
+                        Yarn Booking
+                    </a>
+                </li>
+
+            </ul>
+            <hr>
+
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Yarn Booking No</th>
+                <th>Fabric Name</th>
+                <th>Is Acknowledged</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <td>
+                        <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
+                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    <td>@booking.YarnBookingMasterNo</td>
+                    <td>@booking.FabricName</td>
+                    <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
+                    <td>
+                        <button class="btn btn-success acknowledge-btn" data-id="@booking.YarnBookingMasterId" @(booking.IsAcknowledge == 1 ? "disabled" : "")>
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                    </td>
+                </tr>
+
+
+                <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
+                    <td colspan="4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Yarn Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var child in booking.yarnBookingChildren)
+                                {
+                                    <tr>
+                                        <td>@child.YarnName</td>
+                                        <td>@child.Quantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function toggleDetails(detailsId) {
         var detailsRow = document.getElementById(detailsId);
@@ -60,4 +311,24 @@
             detailsRow.style.display = "none";
         }
     }
+
+
+    $(".acknowledge-btn").click(function () {
+        var yarnBookingMasterId = $(this).data("id");
+        if (!confirm("Are you sure you want to acknowledge this booking?")) return;
+        $.ajax({
+            url: '/YarnBooking/Acknowledge',
+            type: 'POST',
+            data: { yarnBookingMasterId: yarnBookingMasterId },
+            success: function (response) {
+                alert("Yarn Booking acknowledged successfully.");
+                location.reload();
+            },
+            error: function (xhr) {
+                alert("Failed to acknowledge the Yarn Booking. Please try again.");
+            }
+        });
+    });
+
 </script>
+ *@

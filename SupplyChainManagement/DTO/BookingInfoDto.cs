@@ -57,7 +57,22 @@ namespace SupplyChainManagement.DTO
         public int ItemMasterId { get; set; }
         public long Quantity { get; set; }
         public string YarnName { get; set; }
+        public decimal TotalQuantity { get; set; }
         public virtual YarnBookingMaster YarnBookingMaster { get; set; }
+        
     }
+
+    public class YarnSummaryDto
+    {
+        public string YarnName { get; set; }
+        public decimal TotalQuantity { get; set; }
+    }
+
+    public class YarnBookingViewModel
+    {
+        public List<YarnBookingMasterDto> YarnBookings { get; set; }
+        public List<YarnSummaryDto> YarnSummary { get; set; }
+    }
+
 
 }

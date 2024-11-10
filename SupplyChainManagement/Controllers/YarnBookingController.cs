@@ -19,6 +19,17 @@ namespace SupplyChainManagement.Controllers
         public IActionResult Index()
         {
             var yarnbookingData = GetUnacknowledgedYarnBookingsAsync();
+            var yarnSummary = _context.YarnBookingChilds
+        .Join(_context.ItemMasters, c => c.ItemMasterId, im => im.ItemMasterId, (c, im) => new { c, im })
+        .GroupBy(x => x.im.ItemName)
+        .Select(g => new
+        {
+            YarnName = g.Key,
+            TotalQuantity = g.Sum(x => x.c.Quantity)
+        })
+        .ToList();
+
+            ViewBag.YarnSummary = yarnSummary;
             return View(yarnbookingData);
         }
 
@@ -30,7 +41,7 @@ namespace SupplyChainManagement.Controllers
                         join im in _context.ItemMasters on yc.ItemMasterId equals im.ItemMasterId
                         join fy in _context.FabricYarns on yc.ItemMasterId equals fy.YarnId
                         join fab in _context.ItemMasters on fy.FabricId equals fab.ItemMasterId
-                        where yb.IsAcknowledge == 0
+                        
                         select new
                         {
                             yb.YarnBookingMasterId,
@@ -60,8 +71,36 @@ namespace SupplyChainManagement.Controllers
             return groupedData;
         }
 
+        [HttpPost]
+        public IActionResult Acknowledge([FromForm] int yarnBookingMasterId)
+        {
+            var booking = _context.YarnBookingMasters.Find(yarnBookingMasterId);
+            if (booking != null && booking.IsAcknowledge == 0)
+            {
+                booking.IsAcknowledge = 1;
+                _context.SaveChanges();
+                return Ok();
+            }
+            return BadRequest("Unable to acknowledge booking.");
+        }
 
 
-        
+        public IActionResult GetYarnSummary()
+        {
+            var yarnSummary = _context.YarnBookingChilds
+                .Join(_context.YarnBookingMasters, c => c.YarnBookingMasterId, yb => yb.YarnBookingMasterId, (c, yb) => new { c, yb })
+                .Join(_context.ItemMasters, combined => combined.c.ItemMasterId, im => im.ItemMasterId, (combined, im) => new { combined.c, im })
+                .GroupBy(x => x.im.ItemName)
+                .Select(g => new YarnSummaryDto
+                {
+                    YarnName = g.Key,
+                    TotalQuantity = g.Sum(x => x.c.Quantity)
+                })
+                .ToList();
+
+            return Json(yarnSummary);
+        }
+
+
     }
 }

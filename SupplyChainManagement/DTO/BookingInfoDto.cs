@@ -42,8 +42,12 @@ namespace SupplyChainManagement.DTO
     {
         public int YarnBookingMasterId { get; set; }
         public string YarnBookingMasterNo { get; set; }
+        public string FabricName { get; set; }
+        public string YarnName { get; set; }
         public int IsAcknowledge { get; set; }
-        public List<YarnBookingChild> yarnBookingChildren { get; set; }
+        public int FabricId { get; set; }
+        public int YarnId { get; set; }
+        public List<YarnBookingChildDto> yarnBookingChildren { get; set; }
     }
 
     public class YarnBookingChildDto

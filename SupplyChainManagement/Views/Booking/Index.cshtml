@@ -2,96 +2,149 @@
 @model IEnumerable<BookingInfoDto>
 
 <h2>Booking Data</h2>
-<nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Order Base ( EWO)</button>
-        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Projection Base (Buyer)</button>
-        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-            Textile Capacity Base
-            (ROL)
-        </button>
-    </div>
-</nav>
-</br>
-<div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Booking No</th>
-                    <th>Export Work Order</th>
-                    <th>Style No</th>
-                    <th>Fabric</th>
-                    <th>Buyer</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <button class="btn btn-link toggle-icon" onclick="toggleYarn(this)">
-                                &gt;
-                            </button>
-                        </td>
-                        <td>@item.BookingMasterNo</td>
-                        <td>@item.ExportWorkOrder</td>
-                        <td>@item.StyleNo</td>
-                        <td>@item.Fabric</td>
-                        <td>@item.SupplierName</td>
-                    </tr>
 
-                    <tr class="yarn-details" style="display: none;">
-                        <td colspan="6">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Item Master Code</th>
-                                        <th>Item Name</th>
-                                        <th>PO Quantity</th>
-                                        <th>UOM</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="yarn-list-@item.BookingMasterId">
-                                    @foreach (var yarn in item.Yarns)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" checked />
-                                            </td>
-                                            <td>@yarn.YarnId</td>
-                                            <td>@yarn.Yarn</td>
-                                            <td>
-                                                <input type="text" class="form-control" placeholder="Enter PO Quantity" />
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" placeholder="Enter UOM" value="Kilogram" disabled />
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+<div>
+    <div style="float:left">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" >
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+              
+                <span class="fs-4"> </span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link link-dark" aria-current="page">
 
-                            <div style="margin-top: 10px;">
-                                <input type="text" id="new-yarn-name-@item.BookingMasterId" placeholder="Enter Yarn Name" class="form-control" style="display: inline-block; width: auto;" />
-                                <button class="btn btn-primary" onclick="addYarn(@item.BookingMasterId)">Add Yarn</button>
-                                <button class="btn btn-success" onclick="saveYarns(@item.BookingMasterId)">Save</button>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark">
+
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark">
+
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark">
+
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-dark">
+                        Customers
+                    </a>
+                </li>
+            </ul>
+            <hr>
+
+        </div>
     </div>
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-    </div>
-    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-    </div>
+  
+        <div style="float:right; width:1111px;">
+                    <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Order Base ( EWO)</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Projection Base (Buyer)</button>
+                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                        Textile Capacity Base
+                        (ROL)
+                    </button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Booking No</th>
+                                <th>Export Work Order</th>
+                                <th>Style No</th>
+                                <th>Fabric</th>
+                                <th>Buyer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-link toggle-icon" onclick="toggleYarn(this)">
+                                            &gt;
+                                        </button>
+                                    </td>
+                                    <td>@item.BookingMasterNo</td>
+                                    <td>@item.ExportWorkOrder</td>
+                                    <td>@item.StyleNo</td>
+                                    <td>@item.Fabric</td>
+                                    <td>@item.SupplierName</td>
+                                </tr>
+
+                                <tr class="yarn-details" style="display: none;">
+                                    <td colspan="6">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Item Master Code</th>
+                                                    <th>Item Name</th>
+                                                    <th>PO Quantity</th>
+                                                    <th>UOM</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="yarn-list-@item.BookingMasterId">
+                                                @foreach (var yarn in item.Yarns)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" checked />
+                                                        </td>
+                                                        <td>@yarn.YarnId</td>
+                                                        <td>@yarn.Yarn</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" placeholder="Enter PO Quantity" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" placeholder="Enter UOM" value="Kilogram" disabled />
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <div style="margin-top: 10px;">
+                                            <input type="text" id="new-yarn-name-@item.BookingMasterId" placeholder="Enter Yarn Name" class="form-control" style="display: inline-block; width: auto;" />
+                                            <button class="btn btn-primary" onclick="addYarn(@item.BookingMasterId)">Add Yarn</button>
+                                            <button class="btn btn-success" onclick="saveYarns(@item.BookingMasterId)">Save</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                </div>
+            </div>
+         
+        </div>
+     
+
+    <div style="clear:both"></div>
 </div>
+
+
 <script>
     const newYarns = {};
 
@@ -116,13 +169,13 @@
 
             const newRow = document.createElement("tr");
             newRow.innerHTML = `
-                            <td><input type="checkbox" checked onchange="toggleSelectYarn(this, ${bookingMasterId}, '${yarnName}')"/></td>
-                            <td>New</td>
-                            <td>${yarnName}</td>
-                            <td><input type="text" class="form-control" placeholder="Enter PO Quantity" oninput="updatePoQuantity(this, ${bookingMasterId}, '${yarnName}')"/></td>
-                                <td><input type="text" class="form-control" placeholder="Enter UOM" value="Kilogram" disabled/></td>
-                            <td><button class="btn btn-danger btn-sm" onclick="removeYarn(this, ${bookingMasterId}, '${yarnName}')">Remove</button></td>
-                        `;
+                                <td><input type="checkbox" checked onchange="toggleSelectYarn(this, ${bookingMasterId}, '${yarnName}')"/></td>
+                                <td>New</td>
+                                <td>${yarnName}</td>
+                                <td><input type="text" class="form-control" placeholder="Enter PO Quantity" oninput="updatePoQuantity(this, ${bookingMasterId}, '${yarnName}')"/></td>
+                                    <td><input type="text" class="form-control" placeholder="Enter UOM" value="Kilogram" disabled/></td>
+                                <td><button class="btn btn-danger btn-sm" onclick="removeYarn(this, ${bookingMasterId}, '${yarnName}')">Remove</button></td>
+                            `;
             yarnList.appendChild(newRow);
 
             yarnNameInput.value = "";

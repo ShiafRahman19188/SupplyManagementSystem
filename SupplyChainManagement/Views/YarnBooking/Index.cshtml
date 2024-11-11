@@ -1,99 +1,96 @@
 ﻿@model List<SupplyChainManagement.DTO.YarnBookingMasterDto>
-
-<h2>Yarn Booking</h2>
-
-<div>
-
-
+@{
+    ViewData["Title"] = "Yarn Booking";
+}
+<h2>Yarn Booking</h2></br>
 
 
-    <div style="float:right; width:1111px;">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="yarn-booking-tab" data-bs-toggle="tab" data-bs-target="#yarnBooking" type="button" role="tab" aria-controls="yarnBooking" aria-selected="true">Yarn Booking List</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="yarn-summary-tab" data-bs-toggle="tab" data-bs-target="#yarnSummary" type="button" role="tab" aria-controls="yarnSummary" aria-selected="false">Yarn Summary</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="yarn-booking-tab" data-bs-toggle="tab" data-bs-target="#yarnBooking" type="button" role="tab" aria-controls="yarnBooking" aria-selected="true">Yarn Booking List</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="yarn-summary-tab" data-bs-toggle="tab" data-bs-target="#yarnSummary" type="button" role="tab" aria-controls="yarnSummary" aria-selected="false">Yarn Summary</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
 
-            <div class="tab-pane fade show active" id="yarnBooking" role="tabpanel" aria-labelledby="yarn-booking-tab">
+        <div class="tab-pane fade show active" id="yarnBooking" role="tabpanel" aria-labelledby="yarn-booking-tab">
 
-                <table class="table">
-                    <thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Yarn Booking No</th>
+                        <th>Fabric Name</th>
+                        <th>Is Acknowledged</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
                         <tr>
-                            <th></th>
-                            <th>Yarn Booking No</th>
-                            <th>Fabric Name</th>
-                            <th>Is Acknowledged</th>
-                            <th>Action</th>
+                            <td>
+                                <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
+                                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                            <td>@booking.YarnBookingMasterNo</td>
+                            <td>@booking.FabricName</td>
+                            <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
+                            <td>
+                                <button class="btn btn-success acknowledge-btn" data-id="@booking.YarnBookingMasterId" @(booking.IsAcknowledge == 1 ? "disabled" : "")>
+                                    <i class="fa fa-check-circle"></i>
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var booking in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <button class="toggle-btn" onclick="toggleDetails('details-@booking.YarnBookingMasterId')">
-                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                                <td>@booking.YarnBookingMasterNo</td>
-                                <td>@booking.FabricName</td>
-                                <td>@(booking.IsAcknowledge == 1 ? "Yes" : "No")</td>
-                                <td>
-                                    <button class="btn btn-success acknowledge-btn" data-id="@booking.YarnBookingMasterId" @(booking.IsAcknowledge == 1 ? "disabled" : "")>
-                                        <i class="fa fa-check-circle"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
-                                <td colspan="5">
-                                    <table class="table table-bordered">
-                                        <thead>
+                        <tr id="details-@booking.YarnBookingMasterId" class="child-details" style="display: none;">
+                            <td colspan="5">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Yarn Name</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var child in booking.yarnBookingChildren)
+                                        {
                                             <tr>
-                                                <th>Yarn Name</th>
-                                                <th>Quantity</th>
+                                                <td>@child.YarnName</td>
+                                                <td>@child.Quantity</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var child in booking.yarnBookingChildren)
-                                            {
-                                                <tr>
-                                                    <td>@child.YarnName</td>
-                                                    <td>@child.Quantity</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="tab-pane fade" id="yarnSummary" role="tabpanel" aria-labelledby="yarn-summary-tab">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Yarn Name</th>
-                            <th>Total Quantity</th>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody id="yarnSummaryBody">
-                       
-                    </tbody>
-                </table>
-            </div>
-
+                    }
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div style="clear:both"></div>
 
-</div>
+        <div class="tab-pane fade" id="yarnSummary" role="tabpanel" aria-labelledby="yarn-summary-tab">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Yarn Name</th>
+                        <th>Total Quantity</th>
+                    </tr>
+                </thead>
+                <tbody id="yarnSummaryBody">
+                       
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+  
+
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -119,7 +116,6 @@
             }
         });
     });
-
 
     $('#yarn-summary-tab').on('click', function () {
         $.ajax({
@@ -179,9 +175,6 @@
             }
         });
     });
-
-
-
     
     function approveRequisition(itemMasterId) {
         
@@ -228,8 +221,6 @@
             }
         });
     }
-
-
 
 </script>
 

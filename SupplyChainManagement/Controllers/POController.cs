@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SupplyChainManagement.Db;
+using SupplyChainManagement.DTO;
 using SupplyChainManagement.Models;
 using SupplyChainManagement.Service;
 
@@ -26,7 +28,20 @@ namespace SupplyChainManagement.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var result = (from pr in _context.PurchaseRequisitionMasters
+                          join im in _context.ItemMasters on pr.ItemYarnId equals im.ItemMasterId
+                          select new PurchaseRequisitionMasterDto
+                          {
+                              PurchaseRequisitionMasterId = pr.PurchaseRequisitionMasterId,
+                              PRNo = pr.PRNo,
+                              PRDate = pr.PRDate,
+                              ItemYarnId = pr.ItemYarnId,
+                              ItemName = im.ItemName, 
+                              TotalQuantity = pr.TotalQuantity
+                          }).ToList();
+
+
+            return View(result);
         }
 
         public IActionResult Add() 

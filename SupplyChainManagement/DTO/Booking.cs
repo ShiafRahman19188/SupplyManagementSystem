@@ -1,3 +1,6 @@
+using SupplyChainManagement.DTO;
+using static SupplyChainManagement.Controllers.PurchaseRequisitionController;
+
 public class BookingInfo
 {
     public int YBookingID { get; set; }
@@ -17,4 +20,5 @@ public class PRPending
     public List<BookingInfo> EWOBookings { get; set; }
     public List<BookingInfo> Projections { get; set; }
     public List<BookingInfo> CapacityBase { get; set; }
+    public List<PurchaseRequisitionMasterDto> PurchaseRequisitionMasterDtos { get; set; }
 }

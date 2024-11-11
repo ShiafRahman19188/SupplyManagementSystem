@@ -1,4 +1,4 @@
-﻿@model PRPending
+﻿@model List<SupplyChainManagement.DTO.PurchaseRequisitionMasterDto>
 
 @{
     ViewData["Title"] = "Purchase Requisition";
@@ -14,53 +14,34 @@
         <table class="table  table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center">PO No</th>
-                    <th class="text-center">PO Date</th>
-                    <th class="text-center">Supplier Name</th>
-                    <th class="text-center">Delivery Date</th>
-                    <th class="text-center">Remarks</th>
+                    <th class="text-center">PR No</th>
+                    <th class="text-center">PR Date</th>
+                    <th class="text-center">Item Name</th>
+                    <th class="text-center">Total Quantity</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>PO-0001</td>
-                    <td>06-Nov-2024</td>
-                    <td>A K Khan</td>
-                    <td>06-Nov-2024</td>
-                    <td>Noted</td>
-                    <td class="text-center">
-                        
-                        <a href="@Url.Action("Edit", "PurchaseRequisition", new { bookingId = 1 })">
-                            View
-
-                        </a>
-
-                    </td>
-                </tr>
-               @*  @if (Model.EWOBookings is not null)
+                @foreach (var pr in Model)
                 {
-                    @foreach (var booking in Model.EWOBookings)
-                    {
-                        <tr>
-                            <td>@booking.FabricBookingNo</td>
-                            <td>@booking.ExportOrderID</td>
-                            <td>@booking.BuyerName</td>
-                            <td>@booking.BuyerTeamID</td>
-                            <td>@booking.StyleNo</td>
-                            <td class="text-center">
+                    <tr>
 
-                                <a href="@Url.Action("Edit", "PurchaseRequisition", new { bookingId = booking.YBookingID })">
-                                    <i class="fa fa-gear fa-spin" style="font-size:24px;color:green"></i>
-                                </a>
+                        
+                        <td>@pr.PRNo</td>
+                        <td>@pr.PRDate</td>
+                        <td>@pr.ItemName</td>
+                        <td>@pr.TotalQuantity</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Edit", "PurchaseRequisition", new { id = pr.PurchaseRequisitionMasterId })">
+                                View
 
-                            </td>
-                        </tr>
-                    }
+                            </a>
+                        </td>
+                        
 
-
-                } *@
-
+                    </tr>
+                }
+               
             </tbody>
         </table>
 

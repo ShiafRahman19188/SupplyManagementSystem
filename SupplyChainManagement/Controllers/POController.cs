@@ -28,16 +28,16 @@ namespace SupplyChainManagement.Controllers
         }
         public IActionResult Index()
         {
-            var result = (from pr in _context.PurchaseRequisitionMasters
-                          join im in _context.ItemMasters on pr.ItemYarnId equals im.ItemMasterId
-                          select new PurchaseRequisitionMasterDto
+            var result = (from po in _context.ItemPOMaster
+                          join im in _context.ItemMasters on po.YPOMasterID equals im.ItemMasterId
+                          select new ItemMasterPODto
                           {
-                              PurchaseRequisitionMasterId = pr.PurchaseRequisitionMasterId,
-                              PRNo = pr.PRNo,
-                              PRDate = pr.PRDate,
-                              ItemYarnId = pr.ItemYarnId,
-                              ItemName = im.ItemName, 
-                              TotalQuantity = pr.TotalQuantity
+                              YPOMasterID = po.YPOMasterID,
+                              PONo = po.PONo,
+                              PODate = po.PODate,
+                              //ItemYarnId = pr.ItemYarnId,
+                              ItemName = im.ItemName
+                              
                           }).ToList();
 
 

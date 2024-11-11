@@ -125,14 +125,14 @@
                     @if (Model.ItemDetails == null)
                     {
                         <tr>
-                            <td class="text-center"><input type="text" name="ItemDetails[0].BookingNo" value="Book-00012" class="form-control" /></td>
-                            <td class="text-center"><input type="text" name="ItemDetails[0].ItemMasterID" value="Item001" class="form-control" /></td>
-                            <td class="text-center"><input type="text" name="ItemDetails[0].YarnShade" value="Shade002" class="form-control" /></td>
-                            <td class="text-center"><input type="text" name="ItemDetails[0].UnitName" value="Kg" class="form-control" /></td>
-                            <td class="text-center"><input type="number" name="ItemDetails[0].PoQty" value="5000" class="form-control" /></td>
-                            <td class="text-center"><input type="number" name="ItemDetails[0].Rate" value="30" class="form-control" /></td>
-                            <td class="text-center"><input type="number" name="ItemDetails[0].PIValue" value="150000" class="form-control" /></td>
-                            <td class="text-center"><input type="text" name="ItemDetails[0].Remarks" value="val000998" class="form-control" /></td>
+                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].BookingNo" value="Book-00012" class="form-control" /></td>
+                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].ItemMasterID" value="Item001" class="form-control" /></td>
+                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].YarnShade" value="Shade002" class="form-control" /></td>
+                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].UnitName" value="Kg" class="form-control" /></td>
+                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].PoQty" value="5000" class="form-control" /></td>
+                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].Rate" value="30" class="form-control" /></td>
+                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].PIValue" value="150000" class="form-control" /></td>
+                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].Remarks" value="val000998" class="form-control" /></td>
                         </tr>
                     }
                     else
@@ -140,14 +140,14 @@
                         @for (int i = 0; i < Model.ItemDetails.Count; i++)
                         {
                             <tr>
-                                <td class="text-center"><input type="text" name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" /></td>
-                                <td class="text-center"><input type="text" name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" /></td>
-                                <td class="text-center"><input type="text" name="ItemDetails[@i].YarnShade" value="@Model.ItemDetails[i].YarnShade" class="form-control" /></td>
-                                <td class="text-center"><input type="text" name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" /></td>
-                                <td class="text-center"><input type="number" name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" /></td>
-                                <td class="text-center"><input type="number" name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" /></td>
-                                <td class="text-center"><input type="number" name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" /></td>
-                                <td class="text-center"><input type="text" name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" /></td>
+                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" /></td>
+                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" /></td>
+                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].YarnShade" value="@Model.ItemDetails[i].YarnShade" class="form-control" /></td>
+                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" /></td>
+                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" /></td>
+                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" /></td>
+                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" /></td>
+                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" /></td>
                             </tr>
                         }
                     }
@@ -160,7 +160,7 @@
 
     <input type="hidden" asp-for="YPOMasterID" />
 
-    <button type="submit" formaction="@Url.Action("SendPoEmail", "PO")" formmethod="post" class="btn btn-primary">Trigger</button>
+    <button type="submit" formaction="@Url.Action("SendPoEmail", "PO")" formmethod="post" class="btn btn-primary">Release PO</button>
   
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

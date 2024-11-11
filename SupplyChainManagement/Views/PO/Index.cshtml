@@ -1,4 +1,4 @@
-﻿@model List<SupplyChainManagement.DTO.PurchaseRequisitionMasterDto>
+﻿@model List<SupplyChainManagement.DTO.ItemMasterPODto>
 
 @{
     ViewData["Title"] = "Purchase Requisition";
@@ -14,26 +14,26 @@
         <table class="table  table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center">PR No</th>
-                    <th class="text-center">PR Date</th>
+                    <th class="text-center">PO No</th>
+                    <th class="text-center">PO Date</th>
                     <th class="text-center">Item Name</th>
-                    <th class="text-center">Total Quantity</th>
+                    
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var pr in Model)
+                @foreach (var po in Model)
                 {
                     <tr>
 
                         
-                        <td>@pr.PRNo</td>
-                        <td>@pr.PRDate</td>
-                        <td>@pr.ItemName</td>
-                        <td>@pr.TotalQuantity</td>
+                        <td>@po.PONo</td>
+                        <td>@po.PODate</td>
+                        <td>@po.ItemName</td>
+                        
                         <td class="text-center">
-                            <a href="@Url.Action("Edit", "PurchaseRequisition", new { id = pr.PurchaseRequisitionMasterId })">
-                                View
+                            <a href="@Url.Action("Add", "PO", new { id = po.YPOMasterID })">
+                                Release
 
                             </a>
                         </td>

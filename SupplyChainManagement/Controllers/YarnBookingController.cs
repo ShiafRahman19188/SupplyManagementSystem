@@ -50,7 +50,9 @@ namespace SupplyChainManagement.Controllers
                             FabricName = fab.ItemName,
                             YarnName = im.ItemName,
                             yb.IsAcknowledge,
-                            Quantity = yc.Quantity
+                            Quantity = yc.Quantity,
+                            yc.YarnBookingChildId,
+                            yc.ItemMasterId
                         };
 
             var groupedData = query
@@ -63,6 +65,9 @@ namespace SupplyChainManagement.Controllers
                     IsAcknowledge = g.Key.IsAcknowledge,
                     yarnBookingChildren = g.Select(x => new YarnBookingChildDto
                     {
+                        YarnBookingChildId = x.YarnBookingChildId,
+                        ItemMasterId = x.ItemMasterId,
+                        YarnBookingMasterId=x.YarnBookingMasterId,
                         YarnName = x.YarnName,
                         Quantity = x.Quantity
                     }).ToList()
@@ -72,18 +77,58 @@ namespace SupplyChainManagement.Controllers
             return groupedData;
         }
 
+
+
+
         [HttpPost]
         public IActionResult Acknowledge([FromForm] int yarnBookingMasterId)
         {
-            var booking = _context.YarnBookingMasters.Find(yarnBookingMasterId);
+            var booking = _context.YarnBookingMasters.FirstOrDefault(ym => ym.YarnBookingMasterId == yarnBookingMasterId);
+
             if (booking != null && booking.IsAcknowledge == 0)
             {
                 booking.IsAcknowledge = 1;
-                _context.SaveChanges();
+
+                var bookingChildren = _context.YarnBookingChilds
+                                      .Where(yc => yc.YarnBookingMasterId == yarnBookingMasterId)
+                                      .Include(yc => yc.YarnBookingMaster)
+                                      .AsEnumerable(); 
+
+                var requisitions = new List<PurchaseRequisitionMaster>();
+
+                foreach (var item in bookingChildren)
+                {
+                    var requisition = new PurchaseRequisitionMaster
+                    {
+                        PRNo = "PR-" + item.ItemMasterId,
+                        PRDate = DateTime.Now,
+                        ItemYarnId = item.ItemMasterId,
+                        TotalQuantity = item.Quantity,
+                        YarnBookingMasterId = yarnBookingMasterId,
+                    };
+
+                    _context.PurchaseRequisitionMasters.Add(requisition);
+                    requisitions.Add(requisition);
+                }
+
+                _context.SaveChanges(); 
+
+                foreach (var requisition in requisitions)
+                {
+                    requisition.PRNo = "PR-" + requisition.PurchaseRequisitionMasterId;
+                }
+
+                _context.PurchaseRequisitionMasters.UpdateRange(requisitions);
+                _context.SaveChanges(); 
+
                 return Ok();
             }
+
             return BadRequest("Unable to acknowledge booking.");
         }
+
+
+
 
 
         public IActionResult GetYarnSummary()
@@ -135,41 +180,7 @@ namespace SupplyChainManagement.Controllers
             return yarnBookingDetails;
         }
 
-        [HttpPost]
-        public IActionResult Approve([FromBody] PurchaseRequisitionMaster purchaseRequisition)
-        {
-            if (purchaseRequisition == null)
-            {
-                return BadRequest("Invalid data.");
-            }
-
-            try
-            {
-                
-                var requisition = new PurchaseRequisitionMaster
-                {
-                    PRNo = "PR-"+ purchaseRequisition.ItemYarnId,
-                    PRDate = DateTime.Now,
-                    ItemYarnId = purchaseRequisition.ItemYarnId,
-                    TotalQuantity = purchaseRequisition.TotalQuantity
-                };
-
-               
-                _context.PurchaseRequisitionMasters.Add(requisition);
-                _context.SaveChanges();
-
-                requisition.PRNo = "PR-" + requisition.PurchaseRequisitionMasterId;
-                _context.PurchaseRequisitionMasters.Update(requisition);
-                _context.SaveChanges();
-
-                return Ok(new { message = "Purchase Requisition Approved!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while saving the data.", details = ex.Message });
-            }
-        }
-
+        
 
 
     }

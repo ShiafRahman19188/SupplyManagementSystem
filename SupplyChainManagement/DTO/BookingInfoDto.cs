@@ -1,4 +1,5 @@
 ﻿using SupplyChainManagement.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SupplyChainManagement.DTO
 {
@@ -70,6 +71,18 @@ namespace SupplyChainManagement.DTO
         public int FabricId { get; set; }
         public string Fabric { get; set; }
         public decimal Quantity { get; set; }
+    }
+
+    public class PurchaseRequisitionMasterDto
+    {
+        [Key]
+        public int PurchaseRequisitionMasterId { get; set; }
+        public string PRNo { get; set; }
+        public DateTime PRDate { get; set; }
+        public int ItemYarnId { get; set; }
+        public string ItemName { get; set; }
+        public decimal TotalQuantity { get; set; }
+
     }
 
 

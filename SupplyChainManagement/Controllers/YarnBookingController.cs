@@ -158,6 +158,10 @@ namespace SupplyChainManagement.Controllers
                 _context.PurchaseRequisitionMasters.Add(requisition);
                 _context.SaveChanges();
 
+                requisition.PRNo = "PR-" + requisition.PurchaseRequisitionMasterId;
+                _context.PurchaseRequisitionMasters.Update(requisition);
+                _context.SaveChanges();
+
                 return Ok(new { message = "Purchase Requisition Approved!" });
             }
             catch (Exception ex)

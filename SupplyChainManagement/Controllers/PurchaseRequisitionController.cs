@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SupplyChainManagement.Db;
+using SupplyChainManagement.DTO;
 using SupplyChainManagement.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -27,7 +29,8 @@ namespace SupplyChainManagement.Controllers
         public IActionResult Index()
         {
             PRPending model = new PRPending();
-            model.EWOBookings = GetBookingsForEWO();
+            //model.EWOBookings = GetBookingsForEWO();
+            model.PurchaseRequisitionMasterDtos = GetPR();
 
 
             return View(model);
@@ -185,6 +188,34 @@ namespace SupplyChainManagement.Controllers
             }
             return bookings;
 
+        }
+
+        public List<PurchaseRequisitionMasterDto> GetPR()
+        {
+            List<PurchaseRequisitionMasterDto> prList = new List<PurchaseRequisitionMasterDto>();
+
+            string textileQuery = @"select pr.PurchaseRequisitionMasterId,pr.PRNo,pr.PRDate,im.ItemName,pr.TotalQuantity from PurchaseRequisitionMasters pr
+              inner join ItemMasters im on im.ItemMasterId=pr.ItemYarnId";
+
+            var textileResults = _queryService.ExecuteQuery(scm, textileQuery);
+
+            foreach (var reader in textileResults)
+            {
+                var pr = new PurchaseRequisitionMasterDto
+                {
+                    PurchaseRequisitionMasterId = reader["PurchaseRequisitionMasterId"] != DBNull.Value ? Convert.ToInt32(reader["PurchaseRequisitionMasterId"]) : 0,
+                    PRNo = reader["PRNo"] != DBNull.Value ? reader["PRNo"].ToString() : string.Empty,
+                    PRDate = reader["PRDate"] != DBNull.Value ? Convert.ToDateTime(reader["PRDate"]) : DateTime.MinValue,
+                   
+                    ItemName = reader["ItemName"] != DBNull.Value ? reader["ItemName"].ToString() : string.Empty,
+                    TotalQuantity = reader["TotalQuantity"] != DBNull.Value ? Convert.ToDecimal(reader["TotalQuantity"]) : 0,
+                    
+                };
+
+                prList.Add(pr);
+            }
+
+            return prList;
         }
 
 

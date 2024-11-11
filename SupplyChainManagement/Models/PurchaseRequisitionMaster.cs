@@ -10,6 +10,8 @@ namespace SupplyChainManagement.Models
         public DateTime PRDate { get; set; }
         public int ItemYarnId { get; set; }
         public decimal TotalQuantity { get; set; }
+        public int YarnBookingMasterId { get; set; }
+        
 
     }
 }

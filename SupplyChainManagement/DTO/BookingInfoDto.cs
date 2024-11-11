@@ -81,6 +81,7 @@ namespace SupplyChainManagement.DTO
         public DateTime PRDate { get; set; }
         public int ItemYarnId { get; set; }
         public string ItemName { get; set; }
+        public string BookingMasterNo { get; set; }
         public decimal TotalQuantity { get; set; }
 
     }

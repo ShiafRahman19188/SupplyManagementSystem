@@ -139,27 +139,31 @@ namespace SupplyChainManagement.Controllers
 			var PDF = Renderer.RenderHtmlAsPdf(htmlContent.ToString());
 			var pdfBytes = PDF.BinaryData;
 			return File(pdfBytes, "application/pdf", "PurchaseOrder.pdf");
-
-			//var pdfDocument = new HtmlToPdfDocument
-			//{
-			//	GlobalSettings = new GlobalSettings
-			//	{
-			//		PaperSize = PaperKind.A4,
-			//		Orientation = Orientation.Portrait,
-			//	},
-			//	Objects = {
-			//	new ObjectSettings
-			//	{
-			//		HtmlContent = htmlContent.ToString(),
-			//		WebSettings = { DefaultEncoding = "utf-8" }
-			//	}
-			//}
-			//};
-
-			//var pdfBytes = _converter.Convert(pdfDocument);
-
-			// Return PDF file
-			//return File(pdfBytes, "application/pdf", "PurchaseOrder.pdf");
+		
 		}
-	}
+
+        [HttpPost]
+        public async Task<IActionResult> UploadDocument(IFormFile UploadedFile)
+        {
+            if (UploadedFile != null && UploadedFile.Length > 0)
+            {
+                string path = @"D:\File";
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                string filePath = Path.Combine(path, UploadedFile.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await UploadedFile.CopyToAsync(stream);
+                }
+
+                return Json(new { success = true, message = "File uploaded successfully!" });
+            }
+            return Json(new { success = false, message = "No file selected or file is empty." });
+        }
+		 
+    }
 }

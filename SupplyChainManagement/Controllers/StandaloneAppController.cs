@@ -68,10 +68,12 @@ namespace SupplyChainManagement.Controllers
 			var htmlContent = new StringBuilder();
 			htmlContent.AppendLine("<html><body>");
 
-			htmlContent.AppendLine("<div style='display: flex; justify-content: space-between; align-items: center;'>");
-			htmlContent.AppendLine("<div style='text-align: left; font-size: 14px; font-weight: bold;'>");
-			htmlContent.AppendLine("MONTRIMS LTD<br/>MOUCHAK, KALIAKOIR,<br/>GAZIPUR, BANGLADESH");
-			htmlContent.AppendLine("</div>");
+			//htmlContent.AppendLine("<div style='display: flex; justify-content: space-between; align-items: center;'>");
+			//htmlContent.AppendLine("<div style='text-align: left; font-size: 14px; font-weight: bold;'>");
+			//htmlContent.AppendLine("MONTRIMS LTD<br/>MOUCHAK, KALIAKOIR,<br/>GAZIPUR, BANGLADESH");
+			//htmlContent.AppendLine("</div>");
+
+			htmlContent.AppendLine("<p style='text-align:left;font-size:24px;font-weight:bold'>MONTRIMS LTD</p>");
 
 			htmlContent.AppendLine("<p style='text-align:center;font-size:20px;font-weight:bold'>PROFORMA INVOICE</p>");
 

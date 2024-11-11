@@ -165,7 +165,7 @@ namespace SupplyChainManagement.Controllers
             List<BookingInfo> bookings = new List<BookingInfo>();
 
 
-            string textileQuery = $"SELECT  distinct YBM.YBookingID, YBM.YBookingNo, FBM.ExportOrderID,FBM.BookingID ,BookingNo, c.Name,   FBM.BuyerTeamID  , StyleNo  \r\nFROM FBookingAcknowledge FBM\r\ninner join FBookingAcknowledgeChild FBC on FBC.AcknowledgeID = FBM.FBAckID\r\ninner join YarnBookingMaster_New YBM on  YBM.BookingID=FBM.BookingID\r\ninner join EPYSL..Contacts c  on c.ContactID = FBM.BuyerID\r\nwhere  FBM.ExportOrderID in (21747,23048,23068,23512,23975)";
+            string textileQuery = $"SELECT   distinct top 5 YBM.YBookingID, YBM.YBookingNo, FBM.ExportOrderID,FBM.BookingID ,BookingNo, c.Name,   FBM.BuyerTeamID  , StyleNo  \r\nFROM FBookingAcknowledge FBM\r\ninner join FBookingAcknowledgeChild FBC on FBC.AcknowledgeID = FBM.FBAckID\r\ninner join YarnBookingMaster_New YBM on  YBM.BookingID=FBM.BookingID\r\ninner join EPYSL..Contacts c  on c.ContactID = FBM.BuyerID\r\nwhere  FBM.ExportOrderID in (21747,23048,23068,23512,23975) order by FBM.ExportOrderID desc";
 
             var textileResults = _queryService.ExecuteQuery(textile, textileQuery);
 
@@ -179,7 +179,7 @@ namespace SupplyChainManagement.Controllers
                 b.FabricBookingNo = reader["BookingNo"] != DBNull.Value ? reader["BookingNo"].ToString() : string.Empty;
                 b.YarnBookingNo = reader["YBookingNo"] != DBNull.Value ? reader["YBookingNo"].ToString() : string.Empty;
                 b.BuyerName = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty;
-                b.BuyerTeamID = reader["BuyerTeamID"] != DBNull.Value ? Convert.ToInt32(reader["BuyerTeamID"]) : 0;
+              
                 b.StyleNo = reader["StyleNo"] != DBNull.Value ? reader["StyleNo"].ToString() : string.Empty;
 
                 bookings.Add(b);

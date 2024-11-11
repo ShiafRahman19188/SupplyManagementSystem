@@ -1,151 +1,157 @@
 ﻿@model POViewModel
 
-@* @{
-    ViewData["Title"] = "PO Details";
-} *@
+<style>
+    header, nav {
+        display: none;
+    }
 
-@* <div class="text-center">
-    <h4>Purchase Order Details</h4><br /><br />
+    .form-control size {
+        font-size: 0.5rem !important;
+    }
+</style>
 
-    <p><strong>PO Number:</strong> @Model.PONo</p>
-    <p><strong>PO Date:</strong> @Model.PODate</p>
-    <p><strong>Supplier Name:</strong> @Model.SupplierName</p>
-    <p><strong>Charges:</strong> @Model.Charges</p>
-    <p><strong>Port of Loading:</strong> @Model.PortofLoading</p>
-    <p><strong>Port of Discharge:</strong> @Model.PortofDischarge</p>
-    <p><strong>Shipment Mode:</strong> @Model.ShipmentMode</p>
-    <p><strong>Country of Origin:</strong> @Model.CountryOfOrigin</p>
-</div> *@
+<div class="container" style="margin-top: 20px;">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+    <p style="text-align: center; font-size: 20px; font-weight: bold;">Purchase Order Details</p>
+    <form asp-action="DownloadPdf" method="post">
+        <div class="d-flex">
+            <!-- Left side: Purchase Order Details -->
+            <div class="col-md-8" style="padding-right: 20px;">
+                <div class="row">
+                    <!-- Purchase Order Details Form Fields -->
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">PO Number</label>
+                            <input type="text" asp-for="PONo" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">PO Date</label>
+                            <input type="text" asp-for="PODate" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Supplier Name</label>
+                            <input type="text" asp-for="SupplierName" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Charges</label>
+                            <input type="text" asp-for="Charges" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Port of Loading</label>
+                            <input type="text" asp-for="PortofLoading" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Port of Discharge</label>
+                            <input type="text" asp-for="PortofDischarge" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Shipment Mode</label>
+                            <input type="text" asp-for="ShipmentMode" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="title" class="control-label" style="font-size: small;">Country of Origin</label>
+                            <input type="text" asp-for="CountryOfOrigin" readonly class="form-control" style="font-size: small;" />
+                        </div>
+                    </div><br /><br /><br />
+                    <!-- Add other fields as necessary -->
+                    <!-- Table for Item Details -->
+                    <table id="itemTable" class="table table-striped" style="font-size: 9px;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Booking No</th>
+                                <th class="text-center">Item Code</th>
+                                <th class="text-center">Shade</th>
+                                <th class="text-center">Unit</th>
+                                <th class="text-center">PO Qty</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Value</th>
+                                <th class="text-center">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.ItemDetails.Count; i++)
+                            {
+                                <tr>
+                                    <td class="text-center"><input type="text" name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="text" name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="text" name="ItemDetails[@i].YarnShade" value="@Model.ItemDetails[i].YarnShade" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="text" name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="number" name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="number" name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="number" name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" style="font-size:9px !important" /></td>
+                                    <td class="text-center"><input type="text" name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" style="font-size:9px !important" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+            <div class="col-md-4" style="border-left: 1px solid #ddd; padding-left: 20px;">
+                <h6>PO Tracker</h6>
+                <button type="submit" formaction="@Url.Action("DownloadPI", "StandaloneApp")" formmethod="post" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;font-size: 10px;">Download PO</button>
+    </form>
+   
+    <div class="form-group">
+        <label style="font-size:small">Upload PI Document</label>
+        <input type="file" name="UploadedFile" id="UploadedFile" class="form-control" style="font-size: 10px;" />
+    </div>
+    <button type="button" onclick="uploadDocument()" class="btn btn-secondary" style="width: 100%; margin-top: 10px; font-size: 10px;">
+        Upload
+    </button>
 
-<P style="text-align:center;font-size:20px;font-weight:bold"> Purchase Order Details</P>
-<form asp-action="DownloadPdf"  method="post">
-<div class="row" style="font-size: small;">
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">PO Number</label>
-			<div class="col-sm-9">
-				
-				 <input type="text"  asp-for="PONo" readonly class="form-control" size="50" style="font-size: small;" /> 
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">PO Date</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="PODate" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Supplier Name</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="SupplierName" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-</div>
+    <div id="uploadMessage" style="margin-top: 10px;"></div> 
 
-<div class="row" style="font-size: small;">
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Charges</label>
-			<div class="col-sm-9">
-				<input type="text" asp-for="Charges" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Port of Loading</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="PortofLoading" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Port of Discharge</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="PortofDischarge" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-
-</div>
-
-
-<div class="row" style="font-size: small;">
-	<div class="col-sm-4">
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Shipment Mode</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="ShipmentMode" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-
-	<div class="col-sm-4" >
-		<div class="form-group">
-			<label for="title" class="col-sm-3 control-label" style="width: auto;">Country of Origin</label>
-			<div class="col-sm-9">
-				<input type="text"  asp-for="CountryOfOrigin" readonly class="form-control" size="50" style="font-size: small;" />
-			</div>
-		</div>
-	</div>
-
-
-</div>
-<br />
-
-<br />
-
-<h6>Details Info </h6>
-<div class="row" style="font-size: small;">
-	<table id="itemTable" class="table table-striped">
-		<thead class="thead-dark">
-			<tr>
-
-				<th class="text-center">Booking No</th>
-				<th class="text-center">Item Master Code</th>
-				<th class="text-center">Shade</th>
-				<th class="text-center">Unit</th>
-				<th class="text-center">PO Qty</th>
-				<th class="text-center">Rate</th>
-				<th class="text-center">Value</th>
-				<th class="text-center">Remarks</th>
-
-
-			</tr>
-		</thead>
-		<tbody>
-					@for (int i = 0; i < Model.ItemDetails.Count; i++)
-					{
-						<tr>
-							<td class="text-center"><input type="text" name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" /></td>
-							<td class="text-center"><input type="text" name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" /></td>
-							<td class="text-center"><input type="text" name="ItemDetails[@i].YarnShade" value="@Model.ItemDetails[i].YarnShade" class="form-control" /></td>
-							<td class="text-center"><input type="text" name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" /></td>
-							<td class="text-center"><input type="number" name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" /></td>
-							<td class="text-center"><input type="number" name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" /></td>
-							<td class="text-center"><input type="number" name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" /></td>
-							<td class="text-center"><input type="text" name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" /></td>
-						</tr>
-					}
-				
-		</tbody>
-	</table>
 
 </div>
+        
+    <script>
+    function uploadDocument() {
+        var formData = new FormData();
+        var fileInput = document.getElementById("UploadedFile");
 
-@* <button onclick="window.location.href='@Url.Action("DownloadPI", "StandaloneApp", new {  })'" type="button" style="font-size: 8px;" class="btn btn-primary">
-		<span class="glyphicon glyphicon-download"></span> Download PI
-	</button> *@
-	@* <button type="submit" class="btn btn-primary">
-		<span class="glyphicon glyphicon-download"></span> Download PI
-	</button> *@
+        if (fileInput.files.length > 0) {
+            formData.append("UploadedFile", fileInput.files[0]);
 
-	<button type="submit" formaction="@Url.Action("DownloadPI", "StandaloneApp")" formmethod="post" class="btn btn-primary">Download PI</button>
-</form>
+            fetch('/StandaloneApp/UploadDocument', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("uploadMessage").innerHTML = `<div class="alert" style="color: green;" role="alert">${data.message}</div>`;
+                    } else {
+                        document.getElementById("uploadMessage").innerHTML = `<div class="alert alert-danger" role="alert">Failed to upload file.</div>`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("uploadMessage").innerHTML = `<div class="alert alert-danger" role="alert">An error occurred: ${error}</div>`;
+                    console.error('Error:', error);
+                });
+        } else {
+            document.getElementById("uploadMessage").innerHTML = `<div class="alert alert-warning" role="alert">Please select a file to upload.</div>`;
+        }
+    }
+
+ </script>
+

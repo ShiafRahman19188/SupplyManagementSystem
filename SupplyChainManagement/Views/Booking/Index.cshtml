@@ -1,12 +1,11 @@
 ﻿@using SupplyChainManagement.DTO
 @model IEnumerable<BookingInfoDto>
+@{
+    ViewData["Title"] = "Booking";
+}
+<h2>Booking Data</h2><br />
 
-<h2>Booking Data</h2>
 
-<div>
-    
-
-    <div style="float:right; width:1111px;">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Order Base ( EWO)</button>
@@ -97,11 +96,7 @@
             </div>
         </div>
 
-    </div>
 
-
-    <div style="clear:both"></div>
-</div>
 
 
 <script>
@@ -170,8 +165,6 @@
 
         newYarns[bookingMasterId] = newYarns[bookingMasterId].filter(y => y.name !== yarnName);
     }
-
-
 
     async function saveYarns(bookingMasterId) {
 

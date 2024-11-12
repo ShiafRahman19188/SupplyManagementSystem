@@ -1,4 +1,4 @@
-﻿@model YarnPOMaster
+﻿@model SupplyChainManagement.DTO.YarnPOMasterDetailViewModel
 
 
 <h2>@ViewData["Title"]</h2>
@@ -15,32 +15,32 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="PONo" class="control-label custom-label">PO Number</label>
-                    <input asp-for="PONo" class="form-control"  />
-                    <span asp-validation-for="PONo" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.PONo" class="control-label custom-label">PO Number</label>
+                    <input asp-for="YarnPOMaster.PONo" class="form-control" />
+                 
                 </div>
 
 
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="PODate" class="control-label custom-label">PO Date</label>
-                    <input asp-for="PODate" class="form-control" type="date"  />
-                    <span asp-validation-for="PODate" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.PODate" class="control-label custom-label">PO Date</label>
+                    <input asp-for="YarnPOMaster.PODate" class="form-control" type="date" />
+                    
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="DeliveryStartDate" class="control-label custom-label">Delivery Start Date</label>
-                    <input asp-for="DeliveryStartDate" class="form-control" type="date" />
-                    <span asp-validation-for="DeliveryStartDate" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.DeliveryStartDate" class="control-label custom-label">Delivery Start Date</label>
+                    <input asp-for="YarnPOMaster.DeliveryStartDate" class="form-control" type="date" />
+                    
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="DeliveryStartDate" class="control-label custom-label">Delivery End Date</label>
-                    <input asp-for="DeliveryStartDate" class="form-control" type="date" />
-                    <span asp-validation-for="DeliveryStartDate" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.DeliveryStartDate" class="control-label custom-label">Delivery End Date</label>
+                    <input asp-for="YarnPOMaster.DeliveryStartDate" class="form-control" type="date" />
+                    
                 </div>
             </div>
         </div>
@@ -48,31 +48,30 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="SupplierName" class="control-label custom-label">Suppier Name </label>
-                    <input asp-for="SupplierName" class="form-control"  />
-                    <span asp-validation-for="SupplierName" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.SupplierName" class="control-label custom-label">Suppier Name </label>
+                    <input asp-for="YarnPOMaster.SupplierName" class="form-control" />
+ 
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="Charges" class="control-label custom-label">Charges</label>
-                    <input asp-for="Charges" class="form-control"  />
-                    <span asp-validation-for="Charges" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.Charges" class="control-label custom-label">Charges</label>
+                    <input asp-for="YarnPOMaster.Charges" class="form-control" />
+                   
                 </div>
 
 
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="CountryOfOrigin" class="control-label custom-label">Country</label>
-                    <input asp-for="CountryOfOrigin" class="form-control" />
-                    <span asp-validation-for="CountryOfOrigin" class="text-danger"></span>
+                    <label asp-for="YarnPOMaster.CountryOfOrigin" class="control-label custom-label">Country</label>
+                    <input asp-for="YarnPOMaster.CountryOfOrigin" class="form-control" />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="ShippingTolerance" class="control-label custom-label">Shipping Tolerance</label>
-                    <input asp-for="ShippingTolerance" class="form-control"  type="number"/>
+                    <label asp-for="YarnPOMaster.ShippingTolerance" class="control-label custom-label">Shipping Tolerance</label>
+                    <input asp-for="YarnPOMaster.ShippingTolerance" class="form-control" type="number" />
                    
                 </div>
             </div>
@@ -81,22 +80,22 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="PortofLoading" class="control-label custom-label">Portof Loading</label>
-                    <input asp-for="PortofLoading" class="form-control" />
+                    <label asp-for="YarnPOMaster.PortofLoading" class="control-label custom-label">Portof Loading</label>
+                    <input asp-for="YarnPOMaster.PortofLoading" class="form-control" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="PortofDischarge" class="control-label custom-label">Portof Discharge </label>
-                    <input asp-for="PortofDischarge" class="form-control"  />
+                    <label asp-for="YarnPOMaster.PortofDischarge" class="control-label custom-label">Portof Discharge </label>
+                    <input asp-for="YarnPOMaster.PortofDischarge" class="form-control" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label asp-for="ShipmentMode" class="control-label custom-label">Shipment Mode</label>
-                    <input asp-for="ShipmentMode" class="form-control"  />                  
+                    <label asp-for="YarnPOMaster.ShipmentMode" class="control-label custom-label">Shipment Mode</label>
+                    <input asp-for="YarnPOMaster.ShipmentMode" class="form-control" />
                 </div>
             </div>     
         </div>
@@ -122,21 +121,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.ItemDetails == null)
-                    {
-                        <tr>
-                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].BookingNo" value="Book-00012" class="form-control" /></td>
-                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].ItemMasterID" value="Item001" class="form-control" /></td>
-                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].YarnShade" value="Shade002" class="form-control" /></td>
-                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].UnitName" value="Kg" class="form-control" /></td>
-                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].PoQty" value="5000" class="form-control" /></td>
-                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].Rate" value="30" class="form-control" /></td>
-                            <td class="text-center"><input type="number" disabled name="ItemDetails[0].PIValue" value="150000" class="form-control" /></td>
-                            <td class="text-center"><input type="text" disabled name="ItemDetails[0].Remarks" value="val000998" class="form-control" /></td>
-                        </tr>
-                    }
-                    else
-                    {
+                   
                         @for (int i = 0; i < Model.ItemDetails.Count; i++)
                         {
                             <tr>
@@ -149,7 +134,7 @@
                                 <td class="text-center"><input type="number" disabled name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" /></td>
                                 <td class="text-center"><input type="text" disabled name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" /></td>
                             </tr>
-                        }
+                        
                     }
                    
                 </tbody>
@@ -158,7 +143,7 @@
         </div>
     </div>
 
-    <input type="hidden" asp-for="YPOMasterID" />
+    <input type="hidden" asp-for="YarnPOMaster.YPOMasterID" />
 
     <button type="submit" formaction="@Url.Action("SendPoEmail", "PO")" formmethod="post" class="btn btn-primary">Release PO</button>
   

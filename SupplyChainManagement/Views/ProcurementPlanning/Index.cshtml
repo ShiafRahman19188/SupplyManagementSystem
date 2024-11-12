@@ -1,5 +1,82 @@
-﻿@model PRPending
+﻿@model List<SupplyChainManagement.DTO.ProcurementLandingDto>
 
 @{
     ViewData["Title"] = "Procurement Planning";
 }
+
+<h2>@ViewData["Title"]</h2></br>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Details</th>
+            <th>Yarn</th>
+            <th>Total Quantity</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var procurement in Model)
+        {
+            <tr>
+                <td>
+                    <button class="toggle-btn" onclick="toggleDetails('details-@procurement.YarnId')">
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>@procurement.YarnName</td>
+                <td>@procurement.TotalQuantity</td>         
+          
+            </tr>
+            <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
+                <td colspan="5">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>TNA Slab</th>
+                                <th>PR Number</th>
+                                <th>EWO Based</th>
+                                <th>Projection Based</th>
+                                <th>ROL Based</th>
+                                <th>Free  Stock</th>
+                                <th>Free PipeLine Stock</th>
+                                <th>Free Transit Stock</th>
+                                <th>Free Physical Stock</th>
+                                <th>Suggested Store Requisition</th>
+                                <th>Suggested Purchase Quantity</th>
+                                <th>Purchase Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         @*    @foreach (var child in procurement.ProcurementChildren)
+                            { *@
+                                <tr>
+                                <th>TNA Slab</th>
+                                <th>PR Number</th>
+                                <th>EWO Based</th>
+                                <th>Projection Based</th>
+                                <th>ROL Based</th>
+                                <th>Free  Stock</th>
+                                <th>Free PipeLine Stock</th>
+                                <th>Free Transit Stock</th>
+                                <th>Free Physical Stock</th>
+                                <th>Suggested Store Requisition</th>
+                                <th>Suggested Purchase Quantity</th>
+                                <th>Purchase Quantity</th>
+                                </tr>
+                            @* } *@
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function toggleDetails(detailsId) {
+        var detailsRow = document.getElementById(detailsId);
+        detailsRow.style.display = (detailsRow.style.display === "none") ? "table-row" : "none";
+    }
+</script>

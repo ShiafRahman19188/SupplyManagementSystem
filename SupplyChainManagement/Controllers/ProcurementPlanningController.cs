@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SupplyChainManagement.Db;
 using SupplyChainManagement.DTO;
+using SupplyChainManagement.Models;
 
 namespace SupplyChainManagement.Controllers
 {
@@ -9,54 +10,44 @@ namespace SupplyChainManagement.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly SCMDbContext _context;
+        private readonly string scm;
+        private readonly DBService _queryService;
 
-        public ProcurementPlanningController(IConfiguration configuration, SCMDbContext context)
+        public ProcurementPlanningController(IConfiguration configuration, DBService DBService, SCMDbContext context)
         {
             _configuration = configuration;
-
+            scm = _configuration.GetConnectionString("DefaultConnection");
+            _queryService = DBService;
             _context = context;
+
         }
         public IActionResult Index()
         {
-            return View();
+            return View(GetPPData());
         }
 
-        private List<YarnBookingMasterDto> GetUnacknowledgedYarnBookingsAsync()
+        private List<ProcurementLandingDto> GetPPData()
         {
-            var query = from yb in _context.YarnBookingMasters
-                        join yc in _context.YarnBookingChilds on yb.YarnBookingMasterId equals yc.YarnBookingMasterId
-                        join im in _context.ItemMasters on yc.ItemMasterId equals im.ItemMasterId
-            join fy in _context.FabricYarns on yc.ItemMasterId equals fy.YarnId
-                        join fab in _context.ItemMasters on fy.FabricId equals fab.ItemMasterId
-                   
 
-                        select new
-                        {
-                            yb.YarnBookingMasterId,
-                            yb.YarnBookingMasterNo,
-                            FabricName = fab.ItemName,
-                            YarnName = im.ItemName,
-                            yb.IsAcknowledge,
-                            Quantity = yc.Quantity
-                        };
+            List<ProcurementLandingDto> items = new List<ProcurementLandingDto>();
+            string Query = $"select im.ItemName,pr.ItemYarnId,sum(TotalQuantity)TotalQuantity  from PurchaseRequisitionMasters pr inner join ItemMasters im on im.ItemMasterId=pr.ItemYarnId group by ItemYarnId,im.ItemName\r\n";
 
-            var groupedData = query
-                .GroupBy(x => new { x.YarnBookingMasterId, x.YarnBookingMasterNo, x.FabricName, x.IsAcknowledge })
-                .Select(g => new YarnBookingMasterDto
-                {
-                    YarnBookingMasterId = g.Key.YarnBookingMasterId,
-                    YarnBookingMasterNo = g.Key.YarnBookingMasterNo,
-                    FabricName = g.Key.FabricName,
-                    IsAcknowledge = g.Key.IsAcknowledge,
-                    yarnBookingChildren = g.Select(x => new YarnBookingChildDto
-                    {
-                        YarnName = x.YarnName,
-                        Quantity = x.Quantity
-                    }).ToList()
-                })
-                .ToList();
+            var Results = _queryService.ExecuteQuery(scm, Query);
 
-            return groupedData;
+            foreach (var reader in Results)
+            {
+
+                ProcurementLandingDto b = new ProcurementLandingDto();
+
+                b.YarnId = reader["ItemYarnId"] != DBNull.Value ? Convert.ToInt32(reader["ItemYarnId"]) : 0;
+                b.YarnName = reader["ItemName"] != DBNull.Value ? reader["ItemName"].ToString() : string.Empty;
+                b.TotalQuantity = reader["TotalQuantity"] != DBNull.Value ? Convert.ToDecimal(reader["TotalQuantity"]) : 0;
+                items.Add(b);
+
+
+            }
+
+            return items;
         }
     }
 }

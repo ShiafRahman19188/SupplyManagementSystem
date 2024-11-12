@@ -137,4 +137,27 @@ namespace SupplyChainManagement.DTO
     }
 
 
+    public class ProcurementLandingDto
+    {
+        public int YarnId { get; set; }
+        public string YarnName { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public List<ProcurementChildDto> ProcurementChildren { get; set; }
+    }
+    public class ProcurementDto
+    {
+        public int YarnBookingMasterId { get; set; }
+        public string YarnBookingMasterNo { get; set; }
+        public string FabricName { get; set; }
+        public string YarnName { get; set; }
+        public int YarnId { get; set; }
+        public List<ProcurementChildDto> yarnBookingChildren { get; set; }
+    }
+    public class ProcurementChildDto
+    {
+        public string TNASlab { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal EwoQuantity { get; set; }
+        public decimal ProjectionQuantity { get; set; }
+    }
 }

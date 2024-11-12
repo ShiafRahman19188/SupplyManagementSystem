@@ -30,11 +30,11 @@
             </tr>
             <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
                 <td colspan="5">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-sm">
                         <thead>
                             <tr>
                                 <th>TNA Slab</th>
-                                <th>PR Number</th>
+                                <th>PR Number</th>                               
                                 <th>EWO Based</th>
                                 <th>Projection Based</th>
                                 <th>ROL Based</th>
@@ -43,9 +43,12 @@
                                 <th>Free PipeLine Stock</th>
                                 <th>Free Transit Stock</th>
                                 <th>Free Physical Stock</th>
-                                <th>Suggested Store Requisition</th>
+                                <th>Suggested <br />Store <br />Requisition</th>
                                 <th>Suggested Purchase Quantity</th>
                                 <th>Purchase Quantity</th>
+                                <th>Unit</th>
+                                <th style="width:8%">Path of PO</th>
+                                <th style="width:8%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,7 +67,20 @@
                                     <td>@child.FreePhysicalStock</td>
                                     <td>@child.SuggestedStoreRequisition</td>
                                     <td>@child.SuggestedPurchaseQuantity</td>
-                                    <td>@child.PurchaseOrderQuantity</td>
+                                    <td>   <input type="number" name="PurchaseOrderQuantity" value="@child.PurchaseOrderQuantity" class="form-control" step="0.01" />
+                                    </td>
+                                    <td>Kg</td>
+                       
+                                    <td>
+                                        <select name="PathOfPO" class="form-control">
+                                            <option value="PA" selected="@(child.PathOfPO == "PA" ? "selected" : "")">PA</option>
+                                            <option value="RFQ" selected="@(child.PathOfPO == "RFQ" ? "selected" : "")">RFQ</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
+                                    </td>
+
                                 </tr>
                             }
                         </tbody>

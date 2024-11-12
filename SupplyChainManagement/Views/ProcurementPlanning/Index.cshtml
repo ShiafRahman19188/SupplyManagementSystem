@@ -121,4 +121,39 @@
         var detailsRow = document.getElementById(detailsId);
         detailsRow.style.display = (detailsRow.style.display === "none") ? "table-row" : "none";
     }
+
+
+    function AddPO() {
+       
+        $('.child-details').each(function () {
+            const yarnId = $(this).attr('id').split('-')[1]; 
+            const pathOfPO = $(this).find('select[name="PathOfPO"]').val();
+
+            
+            if (pathOfPO === "PA") {
+                const purchaseQuantity = $(this).find('input[name="PurchaseOrderQuantity"]').val();
+                const unit = $(this).find('td:nth-last-child(3)').text().trim(); 
+
+               
+                $.ajax({
+                    url: '/ProcurementPlanning/AddPO',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        YarnId: yarnId,
+                        PurchaseQuantity: parseFloat(purchaseQuantity),
+                        Unit: unit
+                    }),
+                    success: function (response) {
+                        alert('PO successfully added for Yarn ID: ' + yarnId);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
+    }
+
+
 </script>

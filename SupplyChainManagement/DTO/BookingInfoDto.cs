@@ -176,4 +176,13 @@ namespace SupplyChainManagement.DTO
         public decimal SuggestedPurchaseQuantity { get; set; }
         public decimal PurchaseOrderQuantity { get; set; }
     }
+
+    public class YarnPORequest
+    {
+        public int YarnId { get; set; }
+        public decimal PurchaseQuantity { get; set; }
+        public string Unit { get; set; }
+    }
+
+
 }

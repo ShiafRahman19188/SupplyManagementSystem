@@ -97,8 +97,8 @@ namespace SupplyChainManagement.Controllers
             <table border='1' cellspacing='0' cellpadding='5' style='width:100%; font-size:small;'>
                 <thead>
                     <tr>
-                        <th>Booking No</th>
-                        <th>Item Master Code</th>
+                        
+                        <th>Item Name</th>
                         <th>Shade</th>
                         <th>Unit</th>
                         <th>PO Qty</th>
@@ -113,9 +113,8 @@ namespace SupplyChainManagement.Controllers
 			{
 				htmlContent.AppendLine($@"
                 <tr>
-                    <td>{detail.BookingNo}</td>
-                    <td>{detail.ItemMasterID}</td>
-                    <td>{detail.YarnShade}</td>
+                    
+                    <td>{detail.ItemName}</td>
                     <td>{detail.UnitName}</td>
                     <td>{detail.PoQty}</td>
                     <td>{detail.Rate}</td>

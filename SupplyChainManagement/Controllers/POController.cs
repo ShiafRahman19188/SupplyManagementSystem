@@ -34,7 +34,8 @@ namespace SupplyChainManagement.Controllers
                           {
                               YPOMasterID = po.YPOMasterID,
                               PONo = po.PONo,
-                              PODate = (DateTime)po.PODate,
+                              CompanyName=po.CompanyName,
+                              //PODate = (DateTime)po.PODate,
                               //ItemYarnId = pr.ItemYarnId,
                               ItemName = im.ItemName
                               
@@ -49,11 +50,27 @@ namespace SupplyChainManagement.Controllers
             var masterData = _context.ItemPOMaster
                              .FirstOrDefault(m => m.YPOMasterID == id);
 
-            //var masterData = _context.ItemPOMaster.FirstOrDefault(m => m.YPOMasterID == id);
-            var detailData = _context.ItemPODetail
-                             .Where(d => d.YPOMasterID == id) 
-                             .ToList();
-            
+            //var detailData = _context.ItemPODetail
+            //                 .Where(d => d.YPOMasterID == id)
+            //                 .ToList();
+
+            var detailData = (from detail in _context.ItemPODetail
+                              join master in _context.ItemMasters
+                              on detail.ItemMasterID equals master.ItemMasterId
+                              where detail.YPOMasterID == id
+                              select new YarnPOChild
+                              {
+                                  ItemMasterID = detail.ItemMasterID,
+                                  ItemName = master.ItemName,
+                                  UnitName=detail.UnitName,
+                                  BookingNo = detail.BookingNo,
+                                  PoQty = detail.PoQty,
+                                  Rate = detail.Rate,
+                                  PIValue = detail.PIValue,
+                                  Remarks = detail.Remarks
+                              })
+                 .ToList();
+
             var model = new YarnPOMasterDetailViewModel
             {
                 YarnPOMaster = masterData,

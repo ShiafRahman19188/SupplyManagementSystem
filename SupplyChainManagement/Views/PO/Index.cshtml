@@ -15,9 +15,9 @@
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">PO No</th>
-                    <th class="text-center">PO Date</th>
+                   
                     <th class="text-center">Item Name</th>
-                    
+                    <th class="text-center">Unit Name</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -28,9 +28,8 @@
 
                         
                         <td>@po.PONo</td>
-                        <td>@po.PODate</td>
-                        <td>@po.ItemName</td>
-                        
+                        <td class="text-center">@po.ItemName</td>
+                        <td>@po.CompanyName</td>
                         <td class="text-center">
                             <a href="@Url.Action("Add", "PO", new { id = po.YPOMasterID })">
                                 Release

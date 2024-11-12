@@ -41,6 +41,7 @@ namespace SupplyChainManagement.Models
 
         public bool? ReceivedCompleted { get; set; }  
         public DateTime? ReceivedDate { get; set; }
+        public string? ItemName { get; set; }
     }
 
 

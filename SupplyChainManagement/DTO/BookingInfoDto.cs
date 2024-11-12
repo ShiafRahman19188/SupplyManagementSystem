@@ -93,7 +93,7 @@ namespace SupplyChainManagement.DTO
 
         [StringLength(50)]
         public string PONo { get; set; }
-        public DateTime PODate { get; set; }
+        public DateTime? PODate { get; set; }
         public string CompanyName { get; set; }
         public string SupplierName { get; set; }
         public string Currency { get; set; }

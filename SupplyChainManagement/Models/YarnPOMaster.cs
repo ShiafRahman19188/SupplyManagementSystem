@@ -17,13 +17,13 @@ namespace SupplyChainManagement.Models
         public string? Currency { get; set; }
         public DateTime? DeliveryStartDate { get; set; }
 
-        [Required]
+       
         public DateTime DeliveryEndDate { get; set; }
 
         [StringLength(500)]
         public string? Remarks { get; set; }
 
-        [Required]
+ 
         [StringLength(500)]
         public string? Charges { get; set; }
 

@@ -192,7 +192,7 @@ namespace SupplyChainManagement.DTO
     public class YarnPORequest
     {
         public int YarnId { get; set; }
-        public decimal PurchaseQuantity { get; set; }
+        public decimal TotalQuantity { get; set; }
         public string Unit { get; set; }
     }
 

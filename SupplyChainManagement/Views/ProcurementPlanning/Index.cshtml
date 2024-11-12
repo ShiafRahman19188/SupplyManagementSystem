@@ -27,7 +27,7 @@
                 <td>@procurement.YarnName</td>
                 <td>@procurement.TotalQuantity</td>
                 <td>
-                    <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
+                    <button type="button" class="btn btn-primary" onclick="AddPO((@procurement.YarnId))">Done </button>
                 </td>
             </tr>
             <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
@@ -123,37 +123,45 @@
     }
 
 
-    function AddPO() {
-       
-        $('.child-details').each(function () {
-            const yarnId = $(this).attr('id').split('-')[1]; 
-            const pathOfPO = $(this).find('select[name="PathOfPO"]').val();
+    function AddPO(yarnId) {
+        
+        const procurementRow = document.getElementById(`details-${yarnId}`);
+        if (!procurementRow) return;
 
-            
-            if (pathOfPO === "PA") {
-                const purchaseQuantity = $(this).find('input[name="PurchaseOrderQuantity"]').val();
-                const unit = $(this).find('td:nth-last-child(3)').text().trim(); 
+        
+        let totalQuantity = 0;
 
+        
+        const childRows = procurementRow.querySelectorAll('tbody tr');
+        childRows.forEach((row) => {
+            const pathOfPOSelect = row.querySelector('select[name="PathOfPO"]');
+            const purchaseOrderQuantityInput = row.querySelector('input[name="PurchaseOrderQuantity"]');
+
+            if (pathOfPOSelect && purchaseOrderQuantityInput) {
                
-                $.ajax({
-                    url: '/ProcurementPlanning/AddPO',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        YarnId: yarnId,
-                        PurchaseQuantity: parseFloat(purchaseQuantity),
-                        Unit: unit
-                    }),
-                    success: function (response) {
-                        alert('PO successfully added for Yarn ID: ' + yarnId);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                    }
-                });
+                if (pathOfPOSelect.value === 'PA') {
+                    
+                    totalQuantity += parseFloat(purchaseOrderQuantityInput.value) || 0;
+                }
+            }
+        });
+
+       
+        $.ajax({
+            url: '/ProcurementPlanning/AddPO',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ yarnId: yarnId, totalQuantity: totalQuantity }),
+            success: function (response) {
+                alert('Data saved successfully!');
+            },
+            error: function (error) {
+                alert('Error saving data');
+                console.log(error);
             }
         });
     }
+
 
 
 </script>

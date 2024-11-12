@@ -79,6 +79,7 @@ namespace SupplyChainManagement.Controllers
                 b.SuggestedPurchaseQuantity = b.TotalQuantity - b.FreeStock - b.FreePipeLineStock - b.FreePhysicalStock - b.FreeTransitStock;
                 b.PurchaseOrderQuantity = b.SuggestedPurchaseQuantity;
                 b.PurchaseRequisitionMasterId = reader["PurchaseRequisitionMasterId"] != DBNull.Value ? Convert.ToInt32(reader["PurchaseRequisitionMasterId"]) : 0;
+                b.PathOfPO = "PA";
                 items.Add(b);
 
 

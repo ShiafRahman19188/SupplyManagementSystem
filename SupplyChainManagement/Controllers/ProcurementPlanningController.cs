@@ -86,5 +86,41 @@ namespace SupplyChainManagement.Controllers
 
             return items;
         }
+
+
+        [HttpPost]
+        public IActionResult AddPO([FromBody] YarnPORequest request)
+        {
+            
+            var poMaster = new YarnPOMaster
+            {
+                PONo = "YourPONo",
+                CompanyName = "Epyllion", 
+                SupplierName = "Your Supplier", 
+                Currency = "BDT", 
+                
+               
+                DateAdded = DateTime.Now,
+                ItemDetails = new List<YarnPOChild>
+        {
+                        new YarnPOChild
+                        {
+                            ItemMasterID = request.YarnId,
+                            UnitName = request.Unit,
+                            PoQty = request.PurchaseQuantity,
+                            Rate = 10.0M,  
+                            PIValue = request.PurchaseQuantity * 10.0M, 
+                        }
+        }
+            };
+
+            
+            _context.ItemPOMaster.Add(poMaster);
+            _context.SaveChanges();
+
+            return Ok(new { Message = "PO added successfully." });
+        }
+
+
     }
 }

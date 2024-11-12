@@ -27,7 +27,7 @@
                 <td>@procurement.YarnName</td>
                 <td>@procurement.TotalQuantity</td>
                 <td>
-                    <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
+                    <button type="button" class="btn btn-primary" onclick="AddPO((@procurement.YarnId))">Done </button>
                 </td>
             </tr>
             <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
@@ -121,4 +121,47 @@
         var detailsRow = document.getElementById(detailsId);
         detailsRow.style.display = (detailsRow.style.display === "none") ? "table-row" : "none";
     }
+
+
+    function AddPO(yarnId) {
+        
+        const procurementRow = document.getElementById(`details-${yarnId}`);
+        if (!procurementRow) return;
+
+        
+        let totalQuantity = 0;
+
+        
+        const childRows = procurementRow.querySelectorAll('tbody tr');
+        childRows.forEach((row) => {
+            const pathOfPOSelect = row.querySelector('select[name="PathOfPO"]');
+            const purchaseOrderQuantityInput = row.querySelector('input[name="PurchaseOrderQuantity"]');
+
+            if (pathOfPOSelect && purchaseOrderQuantityInput) {
+               
+                if (pathOfPOSelect.value === 'PA') {
+                    
+                    totalQuantity += parseFloat(purchaseOrderQuantityInput.value) || 0;
+                }
+            }
+        });
+
+       
+        $.ajax({
+            url: '/ProcurementPlanning/AddPO',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ yarnId: yarnId, totalQuantity: totalQuantity }),
+            success: function (response) {
+                alert('Data saved successfully!');
+            },
+            error: function (error) {
+                alert('Error saving data');
+                console.log(error);
+            }
+        });
+    }
+
+
+
 </script>

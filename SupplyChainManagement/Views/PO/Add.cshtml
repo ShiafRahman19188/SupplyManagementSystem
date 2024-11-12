@@ -16,7 +16,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PONo" class="control-label custom-label">PO Number</label>
-                    <input asp-for="YarnPOMaster.PONo" class="form-control" />
+                    <input asp-for="YarnPOMaster.PONo" readonly class="form-control" />
                  
                 </div>
 
@@ -25,21 +25,21 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PODate" class="control-label custom-label">PO Date</label>
-                    <input asp-for="YarnPOMaster.PODate" class="form-control" type="date" />
+                    <input asp-for="YarnPOMaster.PODate"  class="form-control" type="date" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.DeliveryStartDate" class="control-label custom-label">Delivery Start Date</label>
-                    <input asp-for="YarnPOMaster.DeliveryStartDate" class="form-control" type="date" />
+                    <input asp-for="YarnPOMaster.DeliveryStartDate"  class="form-control" type="date" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.DeliveryStartDate" class="control-label custom-label">Delivery End Date</label>
-                    <input asp-for="YarnPOMaster.DeliveryStartDate" class="form-control" type="date" />
+                    <input asp-for="YarnPOMaster.DeliveryStartDate"  class="form-control" type="date" />
                     
                 </div>
             </div>
@@ -49,14 +49,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.SupplierName" class="control-label custom-label">Suppier Name </label>
-                    <input asp-for="YarnPOMaster.SupplierName" class="form-control" />
+                    <input asp-for="YarnPOMaster.SupplierName" readonly class="form-control" />
  
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.Charges" class="control-label custom-label">Charges</label>
-                    <input asp-for="YarnPOMaster.Charges" class="form-control" />
+                    <input asp-for="YarnPOMaster.Charges" readonly class="form-control" />
                    
                 </div>
 
@@ -65,13 +65,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.CountryOfOrigin" class="control-label custom-label">Country</label>
-                    <input asp-for="YarnPOMaster.CountryOfOrigin" class="form-control" />
+                    <input asp-for="YarnPOMaster.CountryOfOrigin" readonly class="form-control" />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.ShippingTolerance" class="control-label custom-label">Shipping Tolerance</label>
-                    <input asp-for="YarnPOMaster.ShippingTolerance" class="form-control" type="number" />
+                    <input asp-for="YarnPOMaster.ShippingTolerance" readonly class="form-control" type="number" />
                    
                 </div>
             </div>
@@ -81,21 +81,21 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PortofLoading" class="control-label custom-label">Portof Loading</label>
-                    <input asp-for="YarnPOMaster.PortofLoading" class="form-control" />
+                    <input asp-for="YarnPOMaster.PortofLoading" readonly class="form-control" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PortofDischarge" class="control-label custom-label">Portof Discharge </label>
-                    <input asp-for="YarnPOMaster.PortofDischarge" class="form-control" />
+                    <input asp-for="YarnPOMaster.PortofDischarge" readonly class="form-control" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.ShipmentMode" class="control-label custom-label">Shipment Mode</label>
-                    <input asp-for="YarnPOMaster.ShipmentMode" class="form-control" />
+                    <input asp-for="YarnPOMaster.ShipmentMode" readonly class="form-control" />
                 </div>
             </div>     
         </div>
@@ -110,7 +110,7 @@
                         
                         <th class="text-center">Booking No</th>
                         <th class="text-center">Item Master Code</th>
-                        <th class="text-center">Shade</th>
+                        
                         <th class="text-center">Unit</th>
                         <th class="text-center">PO Qty</th>
                         <th class="text-center">Rate</th>
@@ -121,23 +121,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
-                        @for (int i = 0; i < Model.ItemDetails.Count; i++)
-                        {
-                            <tr>
-                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" /></td>
-                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" /></td>
-                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].YarnShade" value="@Model.ItemDetails[i].YarnShade" class="form-control" /></td>
-                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" /></td>
-                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" /></td>
-                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" /></td>
-                                <td class="text-center"><input type="number" disabled name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" /></td>
-                                <td class="text-center"><input type="text" disabled name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" /></td>
-                            </tr>
-                        
+                    @for (int i = 0; i < Model.ItemDetails.Count; i++)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="text" readonly name="ItemDetails[@i].BookingNo" value="@Model.ItemDetails[i].BookingNo" class="form-control" readonly />
+                            </td>
+                            <td class="text-center">
+                                <input type="number" readonly name="ItemDetails[@i].ItemMasterID" value="@Model.ItemDetails[i].ItemMasterID" class="form-control" readonly />
+                            </td>
+                           
+                            <td class="text-center">
+                                <input type="text" readonly name="ItemDetails[@i].UnitName" value="@Model.ItemDetails[i].UnitName" class="form-control" readonly />
+                            </td>
+                            <td class="text-center">
+                                <input type="number" readonly name="ItemDetails[@i].PoQty" value="@Model.ItemDetails[i].PoQty" class="form-control" readonly />
+                            </td>
+                            <td class="text-center">
+                                <input type="number" name="ItemDetails[@i].Rate" value="@Model.ItemDetails[i].Rate" class="form-control" readonly />
+                            </td>
+                            <td class="text-center">
+                                <input type="number" readonly name="ItemDetails[@i].PIValue" value="@Model.ItemDetails[i].PIValue" class="form-control" readonly />
+                            </td>
+                            <td class="text-center">
+                                <input type="text" readonly name="ItemDetails[@i].Remarks" value="@Model.ItemDetails[i].Remarks" class="form-control" readonly />
+                            </td>
+                        </tr>
                     }
-                   
                 </tbody>
+
             </table>
 
         </div>
@@ -149,7 +161,6 @@
   
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
-
 
 @section Scripts {
     @{

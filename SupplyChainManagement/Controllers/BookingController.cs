@@ -83,7 +83,7 @@ namespace SupplyChainManagement.Controllers
                 existingYarnBookingMaster = new YarnBookingMaster
                 {
                     YarnBookingMasterNo = FabricBookingName + "-YB",
-                    IsAcknowledge = 1
+                    IsAcknowledge = 0
                 };
                 _context.YarnBookingMasters.Add(existingYarnBookingMaster);
                 await _context.SaveChangesAsync();

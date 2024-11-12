@@ -138,8 +138,8 @@ namespace SupplyChainManagement.DTO
 
     public class YarnPOMasterDetailViewModel
     {
-        public YarnPOMaster YarnPOMaster { get; set; }
-        public List<YarnPOChild> ItemDetails { get; set; }
+        public YarnPOMaster? YarnPOMaster { get; set; }
+        public List<YarnPOChild>? ItemDetails { get; set; }
     }
 
     public class ProcurementLandingDto
@@ -176,4 +176,13 @@ namespace SupplyChainManagement.DTO
         public decimal SuggestedPurchaseQuantity { get; set; }
         public decimal PurchaseOrderQuantity { get; set; }
     }
+
+    public class YarnPORequest
+    {
+        public int YarnId { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public string Unit { get; set; }
+    }
+
+
 }

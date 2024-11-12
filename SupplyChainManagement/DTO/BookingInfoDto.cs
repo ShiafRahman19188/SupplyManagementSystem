@@ -158,8 +158,17 @@ namespace SupplyChainManagement.DTO
         public string TNASlab { get; set; }
         public int PurchaseRequisitionMasterId { get; set; }
         public string PRNo { get; set; }
+        public string PathOfPO { get; set; }
         public decimal ROLQuantity { get; set; }
         public decimal EwoQuantity { get; set; }
         public decimal ProjectionQuantity { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public decimal FreeStock { get; set; }
+        public decimal FreePipeLineStock { get; set; }
+        public decimal FreeTransitStock { get; set; }
+        public decimal FreePhysicalStock { get; set; }
+        public decimal SuggestedStoreRequisition { get; set; }
+        public decimal SuggestedPurchaseQuantity { get; set; }
+        public decimal PurchaseOrderQuantity { get; set; }
     }
 }

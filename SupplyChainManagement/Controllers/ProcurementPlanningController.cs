@@ -53,7 +53,8 @@ namespace SupplyChainManagement.Controllers
 
         private List<ProcurementChildDto> GetitemWiseData(int ItemMasterId)
         {
-
+            Random random = new Random();
+         
             List<ProcurementChildDto> items = new List<ProcurementChildDto>();
             string Query = $"Select PurchaseRequisitionMasterId,PRNo,TotalQuantity as EwoQuantity from PurchaseRequisitionMasters where ItemYarnId="+ ItemMasterId;
 
@@ -67,9 +68,16 @@ namespace SupplyChainManagement.Controllers
                 b.TNASlab ="Nov-Dec";
                 b.PRNo = reader["PRNo"] != DBNull.Value ? reader["PRNo"].ToString() : string.Empty;
                 b.EwoQuantity = reader["EwoQuantity"] != DBNull.Value ? Convert.ToDecimal(reader["EwoQuantity"]) : 0;
-                b.ProjectionQuantity = 100;
-                b.ROLQuantity = 10;
-   
+                b.ProjectionQuantity = Math.Round((decimal)(random.NextDouble() * (400 - 100) + 100), 2); // Decimal between 100 and 400
+                b.ROLQuantity = Math.Round((decimal)(random.NextDouble() * (50 - 20) + 20), 2); // Decimal between 20 and 50
+                b.TotalQuantity = b.EwoQuantity + b.ProjectionQuantity + b.ROLQuantity;
+                b.FreeStock = Math.Round((decimal)(random.NextDouble() * 100), 2); // Decimal between 0 and 100
+                b.FreePipeLineStock = Math.Round((decimal)(random.NextDouble() * 50), 2); // Decimal between 0 and 50
+                b.FreeTransitStock = Math.Round((decimal)(random.NextDouble() * 50), 2); // Decimal between 0 and 50
+                b.FreePhysicalStock = Math.Round((decimal)(random.NextDouble() * 100), 2); // Decimal between 0 and 100
+                b.SuggestedStoreRequisition = Math.Round((decimal)(random.NextDouble() * (50 - 20) + 20), 2); // Decimal between 20 and 50
+                b.SuggestedPurchaseQuantity = Math.Round((decimal)(random.NextDouble() * (50 - 20) + 20), 2); // Decimal between 20 and 50
+                b.PurchaseOrderQuantity = Math.Round((decimal)(random.NextDouble() * (50 - 20) + 20), 2); // Decimal between 20 and 50
                 b.PurchaseRequisitionMasterId = reader["PurchaseRequisitionMasterId"] != DBNull.Value ? Convert.ToInt32(reader["PurchaseRequisitionMasterId"]) : 0;
                 items.Add(b);
 

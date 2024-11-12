@@ -12,7 +12,7 @@
             <th>Details</th>
             <th>Yarn</th>
             <th>Total Quantity</th>
-
+            <th style="width:8%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -25,8 +25,10 @@
                     </button>
                 </td>
                 <td>@procurement.YarnName</td>
-                <td>@procurement.TotalQuantity</td>         
-          
+                <td>@procurement.TotalQuantity</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
+                </td>
             </tr>
             <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
                 <td colspan="5">
@@ -48,7 +50,7 @@
                                 <th>Purchase Quantity</th>
                                 <th>Unit</th>
                                 <th style="width:8%">Path of PO</th>
-                                <th style="width:8%">Action</th>
+                    
                             </tr>
                         </thead>
                         <tbody>
@@ -77,9 +79,7 @@
                                             <option value="RFQ" selected="@(child.PathOfPO == "RFQ" ? "selected" : "")">RFQ</option>
                                         </select>
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
-                                    </td>
+                                    
 
                                 </tr>
                             }

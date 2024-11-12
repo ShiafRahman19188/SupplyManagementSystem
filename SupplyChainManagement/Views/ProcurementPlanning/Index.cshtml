@@ -12,7 +12,7 @@
             <th>Details</th>
             <th>Yarn</th>
             <th>Total Quantity</th>
-
+            <th style="width:8%">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -25,8 +25,10 @@
                     </button>
                 </td>
                 <td>@procurement.YarnName</td>
-                <td>@procurement.TotalQuantity</td>         
-          
+                <td>@procurement.TotalQuantity</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
+                </td>
             </tr>
             <tr id="details-@procurement.YarnId" class="child-details" style="display: none;">
                 <td colspan="5">
@@ -48,41 +50,63 @@
                                 <th>Purchase Quantity</th>
                                 <th>Unit</th>
                                 <th style="width:8%">Path of PO</th>
-                                <th style="width:8%">Action</th>
+                    
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var child in procurement.ProcurementChildren)
+                            @{
+                                int count = 1;
+                            }
+                                @foreach (var child in procurement.ProcurementChildren)
                             {
+
                                 <tr>
-                                    <td>@child.TNASlab</td>
-                                    <td>@child.PRNo</td>
-                                    <td>@child.EwoQuantity</td>
-                                    <td>@child.ProjectionQuantity</td>
-                                    <td>@child.ROLQuantity</td>
-                                    <td>@child.TotalQuantity</td>
-                                    <td>@child.FreeStock</td>
-                                    <td>@child.FreePipeLineStock</td>
-                                    <td>@child.FreeTransitStock</td>
-                                    <td>@child.FreePhysicalStock</td>
-                                    <td>@child.SuggestedStoreRequisition</td>
-                                    <td>@child.SuggestedPurchaseQuantity</td>
+
+                                    @if (count == 1)
+                                    {
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@procurement.ProcurementChildren[0].TNASlab</td>
+                                    }
+                                    <td style="text-align: center; vertical-align: middle;">@child.PRNo</td>
+                                    <td style="text-align: center; vertical-align: middle;">@child.EwoQuantity</td>
+                                    @if (count == 1)
+                                    {
+
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">
+                                            @child.ProjectionQuantity
+                                        </td>
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@child.ROLQuantity</td>
+                                    }
+
+                                    <td style="text-align: center; vertical-align: middle;">@child.TotalQuantity</td>
+                                    @if (count == 1)
+                                    {
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@child.FreeStock</td>
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@child.FreePipeLineStock</td>
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@child.FreeTransitStock</td>
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">@child.FreePhysicalStock</td>
+                                    
+                                    
+                                    }
+                                
+                                    <td style="text-align: center; vertical-align: middle;">@child.SuggestedStoreRequisition</td>
+                                    <td style="text-align: center; vertical-align: middle;">@child.SuggestedPurchaseQuantity</td>
                                     <td>   <input type="number" name="PurchaseOrderQuantity" value="@child.PurchaseOrderQuantity" class="form-control" step="0.01" />
                                     </td>
-                                    <td>Kg</td>
-                       
+                                    @if (count == 1)
+                                    {
+                                        <td rowspan="@procurement.ProcurementChildren.Count" style="text-align: center; vertical-align: middle;">Kg</td>
+                                    }
                                     <td>
                                         <select name="PathOfPO" class="form-control">
                                             <option value="PA" selected="@(child.PathOfPO == "PA" ? "selected" : "")">PA</option>
-                                            <option value="RFQ" selected="@(child.PathOfPO == "RFQ" ? "selected" : "")">RFQ</option>
+                                            <option value="RFQ">RFQ</option>
                                         </select>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" onclick="AddPO()">Done </button>
                                     </td>
 
                                 </tr>
+                                count++;
                             }
+                 
                         </tbody>
                     </table>
                 </td>

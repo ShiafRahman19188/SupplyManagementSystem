@@ -7,19 +7,23 @@ namespace SupplyChainManagement.Models
     {
         [Key]
         public int YPOChildID { get; set; }
+
         public int YPOMasterID { get; set; }
+
         public int ItemMasterID { get; set; }
-        public int UnitName { get; set; }
+
+        public string? UnitName { get; set; }
+
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal PoQty { get; set; }
+        public decimal? PoQty { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Rate { get; set; }
+        public decimal? Rate { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal PIValue { get; set; }
+        public decimal? PIValue { get; set; }
 
         [StringLength(500)]
         public string? Remarks { get; set; }
@@ -36,10 +40,10 @@ namespace SupplyChainManagement.Models
         [StringLength(100)]
         public string? BookingNo { get; set; }
 
-
-        public bool ReceivedCompleted { get; set; }
+        public bool? ReceivedCompleted { get; set; }  
         public DateTime? ReceivedDate { get; set; }
     }
+
 
     public class YarnPOChildDetails
     {

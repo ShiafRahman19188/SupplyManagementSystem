@@ -34,7 +34,7 @@ namespace SupplyChainManagement.Controllers
                           {
                               YPOMasterID = po.YPOMasterID,
                               PONo = po.PONo,
-                              PODate = po.PODate,
+                              PODate = (DateTime)po.PODate,
                               //ItemYarnId = pr.ItemYarnId,
                               ItemName = im.ItemName
                               
@@ -44,9 +44,22 @@ namespace SupplyChainManagement.Controllers
             return View(result);
         }
 
-        public IActionResult Add() 
+        public IActionResult Add(int id) 
         {
-            YarnPOMaster model= new YarnPOMaster();
+            var masterData = _context.ItemPOMaster
+                             .FirstOrDefault(m => m.YPOMasterID == id);
+
+            //var masterData = _context.ItemPOMaster.FirstOrDefault(m => m.YPOMasterID == id);
+            var detailData = _context.ItemPODetail
+                             .Where(d => d.YPOMasterID == id) 
+                             .ToList();
+            
+            var model = new YarnPOMasterDetailViewModel
+            {
+                YarnPOMaster = masterData,
+                ItemDetails = detailData
+            };
+
             return View(model);
         }
 

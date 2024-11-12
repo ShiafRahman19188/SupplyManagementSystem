@@ -136,5 +136,10 @@ namespace SupplyChainManagement.DTO
 
     }
 
+    public class YarnPOMasterDetailViewModel
+    {
+        public YarnPOMaster YarnPOMaster { get; set; }
+        public List<YarnPOChild> ItemDetails { get; set; }
+    }
 
 }

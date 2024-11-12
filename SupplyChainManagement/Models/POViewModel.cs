@@ -11,6 +11,6 @@
 		public string? PortofLoading { get; set; }
 		public string? PortofDischarge { get; set; }
 		public string? ShipmentMode { get; set; }
-		public List<YarnPOChild> ItemDetails { get; set; }
+		public List<YarnPOChild>? ItemDetails { get; set; }
 	}
 }

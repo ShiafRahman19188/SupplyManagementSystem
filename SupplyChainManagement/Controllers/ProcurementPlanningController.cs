@@ -42,6 +42,35 @@ namespace SupplyChainManagement.Controllers
                 b.YarnId = reader["ItemYarnId"] != DBNull.Value ? Convert.ToInt32(reader["ItemYarnId"]) : 0;
                 b.YarnName = reader["ItemName"] != DBNull.Value ? reader["ItemName"].ToString() : string.Empty;
                 b.TotalQuantity = reader["TotalQuantity"] != DBNull.Value ? Convert.ToDecimal(reader["TotalQuantity"]) : 0;
+                b.ProcurementChildren = GetitemWiseData(b.YarnId);
+                items.Add(b);
+
+
+            }
+
+            return items;
+        }
+
+        private List<ProcurementChildDto> GetitemWiseData(int ItemMasterId)
+        {
+
+            List<ProcurementChildDto> items = new List<ProcurementChildDto>();
+            string Query = $"Select PurchaseRequisitionMasterId,PRNo,TotalQuantity as EwoQuantity from PurchaseRequisitionMasters where ItemYarnId="+ ItemMasterId;
+
+            var Results = _queryService.ExecuteQuery(scm, Query);
+
+            foreach (var reader in Results)
+            {
+
+                ProcurementChildDto b = new ProcurementChildDto();
+
+                b.TNASlab ="Nov-Dec";
+                b.PRNo = reader["PRNo"] != DBNull.Value ? reader["PRNo"].ToString() : string.Empty;
+                b.EwoQuantity = reader["EwoQuantity"] != DBNull.Value ? Convert.ToDecimal(reader["EwoQuantity"]) : 0;
+                b.ProjectionQuantity = 100;
+                b.ROLQuantity = 10;
+   
+                b.PurchaseRequisitionMasterId = reader["PurchaseRequisitionMasterId"] != DBNull.Value ? Convert.ToInt32(reader["PurchaseRequisitionMasterId"]) : 0;
                 items.Add(b);
 
 

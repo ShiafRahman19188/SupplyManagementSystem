@@ -48,23 +48,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                         @*    @foreach (var child in procurement.ProcurementChildren)
-                            { *@
+                            @foreach (var child in procurement.ProcurementChildren)
+                            {
                                 <tr>
-                                <th>TNA Slab</th>
-                                <th>PR Number</th>
-                                <th>EWO Based</th>
-                                <th>Projection Based</th>
-                                <th>ROL Based</th>
-                                <th>Free  Stock</th>
-                                <th>Free PipeLine Stock</th>
-                                <th>Free Transit Stock</th>
-                                <th>Free Physical Stock</th>
-                                <th>Suggested Store Requisition</th>
-                                <th>Suggested Purchase Quantity</th>
-                                <th>Purchase Quantity</th>
+                                    <td>@child.TNASlab</td>
+                                    <td>@child.PRNo</td>
+                                <td>@child.EwoQuantity</td>
+                                <td>@child.ProjectionQuantity</td>
+                                <td>@child.ROLQuantity</td>
+                                <td>Free  Stock</td>
+                                <td>Free PipeLine Stock</td>
+                                <td>Free Transit Stock</td>
+                                <td>Free Physical Stock</td>
+                                <td>Suggested Store Requisition</td>
+                                <td>Suggested Purchase Quantity</td>
+                                <td>Purchase Quantity</td>
                                 </tr>
-                            @* } *@
+                            }
                         </tbody>
                     </table>
                 </td>

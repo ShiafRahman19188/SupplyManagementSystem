@@ -156,7 +156,9 @@ namespace SupplyChainManagement.DTO
     public class ProcurementChildDto
     {
         public string TNASlab { get; set; }
-        public decimal Quantity { get; set; }
+        public int PurchaseRequisitionMasterId { get; set; }
+        public string PRNo { get; set; }
+        public decimal ROLQuantity { get; set; }
         public decimal EwoQuantity { get; set; }
         public decimal ProjectionQuantity { get; set; }
     }

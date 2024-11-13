@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SupplyChainManagement.DTO;
 using SupplyChainManagement.Models;
 using SupplyChainManagement.Service;
 using System.Text;
@@ -27,9 +28,9 @@ namespace SupplyChainManagement.Controllers
 
 			var queryParams = HttpUtility.ParseQueryString(decryptedQueryData);
 
-			var viewModel = new POViewModel
-			{
-				PONo = queryParams["PONo"],
+			var viewModel = new YarnPOMasterDetailViewModel
+            {
+                PONo = queryParams["PONo"],
 				PODate = DateTime.TryParse(queryParams["PODate"], out var poDate) ? poDate : (DateTime?)null,
 				SupplierName = queryParams["SupplierName"],
 				Charges = decimal.TryParse(queryParams["Charges"], out var charges) ? charges : (decimal?)null,
@@ -62,7 +63,7 @@ namespace SupplyChainManagement.Controllers
 			//};
 		}
 
-		public IActionResult DownloadPI(YarnPOMaster model)
+		public IActionResult DownloadPI(YarnPOMasterDetailViewModel model)
 		{
 			// Build the HTML string
 			var htmlContent = new StringBuilder();
@@ -73,9 +74,9 @@ namespace SupplyChainManagement.Controllers
 			//htmlContent.AppendLine("MONTRIMS LTD<br/>MOUCHAK, KALIAKOIR,<br/>GAZIPUR, BANGLADESH");
 			//htmlContent.AppendLine("</div>");
 
-			htmlContent.AppendLine("<p style='text-align:left;font-size:24px;font-weight:bold'>MONTRIMS LTD</p>");
+			htmlContent.AppendLine("<p style='text-align:left;font-size:24px;color:red;font-weight:bold'>MONTRIMS LTD</p>");
 
-			htmlContent.AppendLine("<p style='text-align:center;font-size:20px;font-weight:bold'>PROFORMA INVOICE</p>");
+			htmlContent.AppendLine("<p style='text-align:center;font-size:18px;font-weight:bold'>PURCHASE ORDER</p>");
 
 			// Master Details
 			htmlContent.AppendLine($@"
@@ -96,8 +97,8 @@ namespace SupplyChainManagement.Controllers
             <table border='1' cellspacing='0' cellpadding='5' style='width:100%; font-size:small;'>
                 <thead>
                     <tr>
-                        <th>Booking No</th>
-                        <th>Item Master Code</th>
+                        
+                        <th>Item Name</th>
                         <th>Shade</th>
                         <th>Unit</th>
                         <th>PO Qty</th>
@@ -112,9 +113,8 @@ namespace SupplyChainManagement.Controllers
 			{
 				htmlContent.AppendLine($@"
                 <tr>
-                    <td>{detail.BookingNo}</td>
-                    <td>{detail.ItemMasterID}</td>
-                    <td>{detail.YarnShade}</td>
+                    
+                    <td>{detail.ItemName}</td>
                     <td>{detail.UnitName}</td>
                     <td>{detail.PoQty}</td>
                     <td>{detail.Rate}</td>

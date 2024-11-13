@@ -17,11 +17,10 @@ namespace SupplyChainManagement.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? PoQty { get; set; }
 
-        [Required]
+
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? Rate { get; set; }
 
-        [Required]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? PIValue { get; set; }
 
@@ -42,6 +41,7 @@ namespace SupplyChainManagement.Models
 
         public bool? ReceivedCompleted { get; set; }  
         public DateTime? ReceivedDate { get; set; }
+        public string? ItemName { get; set; }
     }
 
 

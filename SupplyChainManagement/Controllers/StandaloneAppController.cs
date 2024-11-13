@@ -44,7 +44,7 @@ namespace SupplyChainManagement.Controllers
             if (queryParams["ItemDetails"] != null)
             {
                 string itemDetailsJson = EncryptDecrypt.Decrypt(queryParams["ItemDetails"]);//HttpUtility.UrlDecode(queryParams["ItemDetails"]);
-                viewModel.ItemDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<YarnPOChild>>(itemDetailsJson);
+                viewModel.ItemDetails = Newtonsoft.Json.JsonConvert.DeserializeObject<List<YarnPOChildDto>>(itemDetailsJson);
             }
 
             return View(viewModel);

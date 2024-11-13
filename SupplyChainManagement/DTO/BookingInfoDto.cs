@@ -1,5 +1,6 @@
 ﻿using SupplyChainManagement.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SupplyChainManagement.DTO
 {
@@ -139,7 +140,7 @@ namespace SupplyChainManagement.DTO
     public class YarnPOMasterDetailViewModel
     {
         public YarnPOMaster? YarnPOMaster { get; set; }
-        public List<YarnPOChild>? ItemDetails { get; set; }
+        public List<YarnPOChildDto>? ItemDetails { get; set; }
 
 
         public string? PONo { get; set; }
@@ -194,6 +195,47 @@ namespace SupplyChainManagement.DTO
         public int YarnId { get; set; }
         public decimal TotalQuantity { get; set; }
         public string Unit { get; set; }
+    }
+
+    public class YarnPOChildDto
+    {
+        [Key]
+        public int YPOChildID { get; set; }
+
+        public int YPOMasterID { get; set; }
+
+        public int ItemMasterID { get; set; }
+
+        public string? UnitName { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? PoQty { get; set; }
+
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? Rate { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal? PIValue { get; set; }
+
+        [StringLength(500)]
+        public string? Remarks { get; set; }
+
+        [StringLength(1000)]
+        public string? YarnLotNo { get; set; }
+
+        [StringLength(50)]
+        public string? HSCode { get; set; }
+
+        [StringLength(100)]
+        public string? YarnShade { get; set; }
+
+        [StringLength(100)]
+        public string? BookingNo { get; set; }
+
+        public bool? ReceivedCompleted { get; set; }
+        public DateTime? ReceivedDate { get; set; }
+        public string? ItemName { get; set; }
     }
 
 

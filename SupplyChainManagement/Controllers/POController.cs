@@ -58,7 +58,7 @@ namespace SupplyChainManagement.Controllers
                               join master in _context.ItemMasters
                               on detail.ItemMasterID equals master.ItemMasterId
                               where detail.YPOMasterID == id
-                              select new YarnPOChild
+                              select new YarnPOChildDto
                               {
                                   ItemMasterID = detail.ItemMasterID,
                                   ItemName = master.ItemName,

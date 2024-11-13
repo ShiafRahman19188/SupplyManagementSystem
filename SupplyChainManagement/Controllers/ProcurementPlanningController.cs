@@ -106,7 +106,7 @@ namespace SupplyChainManagement.Controllers
             new YarnPOChild
             {
                 ItemMasterID = request.YarnId,
-                UnitName = "Kg",
+                UnitName = "kg",
                 PoQty = request.TotalQuantity,
                 Rate = 10.0M,
                 PIValue = request.TotalQuantity * 10.0M

@@ -50,9 +50,7 @@ namespace SupplyChainManagement.Controllers
             var masterData = _context.ItemPOMaster
                              .FirstOrDefault(m => m.YPOMasterID == id);
 
-            //var detailData = _context.ItemPODetail
-            //                 .Where(d => d.YPOMasterID == id)
-            //                 .ToList();
+            
 
             var detailData = (from detail in _context.ItemPODetail
                               join master in _context.ItemMasters
@@ -87,7 +85,7 @@ namespace SupplyChainManagement.Controllers
             var itemDetailsJson = Newtonsoft.Json.JsonConvert.SerializeObject(model.ItemDetails);
             string encryptedItemDetails = EncryptDecrypt.Encrypt(itemDetailsJson);
             var queryParameters = $"?PONo={model.YarnPOMaster.PONo}&PODate={model.YarnPOMaster.PODate:yyyy-MM-dd}&SupplierName={model.YarnPOMaster.SupplierName}&Charges={model.YarnPOMaster.Charges}&CountryOfOrigin={model.YarnPOMaster.CountryOfOrigin}&ShippingTolerance={model.YarnPOMaster.ShippingTolerance}&PortofLoading={model.YarnPOMaster.PortofLoading}&PortofDischarge={model.YarnPOMaster.PortofDischarge}&ShipmentMode={model.YarnPOMaster.ShipmentMode}&ItemDetails={Uri.EscapeDataString(encryptedItemDetails)}";
-           // var queryParameters = $"?PONo={model.PONo}&PODate={model.PODate:yyyy-MM-dd}&SupplierName={model.SupplierName}&Charges={model.Charges}&CountryOfOrigin={model.CountryOfOrigin}&ShippingTolerance={model.ShippingTolerance}&PortofLoading={model.PortofLoading}&PortofDischarge={model.PortofDischarge}&ShipmentMode={model.ShipmentMode}&ItemDetails={model.ItemDetails}";
+           
             string encryptedQueryData = EncryptDecrypt.Encrypt(queryParameters);
             string link = $"{linkURL}?data={Uri.EscapeDataString(encryptedQueryData)}";
            

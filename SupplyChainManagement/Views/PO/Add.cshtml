@@ -49,14 +49,20 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.SupplierName" class="control-label custom-label">Suppier Name </label>
-                    <input asp-for="YarnPOMaster.SupplierName"  class="form-control" />
+                   @*  <input asp-for="YarnPOMaster.SupplierName"  class="form-control" /> *@
+                    <select asp-for="YarnPOMaster.SupplierName" class="form-control" id="supplierDropdown">
+                        <option value="">-- Select Supplier --</option>
+                        <option value="Supplier1">Supplier-1</option>
+                        <option value="Supplier2">Supplier-2</option>
+
+                    </select>
  
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.Charges" class="control-label custom-label">Charges</label>
-                    <input asp-for="YarnPOMaster.Charges"  class="form-control" />
+                    <input asp-for="YarnPOMaster.Charges" class="form-control" id="chargesInput" />
                    
                 </div>
 
@@ -65,13 +71,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.CountryOfOrigin" class="control-label custom-label">Country</label>
-                    <input asp-for="YarnPOMaster.CountryOfOrigin"  class="form-control" />
+                    <input asp-for="YarnPOMaster.CountryOfOrigin" class="form-control" id="countryInput" />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.ShippingTolerance" class="control-label custom-label">Shipping Tolerance</label>
-                    <input asp-for="YarnPOMaster.ShippingTolerance"  class="form-control" type="number" />
+                    <input asp-for="YarnPOMaster.ShippingTolerance" class="form-control" type="number" id="toleranceInput" />
                    
                 </div>
             </div>
@@ -81,21 +87,21 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PortofLoading" class="control-label custom-label">Portof Loading</label>
-                    <input asp-for="YarnPOMaster.PortofLoading"  class="form-control" />
+                    <input asp-for="YarnPOMaster.PortofLoading" class="form-control" id="portLoadingInput" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.PortofDischarge" class="control-label custom-label">Portof Discharge </label>
-                    <input asp-for="YarnPOMaster.PortofDischarge"  class="form-control" />
+                    <input asp-for="YarnPOMaster.PortofDischarge" class="form-control" id="portDischargeInput" />
                     
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="YarnPOMaster.ShipmentMode" class="control-label custom-label">Shipment Mode</label>
-                    <input asp-for="YarnPOMaster.ShipmentMode"  class="form-control" />
+                    <input asp-for="YarnPOMaster.ShipmentMode" class="form-control" id="shipmentModeInput" />
                 </div>
             </div>     
         </div>
@@ -256,5 +262,48 @@
     </script>
 
 
+
+    <script>
+        document.getElementById("supplierDropdown").addEventListener("change", function () {
+            var selectedSupplier = this.value;
+
+            var supplierData = {
+                "Supplier1": {
+                    charges: "100",
+                    country: "USA",
+                    tolerance: "5",
+                    portLoading: "New York",
+                    portDischarge: "Los Angeles",
+                    shipmentMode: "Air"
+                },
+                "Supplier2": {
+                    charges: "200",
+                    country: "China",
+                    tolerance: "10",
+                    portLoading: "Shanghai",
+                    portDischarge: "Beijing",
+                    shipmentMode: "Sea"
+                }
+                
+            };
+
+            if (supplierData[selectedSupplier]) {
+                document.getElementById("chargesInput").value = supplierData[selectedSupplier].charges;
+                document.getElementById("countryInput").value = supplierData[selectedSupplier].country;
+                document.getElementById("toleranceInput").value = supplierData[selectedSupplier].tolerance;
+                document.getElementById("portLoadingInput").value = supplierData[selectedSupplier].portLoading;
+                document.getElementById("portDischargeInput").value = supplierData[selectedSupplier].portDischarge;
+                document.getElementById("shipmentModeInput").value = supplierData[selectedSupplier].shipmentMode;
+            } else {
+
+                document.getElementById("chargesInput").value = "";
+                document.getElementById("countryInput").value = "";
+                document.getElementById("toleranceInput").value = "";
+                document.getElementById("portLoadingInput").value = "";
+                document.getElementById("portDischargeInput").value = "";
+                document.getElementById("shipmentModeInput").value = "";
+            }
+        });
+    </script>
 
 }
